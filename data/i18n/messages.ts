@@ -71,7 +71,18 @@ export const uiMessages: Record<
         templates: string[];
       };
     };
-    catalog: { title: string; description: string; viewLabel: string };
+    catalog: {
+      title: string;
+      lead: string;
+      description: string;
+      viewLabel: string;
+      filters: { all: string; f: string; t: string; balanced: string };
+      sections: {
+        f: { title: string; description: string };
+        t: { title: string; description: string };
+        balanced: { title: string; description: string };
+      };
+    };
     localeSwitcher: { label: string };
   }
 > = {
@@ -101,7 +112,18 @@ export const uiMessages: Record<
     result: {
       axis: { f: 'F 성향', t: 'T 성향', balanced: '균형형' }, summaryCard: '한눈에 보는 결과', summaryHint: '답변 점수와 자주 고른 단서를 바탕으로 지금의 해석 성향을 정리했어요.', totalF: 'F 점수', totalT: 'T 점수', answered: '응답 수', scoreReport: '점수 해석', fHint: '감정과 관계 쪽에 더 가까운 흐름', tHint: '판단과 구조 쪽에 더 가까운 흐름', answeredHint: '실제로 답한 문항 수', patternsTitle: '자주 드러난 반응 패턴', patternsHint: '당신은 이런 단서를 자주 선택했어요.', strengths: '잘 드러난 강점', tips: '이렇게 활용해보세요', finalBadge: '당신의 결과', goodMatch: '나랑 잘 맞는 유형', goodMatchReason: '잘 맞는 이유', cta: '한 줄 제안', backHome: '처음으로', tryOther: '다른 모드도 이어서 해보기', share: { badge: 'SHARE YOUR CARD', title: '내 결과 카드 공유하기', hint: '이 결과를 그대로 보내고 친구와 서로 비교해보세요.', previewLabel: '공유 미리보기', share: '공유하기', shareHint: '추천 문구와 함께 보내기', copy: '링크 복사하기', copyHint: '추천 문구 + 링크 복사', copied: '공유 문구와 링크를 복사했어요.', failed: '링크를 복사하지 못했어요.', shared: '결과 카드 공유를 열었어요.', templates: ['나는 F와 T 사이에서 {title}가 나왔어. 너도 해봐.', '내 결과는 {title}. 너는 어떤 결과일까?'] },
     },
-    catalog: { title: '전체 유형 보기', description: '각 유형의 분위기와 특징, 강점과 활용 포인트를 한 번에 살펴보세요.', viewLabel: '결과 페이지 보기' },
+    catalog: {
+      title: '전체 유형 보기',
+      lead: '전체 결과 유형을 둘러보고, 나와 가까운 결을 찾아보세요.',
+      description: '각 유형의 분위기와 특징을 미리 살펴보고, 궁금한 결과를 바로 눌러 자세히 볼 수 있어요.',
+      viewLabel: '자세히 보기',
+      filters: { all: '전체', f: 'F 성향', t: 'T 성향', balanced: '균형형' },
+      sections: {
+        f: { title: 'F 성향', description: '감정의 흐름과 관계의 온도를 먼저 읽는 유형들입니다.' },
+        t: { title: 'T 성향', description: '판단 기준과 구조를 선명하게 세우는 유형들입니다.' },
+        balanced: { title: '균형형', description: '감정과 판단 사이의 중심을 함께 붙드는 유형들입니다.' },
+      },
+    },
     localeSwitcher: { label: '언어' },
   },
   ja: {
@@ -125,7 +147,18 @@ export const uiMessages: Record<
     result: {
       axis: { f: 'F寄り', t: 'T寄り', balanced: 'バランス型' }, summaryCard: '結果の見どころ', summaryHint: '回答の点数とよく選んだ傾向から、今の読み取りスタイルをまとめました。', totalF: 'Fスコア', totalT: 'Tスコア', answered: '回答数', scoreReport: 'スコアの読み取り', fHint: '感情や関係に寄った流れ', tHint: '判断や構造に寄った流れ', answeredHint: '実際に答えた設問数', patternsTitle: 'よく出た反応パターン', patternsHint: 'あなたは次のような反応をよく選んでいます。', strengths: 'よく出ている強み', tips: '活かし方のヒント', finalBadge: 'あなたの結果', goodMatch: '相性のよいタイプ', goodMatchReason: '相性がよい理由', cta: 'ひとことメモ', backHome: 'はじめに戻る', tryOther: '別のモードも続けて試す', share: { badge: 'SHARE YOUR CARD', title: 'この結果カードをシェア', hint: 'この結果をそのまま送って、友だちと比べてみましょう。', previewLabel: 'シェアプレビュー', share: 'シェアする', shareHint: 'ひとこと付きで送る', copy: 'リンクをコピー', copyHint: '紹介文 + リンクをコピー', copied: '紹介文とリンクをコピーしました。', failed: 'リンクをコピーできませんでした。', shared: '結果カードの共有を開きました。', templates: ['FとTのあいだで、私の結果は {title} でした。あなたもやってみて。', '私の結果は {title}。あなたはどのタイプになる？'] },
     },
-    catalog: { title: '全タイプを見る', description: '各タイプの空気感や特徴、強みや活かし方をまとめて見られます。', viewLabel: '結果ページを見る' },
+    catalog: {
+      title: '全タイプを見る',
+      lead: 'すべての結果タイプを眺めながら、自分に近い輪郭を探してみましょう。',
+      description: '各タイプの雰囲気や特徴を先に見比べて、気になる結果をそのまま開けます。',
+      viewLabel: '詳しく見る',
+      filters: { all: 'すべて', f: 'F寄り', t: 'T寄り', balanced: 'バランス型' },
+      sections: {
+        f: { title: 'F寄りタイプ', description: '感情の流れや関係の温度を先に受け取るタイプです。' },
+        t: { title: 'T寄りタイプ', description: '判断基準や構造をはっきり立てやすいタイプです。' },
+        balanced: { title: 'バランス型', description: '感情と判断の中心を同時に保ちやすいタイプです。' },
+      },
+    },
     localeSwitcher: { label: '言語' },
   },
   'zh-TW': {
@@ -149,7 +182,18 @@ export const uiMessages: Record<
     result: {
       axis: { f: 'F 傾向', t: 'T 傾向', balanced: '平衡型' }, summaryCard: '結果重點', summaryHint: '根據你的作答分數和常出現的線索，整理出目前的解讀風格。', totalF: 'F 分數', totalT: 'T 分數', answered: '作答數', scoreReport: '分數解讀', fHint: '更靠近感受與關係的一側', tHint: '更靠近判斷與結構的一側', answeredHint: '實際完成的題數', patternsTitle: '常出現的反應模式', patternsHint: '你經常選擇這些解讀方向。', strengths: '目前的優勢', tips: '可試著這樣做', finalBadge: '你的結果', goodMatch: '和我很合的類型', goodMatchReason: '合拍原因', cta: '一句提醒', backHome: '回到最初', tryOther: '也試試另一種模式', share: { badge: 'SHARE YOUR CARD', title: '把我的結果卡分享出去', hint: '直接把這張結果卡傳給朋友，一起比較看看。', previewLabel: '分享預覽', share: '立即分享', shareHint: '附上推薦文案分享', copy: '複製連結', copyHint: '複製文案 + 連結', copied: '已複製分享文案與連結。', failed: '無法複製連結。', shared: '已開啟結果卡分享。', templates: ['我在 F 與 T 之間測出 {title}，你也來試試看。', '我的結果是 {title}。你會是哪一型？'] },
     },
-    catalog: { title: '查看全部類型', description: '一次瀏覽所有類型的性格氣質、優勢與使用方式。', viewLabel: '查看結果頁' },
+    catalog: {
+      title: '查看全部類型',
+      lead: '先逛逛所有結果類型，找出最接近你氣質的方向。',
+      description: '你可以先看每種類型的氛圍與特徵，再點進去讀完整結果。',
+      viewLabel: '查看詳情',
+      filters: { all: '全部', f: 'F 傾向', t: 'T 傾向', balanced: '平衡型' },
+      sections: {
+        f: { title: 'F 傾向', description: '會先讀情緒流動與關係溫度的類型。' },
+        t: { title: 'T 傾向', description: '更容易先建立判準與結構的類型。' },
+        balanced: { title: '平衡型', description: '能同時守住感受與判斷中心的類型。' },
+      },
+    },
     localeSwitcher: { label: '語言' },
   },
   en: {
@@ -173,7 +217,18 @@ export const uiMessages: Record<
     result: {
       axis: { f: 'F-leaning', t: 'T-leaning', balanced: 'Balanced' }, summaryCard: 'What stands out', summaryHint: 'We summarized your current reading style from your answers and repeated patterns.', totalF: 'F score', totalT: 'T score', answered: 'Answered', scoreReport: 'Score reading', fHint: 'Closer to feeling and relationship cues', tHint: 'Closer to judgment and structure cues', answeredHint: 'Questions you actually completed', patternsTitle: 'Frequent response patterns', patternsHint: 'These are the tendencies you selected most often.', strengths: 'Strengths that stand out', tips: 'Ways to use it well', finalBadge: 'Final Result', goodMatch: 'A type that fits you well', goodMatchReason: 'Why it fits', cta: 'One takeaway', backHome: 'Back to start', tryOther: 'Try the other mode next', share: { badge: 'SHARE YOUR CARD', title: 'Share your result card', hint: 'Send this result as-is and compare it with a friend.', previewLabel: 'Share preview', share: 'Share now', shareHint: 'Send with a short intro line', copy: 'Copy link', copyHint: 'Copy intro text + link', copied: 'Share text and link copied.', failed: 'Could not copy the link.', shared: 'Opened the share sheet for your result card.', templates: ['I got {title} in Between F and T. You should try it too.', 'My result is {title}. What would yours be?'] },
     },
-    catalog: { title: 'Browse all types', description: 'See every profile at a glance, including its tone, strengths, and how it tends to show up.', viewLabel: 'Open result page' },
+    catalog: {
+      title: 'Browse all types',
+      lead: 'Browse every result type and quickly find the one that feels closest to you.',
+      description: 'Preview each type’s tone and standout traits first, then open the full report when you want more detail.',
+      viewLabel: 'View details',
+      filters: { all: 'All', f: 'F-leaning', t: 'T-leaning', balanced: 'Balanced' },
+      sections: {
+        f: { title: 'F-leaning types', description: 'These types tend to read emotional flow and relational temperature first.' },
+        t: { title: 'T-leaning types', description: 'These types tend to set criteria and structure more clearly first.' },
+        balanced: { title: 'Balanced types', description: 'These types tend to hold both feeling and judgment in steadier balance.' },
+      },
+    },
     localeSwitcher: { label: 'Language' },
   },
 };

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 
 import { Layout } from '@/components/Layout';
-import { ResultCatalogCard } from '@/components/ResultCatalogCard';
+import { ResultCatalogExplorer } from '@/components/ResultCatalogExplorer';
 import { uiMessages } from '@/data/i18n/messages';
 import { getLocalizedResultProfiles } from '@/data/results';
 import { defaultLocale, isLocale, type Locale } from '@/lib/i18n/config';
@@ -37,23 +37,11 @@ export default function AllTypesPage({ params }: AllTypesPageProps) {
           <h1 className="text-balance font-serif text-4xl font-semibold leading-[1.06] text-ink sm:text-5xl">
             {messages.catalog.title}
           </h1>
-          <p className="mt-4 max-w-3xl text-base leading-8 text-ink/72 sm:text-lg">{messages.catalog.description}</p>
+          <p className="mt-4 max-w-3xl text-lg leading-8 text-plum sm:text-xl">{messages.catalog.lead}</p>
+          <p className="mt-3 max-w-3xl text-base leading-8 text-ink/72 sm:text-lg">{messages.catalog.description}</p>
         </div>
 
-        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-          {resultTypes.map((type) => (
-            <ResultCatalogCard
-              key={type}
-              locale={locale}
-              profile={profiles[type]}
-              strengthsLabel={messages.result.strengths}
-              tipsLabel={messages.result.tips}
-              goodMatchLabel={messages.result.goodMatch}
-              goodMatchReasonLabel={messages.result.goodMatchReason}
-              viewLabel={messages.catalog.viewLabel}
-            />
-          ))}
-        </div>
+        <ResultCatalogExplorer locale={locale} resultTypes={resultTypes} profiles={profiles} messages={messages.catalog} />
       </section>
     </Layout>
   );
