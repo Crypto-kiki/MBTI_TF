@@ -55,6 +55,24 @@ function buildQuickSummary(locale: Locale, content: ResultContent) {
   return `${content.subtitle}. It stands out most clearly through ${firstStrength.toLowerCase()}.`;
 }
 
+function buildActionCta(locale: Locale, content: ResultContent) {
+  const [firstTip = ''] = content.tips;
+
+  if (locale === 'ko') {
+    return `${content.cta} 다만 ${firstTip}를 함께 기억하면 이 강점이 더 편안하고 선명하게 살아나요.`;
+  }
+
+  if (locale === 'ja') {
+    return `${content.cta} そのうえで「${firstTip}」を意識すると、この強みはもっと心地よく活かせます。`;
+  }
+
+  if (locale === 'zh-TW') {
+    return `${content.cta} 如果也記得「${firstTip}」，這個優勢會更穩、更好用。`;
+  }
+
+  return `${content.cta} It becomes even stronger when you remember to ${firstTip.toLowerCase()}.`;
+}
+
 const compatibilityDefinitions: Record<ResultType, Record<Locale, { type: ResultType; reason: string }>> = {
   f_empathy: {
     ko: { type: 't_calm', reason: '당신의 공감력에 이 유형의 차분한 정리가 더해지면 서로를 안정적으로 받쳐줄 수 있어요.' },
@@ -678,6 +696,7 @@ export function getResultProfile(locale: Locale, type: ResultType): ResultProfil
     ...content,
     quickSummary: content.quickSummary ?? buildQuickSummary(locale, content),
     description: enrichDescription(locale, content),
+    cta: buildActionCta(locale, content),
     compatibility: {
       ...compatibility,
       title: compatibilityContent.title,
