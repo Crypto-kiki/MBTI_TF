@@ -3,7 +3,7 @@ import { ResultProfile, ResultType } from '@/types/quiz';
 export const resultProfiles: Record<ResultType, ResultProfile> = {
   f_empathy: {
     type: 'f_empathy',
-    title: '따뜻한 공감러',
+    title: 'Velvet Ember',
     subtitle: '마음의 온도를 먼저 읽는 섬세한 사람',
     description:
       '당신은 말보다 마음의 떨림을 먼저 감지하는 편이에요. 누군가 애써 괜찮은 척해도 그 결을 놓치지 않고, 관계 안에서 부드럽게 손을 내밀 줄 아는 타입입니다.',
@@ -13,7 +13,7 @@ export const resultProfiles: Record<ResultType, ResultProfile> = {
   },
   f_nuance: {
     type: 'f_nuance',
-    title: '감정의 결을 읽는 사람',
+    title: 'Moon Ripple',
     subtitle: '표정과 맥락 사이를 자연스럽게 해석하는 타입',
     description:
       '당신은 드러난 말보다 숨은 의미를 더 잘 읽어요. 작은 말투 변화나 공기의 결도 놓치지 않아, 사람들의 미묘한 감정을 이해하는 데 강점을 보입니다.',
@@ -23,7 +23,7 @@ export const resultProfiles: Record<ResultType, ResultProfile> = {
   },
   f_warmth: {
     type: 'f_warmth',
-    title: '분위기를 살피는 다정한 해석가',
+    title: 'Rose Hush',
     subtitle: '사람과 사람 사이의 공기를 부드럽게 읽는 스타일',
     description:
       '당신은 누가 편안한지, 누가 긴장했는지 먼저 보는 사람입니다. 대화의 흐름과 관계의 온도를 함께 살피며, 부드러운 조율로 상황을 안정시키는 힘이 있어요.',
@@ -33,7 +33,7 @@ export const resultProfiles: Record<ResultType, ResultProfile> = {
   },
   t_calm: {
     type: 't_calm',
-    title: '차분한 판단가',
+    title: 'Quiet Pivot',
     subtitle: '감정에 휩쓸리기보다 상황을 정리해보는 사람',
     description:
       '당신은 상황을 조금 떨어져 바라보며 판단하는 편이에요. 감정보다 사실과 맥락을 분리해 생각하고, 흔들림 속에서도 기준을 잃지 않는 안정감이 있습니다.',
@@ -43,7 +43,7 @@ export const resultProfiles: Record<ResultType, ResultProfile> = {
   },
   t_criteria: {
     type: 't_criteria',
-    title: '기준부터 세우는 타입',
+    title: 'Frame Setter',
     subtitle: '무엇을 볼지 먼저 정하고 움직이는 구조형',
     description:
       '당신은 결론을 급히 내리기보다 먼저 판단의 기준을 세워요. 그래서 선택의 이유가 분명하고, 복잡한 상황에서도 흔들리지 않는 선명함이 느껴집니다.',
@@ -53,7 +53,7 @@ export const resultProfiles: Record<ResultType, ResultProfile> = {
   },
   t_structure: {
     type: 't_structure',
-    title: '구조적으로 생각하는 해결사',
+    title: 'Pattern Smith',
     subtitle: '문제를 쪼개고 다시 세우는 데 강한 타입',
     description:
       '당신은 복잡한 문제를 구조로 바꾸는 재능이 있어요. 흐릿한 상황도 정리 가능한 조각으로 나누고, 실행 가능한 해답으로 연결하는 힘이 돋보입니다.',
@@ -63,7 +63,7 @@ export const resultProfiles: Record<ResultType, ResultProfile> = {
   },
   b_balance: {
     type: 'b_balance',
-    title: '마음과 기준 사이의 균형러',
+    title: 'Soft Compass',
     subtitle: '공감과 판단의 무게를 나란히 두는 사람',
     description:
       '당신은 마음을 살피면서도 기준을 놓치지 않아요. 따뜻함과 명료함이 한쪽으로 쏠리지 않아, 상황을 무리 없이 안정적으로 읽어내는 편입니다.',
@@ -73,7 +73,7 @@ export const resultProfiles: Record<ResultType, ResultProfile> = {
   },
   b_steady: {
     type: 'b_steady',
-    title: '다정하지만 흔들리지 않는 해석가',
+    title: 'Still Bloom',
     subtitle: '부드럽지만 중심이 분명한 균형형',
     description:
       '당신은 상대의 감정을 충분히 읽으면서도 쉽게 휩쓸리진 않아요. 다정한 태도와 단단한 기준이 함께 있어, 편안하면서도 신뢰감 있는 인상을 줍니다.',
@@ -83,7 +83,7 @@ export const resultProfiles: Record<ResultType, ResultProfile> = {
   },
   b_bridge: {
     type: 'b_bridge',
-    title: '공감도 판단도 놓치지 않는 타입',
+    title: 'Twin Current',
     subtitle: '사람과 구조 사이를 이어주는 브릿지형',
     description:
       '당신은 사람의 마음을 읽는 일과 상황을 정리하는 일을 함께 해낼 수 있어요. 감정과 구조를 번갈아 보며, 팀이나 관계 안에서 연결자 역할을 잘 해냅니다.',
