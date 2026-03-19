@@ -1,33 +1,38 @@
 <svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <linearGradient id="bg" x1="120" y1="80" x2="1080" y2="550" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#f7d8df"/>
-      <stop offset="1" stop-color="#d7bfef"/>
+    <linearGradient id="bg" x1="96" y1="72" x2="1104" y2="558" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F6D6E1"/>
+      <stop offset="1" stop-color="#D6C0EF"/>
     </linearGradient>
-    <radialGradient id="orbA" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(240 170) rotate(48) scale(260 240)">
-      <stop stop-color="#ffffff" stop-opacity="0.98"/>
+    <radialGradient id="glowA" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(240 140) rotate(35) scale(280 220)">
+      <stop stop-color="#ffffff" stop-opacity="0.92"/>
       <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
     </radialGradient>
-    <radialGradient id="orbB" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(950 470) rotate(20) scale(300 240)">
-      <stop stop-color="#f3d7df" stop-opacity="0.92"/>
-      <stop offset="1" stop-color="#f3d7df" stop-opacity="0"/>
+    <radialGradient id="glowB" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(980 480) rotate(-10) scale(320 240)">
+      <stop stop-color="#ffffff" stop-opacity="0.58"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
     </radialGradient>
     <filter id="blur" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur stdDeviation="22"/>
+      <feGaussianBlur stdDeviation="24"/>
     </filter>
   </defs>
-  <rect width="1200" height="630" rx="48" fill="url(#bg)"/>
+  <rect width="1200" height="630" rx="52" fill="url(#bg)"/>
   <g filter="url(#blur)">
-    <circle cx="220" cy="170" r="170" fill="url(#orbA)"/>
-    <circle cx="950" cy="470" r="190" fill="url(#orbB)"/>
+    <circle cx="220" cy="156" r="164" fill="url(#glowA)"/>
+    <circle cx="976" cy="470" r="196" fill="url(#glowB)"/>
   </g>
-  <rect x="72" y="72" width="1056" height="486" rx="40" fill="rgba(255,255,255,0.24)" stroke="rgba(255,255,255,0.58)"/>
-  <rect x="120" y="118" width="150" height="38" rx="19" fill="rgba(255,255,255,0.7)"/>
-  <text x="154" y="143" fill="#6A5164" font-family="'Noto Sans KR', sans-serif" font-size="14" letter-spacing="0.32em">RESULT</text>
-  <text x="120" y="282" fill="#342634" font-family="'Cormorant Garamond', serif" font-size="74" font-weight="600">Velvet Ember</text>
-  <text x="120" y="338" fill="#5E4C5E" font-family="'Noto Sans KR', sans-serif" font-size="22">Between feeling and judgment</text>
-  <path d="M838 172C897 120 992 118 1058 156C1118 191 1149 255 1128 315C1108 374 1041 423 956 422C866 421 799 366 783 297C770 242 790 208 838 172Z" fill="rgba(255,255,255,0.42)"/>
-  <path d="M885 221C923 190 987 184 1036 211C1083 237 1107 284 1093 328C1078 373 1024 405 960 401C892 398 841 357 830 306C821 269 834 244 885 221Z" fill="rgba(255,255,255,0.55)"/>
-  <circle cx="971" cy="291" r="67" fill="rgba(255,255,255,0.75)"/>
-  <circle cx="971" cy="291" r="44" fill="rgba(110,86,111,0.14)"/>
+  <rect x="70" y="70" width="1060" height="490" rx="42" fill="rgba(255,255,255,0.28)" stroke="rgba(255,255,255,0.58)"/>
+  <rect x="116" y="112" width="152" height="40" rx="20" fill="rgba(255,255,255,0.74)"/>
+  <text x="150" y="138" fill="#8C647F" font-family="'Noto Sans KR', sans-serif" font-size="14" letter-spacing="0.28em">RESULT</text>
+  <text x="116" y="286" fill="#322332" font-family="'Cormorant Garamond', serif" font-size="72" font-weight="600">Velvet Ember</text>
+  <text x="116" y="338" fill="#6B5670" font-family="'Noto Sans KR', sans-serif" font-size="22">A hand offering warmth to another heart</text>
+
+  <circle cx="938" cy="250" r="132" fill="rgba(255,255,255,0.52)"/>
+  <path d="M855 375C878 332 919 303 961 303C1000 303 1038 330 1061 367C1030 405 1001 430 960 430C917 430 881 408 855 375Z" fill="rgba(255,255,255,0.72)"/>
+  <path d="M940 264C940 243 956 228 976 228C998 228 1012 244 1012 263C1012 282 999 294 978 312C958 295 940 283 940 264Z" fill="#C883A8"/>
+  <path d="M808 390C837 345 884 325 919 334C947 341 962 367 955 390C949 410 929 425 902 430C874 436 842 425 808 390Z" fill="#F7E5EB" stroke="rgba(107,86,112,0.18)" stroke-width="6"/>
+  <path d="M934 386C958 352 997 336 1031 342C1060 347 1079 370 1074 394C1068 420 1039 434 1008 435C981 437 955 425 934 386Z" fill="#FFF4F8" stroke="rgba(107,86,112,0.16)" stroke-width="6"/>
+  <circle cx="900" cy="382" r="18" fill="#E8B7CB"/>
+  <circle cx="1005" cy="386" r="18" fill="#E8B7CB"/>
+
 </svg>

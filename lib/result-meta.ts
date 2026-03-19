@@ -20,12 +20,34 @@ function clampText(value: string, maxLength: number) {
   return value.length > maxLength ? `${value.slice(0, maxLength - 1).trim()}…` : value;
 }
 
-export function getResultShareMetadata(locale: Locale, resultType: ResultType) {
+interface ResultShareSearchParams {
+  mode?: string;
+  totalFScore?: string;
+  totalTScore?: string;
+  answered?: string;
+  tags?: string;
+}
+
+function buildShareImagePath(locale: Locale, resultType: ResultType, searchParams?: ResultShareSearchParams) {
+  const query = new URLSearchParams();
+
+  if (searchParams?.mode) query.set('mode', searchParams.mode);
+  if (searchParams?.totalFScore) query.set('totalFScore', searchParams.totalFScore);
+  if (searchParams?.totalTScore) query.set('totalTScore', searchParams.totalTScore);
+  if (searchParams?.answered) query.set('answered', searchParams.answered);
+  if (searchParams?.tags) query.set('tags', searchParams.tags);
+
+  const basePath = `/${locale}/result/${resultType}/share-image`;
+  const search = query.toString();
+  return search ? `${basePath}?${search}` : basePath;
+}
+
+export function getResultShareMetadata(locale: Locale, resultType: ResultType, searchParams?: ResultShareSearchParams) {
   const profile = getResultProfile(locale, resultType);
   const palette = ogPalettes[resultType];
   const subtitle = clampText(profile.subtitle, 48);
   const description = clampText(profile.description, 110);
-  const imagePath = `/${locale}/result/${resultType}/opengraph-image`;
+  const imagePath = buildShareImagePath(locale, resultType, searchParams);
 
   return {
     serviceName: OG_SERVICE_NAME,

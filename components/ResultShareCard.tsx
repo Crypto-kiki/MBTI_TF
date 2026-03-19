@@ -30,11 +30,11 @@ export function ResultShareCard({ locale, resultType, title, subtitle, messages 
   const [feedback, setFeedback] = useState<{ tone: 'success' | 'error'; message: string } | null>(null);
 
   const getShareUrl = () => {
-    if (typeof window === 'undefined') {
-      return getResultHref(locale, resultType);
+    if (typeof window !== 'undefined') {
+      return window.location.href;
     }
 
-    return new URL(getResultHref(locale, resultType), window.location.origin).toString();
+    return getResultHref(locale, resultType);
   };
 
   useEffect(() => {

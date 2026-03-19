@@ -41,10 +41,10 @@ export function generateStaticParams() {
   return locales.flatMap((locale) => resultTypes.map((resultType) => ({ locale, resultType })));
 }
 
-export async function generateMetadata({ params }: DynamicResultPageProps): Promise<Metadata> {
+export async function generateMetadata({ params, searchParams }: DynamicResultPageProps): Promise<Metadata> {
   const locale = getLocaleOrFallback(params.locale);
   const resultType = isResultType(params.resultType) ? params.resultType : defaultResultType;
-  const metadata = getResultShareMetadata(locale, resultType);
+  const metadata = getResultShareMetadata(locale, resultType, searchParams);
 
   return {
     title: metadata.title,
