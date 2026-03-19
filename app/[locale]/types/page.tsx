@@ -31,7 +31,7 @@ export default function AllTypesPage({ params }: AllTypesPageProps) {
   const profiles = getLocalizedResultProfiles(locale);
 
   return (
-    <Layout locale={locale}>
+    <Layout locale={locale} activeNav="types">
       <section className="flex flex-1 flex-col gap-6 py-3 sm:gap-8 sm:py-8">
         <div className="glass-panel rounded-[2.25rem] bg-hero-glow px-6 py-8 sm:px-8 sm:py-10">
           <h1 className="text-balance font-serif text-4xl font-semibold leading-[1.06] text-ink sm:text-5xl">

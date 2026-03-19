@@ -9,10 +9,12 @@ import { LanguageSwitcher } from './LanguageSwitcher';
 interface LayoutProps {
   children: ReactNode;
   locale: Locale;
+  activeNav?: 'types';
 }
 
-export function Layout({ children, locale }: LayoutProps) {
+export function Layout({ children, locale, activeNav }: LayoutProps) {
   const messages = uiMessages[locale];
+  const isTypesActive = activeNav === 'types';
 
   return (
     <div className="relative min-h-screen overflow-hidden">
@@ -26,7 +28,14 @@ export function Layout({ children, locale }: LayoutProps) {
             <Link href={`/${locale}`} className="brand-chip px-3.5 py-2 text-xs font-medium tracking-[0.24em] sm:text-sm">
               F와 T 사이
             </Link>
-            <Link href={`/${locale}/types`} className="rounded-full border border-white/70 bg-white/68 px-3.5 py-2 text-xs font-medium tracking-[0.08em] text-plum/80 shadow-soft transition hover:bg-white sm:text-sm">
+            <Link
+              href={`/${locale}/types`}
+              className={`inline-flex items-center rounded-full px-3.5 py-2 text-xs font-medium tracking-[0.08em] shadow-soft transition sm:text-sm ${
+                isTypesActive
+                  ? 'border border-plum/16 bg-plum/8 text-plum'
+                  : 'border border-white/70 bg-white/68 text-plum/80 hover:bg-white'
+              }`}
+            >
               {messages.header.typesTab}
             </Link>
             <p className="hidden text-sm text-plum/60 lg:block">{messages.header.tagline}</p>

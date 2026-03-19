@@ -17,29 +17,33 @@ export function ResultCatalogCard({ locale, profile, viewLabel }: ResultCatalogC
   return (
     <Link
       href={getResultHref(locale, profile.type)}
-      className="interactive-card group block rounded-[1.8rem] sm:rounded-[2rem]"
+      className="interactive-card group block h-full rounded-[1.8rem] sm:rounded-[2rem]"
     >
-      <article className="glass-panel rounded-[1.8rem] border border-white/70 bg-white/84 p-3.5 shadow-soft transition duration-300 group-hover:border-plum/18 group-hover:bg-white group-hover:shadow-float sm:rounded-[2rem] sm:p-5">
+      <article className="glass-panel flex h-full flex-col rounded-[1.8rem] border border-white/70 bg-white/84 p-3.5 shadow-soft transition duration-300 group-hover:border-plum/18 group-hover:bg-white group-hover:shadow-float sm:rounded-[2rem] sm:p-5">
         <ResultImageCard image={profile.image} title={profile.title} subtitle={profile.subtitle} />
 
-        <div className="mt-3.5 sm:mt-4">
-          <h2 className="text-[1.55rem] font-semibold leading-tight text-ink sm:text-2xl">{profile.title}</h2>
-          <p className="mt-1.5 line-clamp-2 text-sm leading-6 text-plum sm:mt-2 sm:line-clamp-1 sm:leading-7">{profile.subtitle}</p>
+        <div className="mt-3.5 min-h-[4.9rem] sm:mt-4 sm:min-h-[5.35rem]">
+          <h2 className="line-clamp-2 max-w-[14ch] text-[1.35rem] font-semibold leading-tight text-ink sm:text-[1.55rem]">
+            {profile.title}
+          </h2>
+          <p className="mt-1.5 line-clamp-1 text-sm leading-6 text-plum/88">{profile.subtitle}</p>
         </div>
 
-        <div className="mt-3.5 flex flex-wrap gap-2 sm:mt-4">
+        <div className="mt-3.5 flex min-h-[2.4rem] flex-wrap gap-2 sm:mt-4">
           {profile.strengths.slice(0, 3).map((strength) => (
-            <span key={strength} className="rounded-full bg-plum/7 px-3 py-1 text-xs font-medium text-plum/78">
+            <span key={strength} className="rounded-full bg-plum/7 px-3 py-1 text-[0.72rem] font-medium text-plum/78">
               {strength}
             </span>
           ))}
         </div>
 
-        <p className="mt-3.5 line-clamp-4 text-sm leading-6 text-ink/68 sm:mt-4 sm:line-clamp-3 sm:leading-7">{profile.quickSummary}</p>
+        <p className="mt-3 line-clamp-2 min-h-[3rem] text-sm leading-6 text-ink/66 sm:mt-3.5">{profile.quickSummary}</p>
 
-        <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-plum/12 bg-white px-4 py-2 text-sm font-medium text-plum transition duration-300 group-hover:border-plum/24 group-hover:bg-plum group-hover:text-white sm:mt-5">
-          {viewLabel}
-          <ArrowRight className="h-4 w-4" />
+        <div className="mt-auto pt-4 sm:pt-5">
+          <div className="inline-flex items-center gap-2 rounded-full border border-plum/12 bg-white px-4 py-2 text-sm font-medium text-plum transition duration-300 group-hover:border-plum/24 group-hover:bg-plum group-hover:text-white">
+            {viewLabel}
+            <ArrowRight className="h-4 w-4" />
+          </div>
         </div>
       </article>
     </Link>
