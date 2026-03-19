@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Check, Copy, Link2, Share2 } from 'lucide-react';
 
 import { Locale } from '@/lib/i18n/config';
@@ -29,13 +29,13 @@ export function ResultShareCard({ locale, resultType, title, subtitle, messages 
   const [shareSupported, setShareSupported] = useState(false);
   const [feedback, setFeedback] = useState<{ tone: 'success' | 'error'; message: string } | null>(null);
 
-  const shareUrl = useMemo(() => {
+  const getShareUrl = () => {
     if (typeof window === 'undefined') {
       return getResultHref(locale, resultType);
     }
 
     return new URL(getResultHref(locale, resultType), window.location.origin).toString();
-  }, [locale, resultType]);
+  };
 
   useEffect(() => {
     setShareSupported(typeof navigator !== 'undefined' && typeof navigator.share === 'function');
@@ -57,10 +57,10 @@ export function ResultShareCard({ locale, resultType, title, subtitle, messages 
   const copyToClipboard = async () => {
     try {
       if (navigator.clipboard?.writeText) {
-        await navigator.clipboard.writeText(shareUrl);
+        await navigator.clipboard.writeText(getShareUrl());
       } else {
         const textArea = document.createElement('textarea');
-        textArea.value = shareUrl;
+        textArea.value = getShareUrl();
         textArea.style.position = 'fixed';
         textArea.style.opacity = '0';
         document.body.appendChild(textArea);
@@ -90,7 +90,7 @@ export function ResultShareCard({ locale, resultType, title, subtitle, messages 
       await navigator.share({
         title,
         text: subtitle,
-        url: shareUrl,
+        url: getShareUrl(),
       });
       showFeedback('success', messages.shared);
     } catch (error) {
@@ -125,29 +125,27 @@ export function ResultShareCard({ locale, resultType, title, subtitle, messages 
         ) : null}
       </div>
 
-      <div className="mt-4 rounded-[1.4rem] border border-plum/10 bg-gradient-to-r from-white to-plum/5 px-4 py-3 text-sm text-ink/62 shadow-sm">
-        <span className="block truncate">{shareUrl}</span>
-      </div>
-
-      <div className="mt-4 flex flex-col gap-3 sm:flex-row">
+      <div className="mt-5 flex items-center gap-3">
         {shareSupported ? (
           <button
             type="button"
             onClick={handleNativeShare}
-            className="inline-flex items-center justify-center gap-2 rounded-full bg-plum px-5 py-3 text-sm font-medium text-white transition duration-300 hover:-translate-y-0.5 hover:bg-plum/92"
+            aria-label={messages.share}
+            title={messages.share}
+            className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-plum text-white shadow-soft transition duration-300 hover:-translate-y-0.5 hover:bg-plum/92"
           >
-            <Share2 className="h-4 w-4" />
-            {messages.share}
+            <Share2 className="h-5 w-5" />
           </button>
         ) : null}
 
         <button
           type="button"
           onClick={copyToClipboard}
-          className="inline-flex items-center justify-center gap-2 rounded-full border border-plum/12 bg-white/82 px-5 py-3 text-sm font-medium text-plum transition duration-300 hover:-translate-y-0.5 hover:bg-white"
+          aria-label={messages.copy}
+          title={messages.copy}
+          className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-plum/12 bg-white/82 text-plum shadow-soft transition duration-300 hover:-translate-y-0.5 hover:bg-white"
         >
-          <Copy className="h-4 w-4" />
-          {messages.copy}
+          <Copy className="h-5 w-5" />
         </button>
       </div>
     </div>
