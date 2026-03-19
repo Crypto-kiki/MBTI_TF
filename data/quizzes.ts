@@ -1,4 +1,5 @@
 import { fQuestions } from '@/data/f-questions';
+import { questionTranslations } from '@/data/i18n/question-translations';
 import { tQuestions } from '@/data/t-questions';
 import { Locale } from '@/lib/i18n/config';
 import { Question, QuizMode } from '@/types/quiz';
@@ -25,9 +26,19 @@ const localizedContexts: Record<Locale, Record<QuizMode, string>> = {
 export function getLocalizedQuestions(locale: Locale, mode: QuizMode): Question[] {
   const baseQuestions = mode === 'f' ? fQuestions : tQuestions;
   const localizedContext = localizedContexts[locale][mode];
+  const translatedQuestions = questionTranslations[locale] ?? {};
 
-  return baseQuestions.map((question) => ({
-    ...question,
-    context: locale === 'ko' ? question.context : localizedContext,
-  }));
+  return baseQuestions.map((question) => {
+    const translatedQuestion = translatedQuestions[question.id];
+
+    return {
+      ...question,
+      prompt: translatedQuestion?.prompt ?? question.prompt,
+      context: locale === 'ko' ? question.context : localizedContext,
+      choices: question.choices.map((choice) => ({
+        ...choice,
+        text: translatedQuestion?.choices[choice.id] ?? choice.text,
+      })),
+    };
+  });
 }
