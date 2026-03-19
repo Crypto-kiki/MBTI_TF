@@ -1,4 +1,5 @@
 import { localeLabels, type Locale } from '@/lib/i18n/config';
+import { translatedTagLabels } from '@/data/i18n/tag-labels';
 
 export const uiMessages: Record<
   Locale,
@@ -150,13 +151,6 @@ export const uiMessages: Record<
     },
     localeSwitcher: { label: 'Language' },
   },
-};
-
-export const translatedTagLabels: Record<Locale, Record<string, string>> = {
-  ko: {},
-  ja: { 공감: '共感', 배려: '配慮', 해석: '解釈', 맥락: '文脈', 분위기: '雰囲気', 관계: '関係', 구조: '構造', 분석: '分析', 기준: '基準', 판단: '判断', 정리: '整理', 우선순위: '優先順位', 실행: '実行', 균형: 'バランス', 신중함: '慎重さ', 경청: '傾聴', 이해: '理解' },
-  'zh-TW': { 공감: '共感', 배려: '體貼', 해석: '解讀', 맥락: '脈絡', 분위기: '氛圍', 관계: '關係', 구조: '結構', 분석: '分析', 기준: '標準', 판단: '判斷', 정리: '整理', 우선순위: '優先順序', 실행: '執行', 균형: '平衡', 신중함: '審慎', 경청: '傾聽', 이해: '理解' },
-  en: { 공감: 'empathy', 배려: 'care', 해석: 'reading', 맥락: 'context', 분위기: 'mood', 관계: 'relationship', 구조: 'structure', 분석: 'analysis', 기준: 'criteria', 판단: 'judgment', 정리: 'clarity', 우선순위: 'priority', 실행: 'action', 균형: 'balance', 신중함: 'carefulness', 경청: 'listening', 이해: 'understanding' },
 };
 
 export function getTagLabel(locale: Locale, tag: string) {
