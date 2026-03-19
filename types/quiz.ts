@@ -34,7 +34,7 @@ export interface ModeConfig {
   subtitle: string;
   description: string;
   accentClass: string;
-  route: `/${Locale}/quiz/${QuizMode}`;
+  route: string;
 }
 
 export interface Choice {

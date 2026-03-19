@@ -1,5 +1,5 @@
 import { redirect } from 'next/navigation';
 
 export default function LegacyResultRedirect() {
-  redirect('/ko/result/f_empathy');
+  redirect('/ko/series/core/result/f_empathy');
 }

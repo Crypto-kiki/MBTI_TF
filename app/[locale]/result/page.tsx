@@ -28,7 +28,7 @@ export default function LegacyLocalizedResultPage({ params, searchParams }: Lega
   const locale: Locale = isLocale(params.locale) ? params.locale : defaultLocale;
 
   if (!hasQuizState(searchParams)) {
-    redirect(getResultHref(locale, defaultResultType));
+    redirect(getResultHref(locale, defaultResultType, 'core'));
   }
 
   const totals: QuizTotals = {
@@ -47,5 +47,5 @@ export default function LegacyLocalizedResultPage({ params, searchParams }: Lega
     tags: searchParams?.tags ?? '',
   });
 
-  redirect(`${getResultHref(locale, result.profile.type)}?${nextSearch.toString()}`);
+  redirect(`${getResultHref(locale, result.profile.type, 'core')}?${nextSearch.toString()}`);
 }

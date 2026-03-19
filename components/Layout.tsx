@@ -1,8 +1,12 @@
+import type { Route } from 'next';
 import Link from 'next/link';
 import { ReactNode } from 'react';
 
 import { uiMessages } from '@/data/i18n/messages';
+import { getSeriesDefinition } from '@/data/series';
 import { Locale } from '@/lib/i18n/config';
+import { getSeriesHomeHref, getSeriesTypesHref } from '@/lib/series';
+import { SeriesKey } from '@/types/series';
 
 import { LanguageSwitcher } from './LanguageSwitcher';
 
@@ -10,11 +14,13 @@ interface LayoutProps {
   children: ReactNode;
   locale: Locale;
   activeNav?: 'types';
+  series?: SeriesKey;
 }
 
-export function Layout({ children, locale, activeNav }: LayoutProps) {
+export function Layout({ children, locale, activeNav, series }: LayoutProps) {
   const messages = uiMessages[locale];
   const isTypesActive = activeNav === 'types';
+  const seriesDefinition = series ? getSeriesDefinition(locale, series) : null;
 
   return (
     <div className="relative min-h-screen overflow-hidden">
@@ -25,11 +31,11 @@ export function Layout({ children, locale, activeNav }: LayoutProps) {
       <main className="mx-auto flex min-h-screen w-full max-w-6xl flex-col px-5 py-5 sm:px-8 sm:py-7 lg:px-12">
         <header className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center gap-3">
-            <Link href={`/${locale}`} className="brand-chip px-3.5 py-2 text-xs font-medium tracking-[0.24em] sm:text-sm">
+            <Link href={(series ? getSeriesHomeHref(locale, series) : `/${locale}`) as Route} className="brand-chip px-3.5 py-2 text-xs font-medium tracking-[0.24em] sm:text-sm">
               F와 T 사이
             </Link>
             <Link
-              href={`/${locale}/types`}
+              href={(series ? getSeriesTypesHref(locale, series) : getSeriesTypesHref(locale, 'core')) as Route}
               className={`inline-flex items-center rounded-full px-3.5 py-2 text-xs font-medium tracking-[0.08em] shadow-soft transition sm:text-sm ${
                 isTypesActive
                   ? 'border border-plum/16 bg-plum/8 text-plum'
@@ -38,7 +44,12 @@ export function Layout({ children, locale, activeNav }: LayoutProps) {
             >
               {messages.header.typesTab}
             </Link>
-            <p className="hidden text-sm text-plum/60 lg:block">{messages.header.tagline}</p>
+            {seriesDefinition ? (
+              <span className="hidden rounded-full bg-white/76 px-3 py-1 text-xs font-medium text-plum/68 shadow-sm lg:inline-flex">
+                {seriesDefinition.content.label}
+              </span>
+            ) : null}
+            <p className="hidden text-sm text-plum/60 xl:block">{messages.header.tagline}</p>
           </div>
           <LanguageSwitcher locale={locale} label={messages.localeSwitcher.label} />
         </header>

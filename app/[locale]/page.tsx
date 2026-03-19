@@ -1,5 +1,5 @@
-import { HeroSection } from '@/components/HeroSection';
 import { Layout } from '@/components/Layout';
+import { SeriesHubSection } from '@/components/SeriesHubSection';
 import { defaultLocale, isLocale, type Locale } from '@/lib/i18n/config';
 
 interface LocalizedHomePageProps {
@@ -11,7 +11,7 @@ export default function LocalizedHomePage({ params }: LocalizedHomePageProps) {
 
   return (
     <Layout locale={locale}>
-      <HeroSection locale={locale} />
+      <SeriesHubSection locale={locale} />
     </Layout>
   );
 }

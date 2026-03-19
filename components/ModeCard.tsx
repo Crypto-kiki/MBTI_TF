@@ -1,3 +1,4 @@
+import type { Route } from 'next';
 import Link from 'next/link';
 import { ArrowRight, HeartHandshake, ScanSearch } from 'lucide-react';
 
@@ -19,7 +20,7 @@ export function ModeCard({ config, locale }: ModeCardProps) {
 
   return (
     <Link
-      href={config.route}
+      href={config.route as Route}
       className={`group relative overflow-hidden rounded-[2rem] border border-white/75 bg-gradient-to-br ${config.accentClass} p-6 shadow-glow transition duration-300 hover:-translate-y-1 hover:shadow-float sm:p-7`}
     >
       <div className="absolute right-5 top-5 rounded-full border border-white/70 bg-white/65 p-3 text-plum/80 shadow-soft">

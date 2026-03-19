@@ -1,5 +1,6 @@
 'use client';
 
+import type { Route } from 'next';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Languages } from 'lucide-react';
@@ -29,7 +30,7 @@ export function LanguageSwitcher({ locale, label }: LanguageSwitcherProps) {
           return (
             <Link
               key={nextLocale}
-              href={href}
+              href={href as Route}
               className={`rounded-full px-2.5 py-1.5 text-xs font-medium transition sm:px-3 ${
                 isActive ? 'bg-plum text-white shadow-sm' : 'text-plum/75 hover:bg-plum/8'
               }`}

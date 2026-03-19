@@ -1,5 +1,5 @@
 import { redirect } from 'next/navigation';
 
 export default function LegacyFQuizRedirect() {
-  redirect('/ko/quiz/f');
+  redirect('/ko/series/core/quiz/f');
 }

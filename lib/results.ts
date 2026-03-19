@@ -1,4 +1,5 @@
 import { getResultProfile } from '@/data/results';
+import { defaultSeries, getSeriesResultHref } from '@/lib/series';
 import { Choice, Question, QuizAnswer, QuizMode, QuizTotals, ResolvedQuizResult, ResultType } from '@/types/quiz';
 import type { Locale } from '@/lib/i18n/config';
 
@@ -63,8 +64,8 @@ export function normalizeQuizTotals(totals: QuizTotals): QuizTotals {
   };
 }
 
-export function getResultHref(locale: Locale, resultType: ResultType) {
-  return `/${locale}/result/${resultType}`;
+export function getResultHref(locale: Locale, resultType: ResultType, series = defaultSeries) {
+  return getSeriesResultHref(locale, series, resultType);
 }
 
 export function getAxisFromResultType(resultType: ResultType): 'f' | 't' | 'balanced' {

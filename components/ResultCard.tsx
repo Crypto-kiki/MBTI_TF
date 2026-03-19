@@ -1,15 +1,19 @@
+import type { Route } from 'next';
 import Link from 'next/link';
 import { ArrowRight, Fingerprint, Lightbulb, Sparkles } from 'lucide-react';
 
 import { getTagLabel, uiMessages } from '@/data/i18n/messages';
 import { Locale } from '@/lib/i18n/config';
 import { getAxisFromResultType } from '@/lib/results';
+import { getSeriesQuizModeHref, getSeriesResultHref } from '@/lib/series';
 import { QuizMode, ResolvedQuizResult } from '@/types/quiz';
+import { SeriesKey } from '@/types/series';
 import { ResultImageCard } from '@/components/ResultImageCard';
 import { ResultShareCard } from '@/components/ResultShareCard';
 
 interface ResultCardProps {
   locale: Locale;
+  series: SeriesKey;
   mode: QuizMode;
   modeLabel: string;
   result: ResolvedQuizResult;
@@ -373,10 +377,10 @@ function getGuidanceMessage(locale: Locale, axis: 'f' | 't' | 'balanced') {
   };
 }
 
-export function ResultCard({ locale, mode, modeLabel, result }: ResultCardProps) {
-  const otherRoute = mode === 'f' ? `/${locale}/quiz/t` : `/${locale}/quiz/f`;
+export function ResultCard({ locale, series, mode, modeLabel, result }: ResultCardProps) {
+  const otherRoute = getSeriesQuizModeHref(locale, series, mode === 'f' ? 't' : 'f');
   const messages = uiMessages[locale].result;
-  const compatibilityHref = `/${locale}/result/${result.profile.compatibility.type}`;
+  const compatibilityHref = getSeriesResultHref(locale, series, result.profile.compatibility.type);
   const compatibilityAxis = getAxisFromResultType(result.profile.compatibility.type);
   const compatibilityLead = getCompatibilityLead(locale, compatibilityAxis);
   const compatibilityTags = getCompatibilityTags(locale, compatibilityAxis);
@@ -478,6 +482,7 @@ export function ResultCard({ locale, mode, modeLabel, result }: ResultCardProps)
             <div className="relative z-10 mx-2 -mt-4 sm:mx-5 sm:-mt-6 lg:mx-6 xl:mx-7">
               <ResultShareCard
                 locale={locale}
+                series={series}
                 resultType={result.profile.type}
                 image={result.profile.image}
                 title={result.profile.title}
@@ -567,7 +572,7 @@ export function ResultCard({ locale, mode, modeLabel, result }: ResultCardProps)
               </p>
               <p className="mt-2 text-sm leading-6 text-ink/70 sm:leading-7">{result.profile.compatibility.reason}</p>
               <Link
-                href={compatibilityHref}
+                href={compatibilityHref as Route}
                 className="interactive-card mt-5 inline-flex items-center gap-2 rounded-full border border-plum/14 bg-white px-4 py-2.5 text-sm font-semibold text-plum hover:border-plum/24 hover:bg-plum hover:text-white"
               >
                 {compatibilityCta}
@@ -593,14 +598,14 @@ export function ResultCard({ locale, mode, modeLabel, result }: ResultCardProps)
 
       <div className="flex flex-col gap-3 pt-1 sm:flex-row sm:pt-0">
         <Link
-          href={otherRoute}
+          href={otherRoute as Route}
           className="interactive-card inline-flex min-h-[3.35rem] items-center justify-center gap-2 rounded-full bg-gradient-to-r from-plum to-[#8d7488] px-6 py-3.5 text-sm font-semibold text-white shadow-soft hover:shadow-float sm:flex-1 sm:min-h-[3.5rem] sm:flex-none"
         >
           {messages.tryOther}
           <ArrowRight className="h-4 w-4" />
         </Link>
         <Link
-          href={`/${locale}`}
+          href={`/${locale}` as Route}
           className="interactive-card inline-flex min-h-[3.35rem] items-center justify-center rounded-full border border-plum/12 bg-white/84 px-5 py-3 text-sm font-medium text-plum hover:bg-white sm:min-h-[3.5rem]"
         >
           {messages.backHome}

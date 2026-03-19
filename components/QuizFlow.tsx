@@ -1,22 +1,25 @@
 'use client';
 
+import type { Route } from 'next';
 import { useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 import { calculateQuizTotals, getResultHref, resolveQuizResult, serializeTagCounts } from '@/lib/results';
 import { Locale } from '@/lib/i18n/config';
+import { SeriesKey } from '@/types/series';
 import { Choice, Question, QuizAnswer, QuizMode } from '@/types/quiz';
 
 import { QuizCard } from './QuizCard';
 
 interface QuizFlowProps {
   locale: Locale;
+  series: SeriesKey;
   mode: QuizMode;
   modeLabel: string;
   questions: Question[];
 }
 
-export function QuizFlow({ locale, mode, modeLabel, questions }: QuizFlowProps) {
+export function QuizFlow({ locale, series, mode, modeLabel, questions }: QuizFlowProps) {
   const router = useRouter();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answers, setAnswers] = useState<QuizAnswer[]>([]);
@@ -51,7 +54,7 @@ export function QuizFlow({ locale, mode, modeLabel, questions }: QuizFlowProps) 
         answered: String(totals.answeredCount),
         tags: serializeTagCounts(totals.tagCounts),
       });
-      router.push(`${getResultHref(locale, resolvedResult.profile.type)}?${searchParams.toString()}`);
+      router.push(`${getResultHref(locale, resolvedResult.profile.type, series)}?${searchParams.toString()}` as Route);
       return;
     }
 

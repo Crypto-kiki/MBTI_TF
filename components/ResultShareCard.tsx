@@ -7,6 +7,7 @@ import { Check, Copy, Link2, Share2 } from 'lucide-react';
 import { Locale } from '@/lib/i18n/config';
 import { getResultHref } from '@/lib/results';
 import { ResultImage, ResultType } from '@/types/quiz';
+import { SeriesKey } from '@/types/series';
 
 interface ResultShareMessages {
   badge: string;
@@ -25,6 +26,7 @@ interface ResultShareMessages {
 
 interface ResultShareCardProps {
   locale: Locale;
+  series: SeriesKey;
   resultType: ResultType;
   image: ResultImage;
   title: string;
@@ -44,6 +46,7 @@ function buildShareText(resultType: ResultType, title: string, templates: string
 
 export function ResultShareCard({
   locale,
+  series,
   resultType,
   image,
   title,
@@ -61,7 +64,7 @@ export function ResultShareCard({
       return window.location.href;
     }
 
-    return getResultHref(locale, resultType);
+    return getResultHref(locale, resultType, series);
   };
 
   useEffect(() => {

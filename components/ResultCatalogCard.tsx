@@ -1,22 +1,25 @@
+import type { Route } from 'next';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 
 import { Locale } from '@/lib/i18n/config';
 import { getResultHref } from '@/lib/results';
+import { SeriesKey } from '@/types/series';
 import { ResultProfile } from '@/types/quiz';
 
 import { ResultImageCard } from './ResultImageCard';
 
 interface ResultCatalogCardProps {
   locale: Locale;
+  series: SeriesKey;
   profile: ResultProfile;
   viewLabel: string;
 }
 
-export function ResultCatalogCard({ locale, profile, viewLabel }: ResultCatalogCardProps) {
+export function ResultCatalogCard({ locale, series, profile, viewLabel }: ResultCatalogCardProps) {
   return (
     <Link
-      href={getResultHref(locale, profile.type)}
+      href={getResultHref(locale, profile.type, series) as Route}
       className="interactive-card group block h-full rounded-[1.8rem] sm:rounded-[2rem]"
     >
       <article className="glass-panel flex h-full flex-col rounded-[1.8rem] border border-white/70 bg-white/84 p-3.5 shadow-soft transition duration-300 group-hover:border-plum/18 group-hover:bg-white group-hover:shadow-float sm:rounded-[2rem] sm:p-5">

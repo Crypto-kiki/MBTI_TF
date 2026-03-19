@@ -1,4 +1,5 @@
 import { getResultProfile } from '@/data/results';
+import { defaultSeries } from '@/lib/series';
 import type { Locale } from '@/lib/i18n/config';
 import type { ResultType } from '@/types/quiz';
 
@@ -34,7 +35,7 @@ interface ResultShareSearchParams {
   tags?: string;
 }
 
-function buildShareImagePath(locale: Locale, resultType: ResultType, searchParams?: ResultShareSearchParams) {
+function buildShareImagePath(locale: Locale, resultType: ResultType, searchParams?: ResultShareSearchParams, series = defaultSeries) {
   const query = new URLSearchParams();
 
   if (searchParams?.mode) query.set('mode', searchParams.mode);
@@ -43,17 +44,17 @@ function buildShareImagePath(locale: Locale, resultType: ResultType, searchParam
   if (searchParams?.answered) query.set('answered', searchParams.answered);
   if (searchParams?.tags) query.set('tags', searchParams.tags);
 
-  const basePath = `/${locale}/result/${resultType}/share-image`;
+  const basePath = `/${locale}/series/${series}/result/${resultType}/share-image`;
   const search = query.toString();
   return search ? `${basePath}?${search}` : basePath;
 }
 
-export function getResultShareMetadata(locale: Locale, resultType: ResultType, searchParams?: ResultShareSearchParams) {
+export function getResultShareMetadata(locale: Locale, resultType: ResultType, searchParams?: ResultShareSearchParams, series = defaultSeries) {
   const profile = getResultProfile(locale, resultType);
   const palette = ogPalettes[resultType];
   const subtitle = clampText(profile.subtitle, 48);
   const description = clampText(profile.description, 110);
-  const imagePath = buildShareImagePath(locale, resultType, searchParams);
+  const imagePath = buildShareImagePath(locale, resultType, searchParams, series);
 
   return {
     serviceName: OG_SERVICE_NAME,

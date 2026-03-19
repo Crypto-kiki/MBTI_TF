@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react';
 
 import { Locale } from '@/lib/i18n/config';
 import { getAxisFromResultType } from '@/lib/results';
+import { SeriesKey } from '@/types/series';
 import { ResultProfile, ResultType } from '@/types/quiz';
 
 import { ResultCatalogCard } from './ResultCatalogCard';
@@ -12,6 +13,7 @@ type CatalogFilter = 'all' | 'f' | 't' | 'balanced';
 
 interface ResultCatalogExplorerProps {
   locale: Locale;
+  series: SeriesKey;
   resultTypes: readonly ResultType[];
   profiles: Record<ResultType, ResultProfile>;
   messages: {
@@ -43,7 +45,7 @@ function getCountLabel(locale: Locale, count: number) {
   return `${count} types`;
 }
 
-export function ResultCatalogExplorer({ locale, resultTypes, profiles, messages }: ResultCatalogExplorerProps) {
+export function ResultCatalogExplorer({ locale, series, resultTypes, profiles, messages }: ResultCatalogExplorerProps) {
   const [activeFilter, setActiveFilter] = useState<CatalogFilter>('all');
 
   const groupedTypes = useMemo(
@@ -105,7 +107,7 @@ export function ResultCatalogExplorer({ locale, resultTypes, profiles, messages 
 
             <div className="grid gap-4 sm:gap-5 md:grid-cols-2 xl:grid-cols-3">
               {groupedTypes[section].map((type) => (
-                <ResultCatalogCard key={type} locale={locale} profile={profiles[type]} viewLabel={messages.viewLabel} />
+                <ResultCatalogCard key={type} locale={locale} series={series} profile={profiles[type]} viewLabel={messages.viewLabel} />
               ))}
             </div>
           </section>
