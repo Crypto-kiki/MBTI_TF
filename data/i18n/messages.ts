@@ -5,7 +5,7 @@ export const uiMessages: Record<
   Locale,
   {
     metadata: { title: string; description: string };
-    header: { tagline: string };
+    header: { tagline: string; typesTab: string };
     hero: {
       eyebrow: string;
       title: string;
@@ -60,12 +60,13 @@ export const uiMessages: Record<
         shared: string;
       };
     };
+    catalog: { title: string; description: string; viewLabel: string };
     localeSwitcher: { label: string };
   }
 > = {
   ko: {
     metadata: { title: 'F와 T 사이', description: '감정과 판단 사이, 당신의 해석 습관을 연습해보세요.' },
-    header: { tagline: '감정과 판단 사이에서, 나의 해석 습관을 살펴보는 테스트' },
+    header: { tagline: '감정과 판단 사이에서, 나의 해석 습관을 살펴보는 테스트', typesTab: '전체 유형' },
     hero: {
       eyebrow: '감정과 판단 사이를 가볍게 점검하는 해석 테스트',
       title: 'F와 T 사이',
@@ -89,11 +90,12 @@ export const uiMessages: Record<
     result: {
       axis: { f: 'F 성향', t: 'T 성향', balanced: '균형형' }, summaryCard: '한눈에 보는 결과', summaryHint: '답변 점수와 자주 고른 단서를 바탕으로 지금의 해석 성향을 정리했어요.', totalF: 'F 점수', totalT: 'T 점수', answered: '응답 수', fHint: '감정과 관계 쪽에 더 가까운 흐름', tHint: '판단과 구조 쪽에 더 가까운 흐름', answeredHint: '실제로 답한 문항 수', strengths: '잘 드러난 강점', tips: '이렇게 활용해보세요', cta: '한 줄 제안', backHome: '처음으로', tryOther: '다른 모드 해보기', share: { title: '결과 공유', hint: '현재 결과 링크를 그대로 공유할 수 있어요.', share: '공유하기', copy: '링크 복사', copied: '링크가 복사되었어요.', failed: '링크를 복사하지 못했어요.', shared: '결과 링크를 공유했어요.' },
     },
+    catalog: { title: '전체 유형 보기', description: '각 유형의 분위기와 특징, 강점과 활용 포인트를 한 번에 살펴보세요.', viewLabel: '결과 페이지 보기' },
     localeSwitcher: { label: '언어' },
   },
   ja: {
     metadata: { title: 'FとTのあいだ', description: '感情と判断のあいだで、あなたの読み取りの癖をやさしく練習しましょう。' },
-    header: { tagline: '感情と判断のあいだで、自分の読み取り方を見つめるテスト' },
+    header: { tagline: '感情と判断のあいだで、自分の読み取り方を見つめるテスト', typesTab: '全タイプ' },
     hero: {
       eyebrow: '感情と判断のあいだを軽やかに見つめる解釈テスト',
       title: 'FとTのあいだ',
@@ -112,11 +114,12 @@ export const uiMessages: Record<
     result: {
       axis: { f: 'F寄り', t: 'T寄り', balanced: 'バランス型' }, summaryCard: '結果の見どころ', summaryHint: '回答の点数とよく選んだ傾向から、今の読み取りスタイルをまとめました。', totalF: 'Fスコア', totalT: 'Tスコア', answered: '回答数', fHint: '感情や関係に寄った流れ', tHint: '判断や構造に寄った流れ', answeredHint: '実際に答えた設問数', strengths: 'よく出ている強み', tips: '活かし方のヒント', cta: 'ひとことメモ', backHome: 'はじめに戻る', tryOther: '別のモードを試す', share: { title: '結果をシェア', hint: '今の結果リンクをそのまま共有できます。', share: 'シェアする', copy: 'リンクをコピー', copied: 'リンクをコピーしました。', failed: 'リンクをコピーできませんでした。', shared: '結果リンクを共有しました。' },
     },
+    catalog: { title: '全タイプを見る', description: '各タイプの空気感や特徴、強みや活かし方をまとめて見られます。', viewLabel: '結果ページを見る' },
     localeSwitcher: { label: '言語' },
   },
   'zh-TW': {
     metadata: { title: 'F與T之間', description: '在感受與判斷之間，練習你解讀情境的習慣。' },
-    header: { tagline: '在感受與判斷之間，看見自己的解讀方式' },
+    header: { tagline: '在感受與判斷之間，看見自己的解讀方式', typesTab: '全部類型' },
     hero: {
       eyebrow: '輕鬆查看自己解讀習慣的小測驗',
       title: 'F與T之間',
@@ -135,11 +138,12 @@ export const uiMessages: Record<
     result: {
       axis: { f: 'F 傾向', t: 'T 傾向', balanced: '平衡型' }, summaryCard: '結果重點', summaryHint: '根據你的作答分數和常出現的線索，整理出目前的解讀風格。', totalF: 'F 分數', totalT: 'T 分數', answered: '作答數', fHint: '更靠近感受與關係的一側', tHint: '更靠近判斷與結構的一側', answeredHint: '實際完成的題數', strengths: '目前的優勢', tips: '可試著這樣做', cta: '一句提醒', backHome: '回到最初', tryOther: '試試其他模式', share: { title: '分享結果', hint: '可以直接分享目前這份結果連結。', share: '立即分享', copy: '複製連結', copied: '已複製結果連結。', failed: '無法複製連結。', shared: '已分享結果連結。' },
     },
+    catalog: { title: '查看全部類型', description: '一次瀏覽所有類型的性格氣質、優勢與使用方式。', viewLabel: '查看結果頁' },
     localeSwitcher: { label: '語言' },
   },
   en: {
     metadata: { title: 'Between F and T', description: 'Practice your interpretation habits between feeling and judgment.' },
-    header: { tagline: 'A short test for noticing how you read situations' },
+    header: { tagline: 'A short test for noticing how you read situations', typesTab: 'All types' },
     hero: {
       eyebrow: 'A short interpretation test between feeling and judgment',
       title: 'Between F and T',
@@ -158,6 +162,7 @@ export const uiMessages: Record<
     result: {
       axis: { f: 'F-leaning', t: 'T-leaning', balanced: 'Balanced' }, summaryCard: 'What stands out', summaryHint: 'We summarized your current reading style from your answers and repeated patterns.', totalF: 'F score', totalT: 'T score', answered: 'Answered', fHint: 'Closer to feeling and relationship cues', tHint: 'Closer to judgment and structure cues', answeredHint: 'Questions you actually completed', strengths: 'Strengths that stand out', tips: 'Ways to use it well', cta: 'One takeaway', backHome: 'Back to start', tryOther: 'Try the other mode', share: { title: 'Share this result', hint: 'You can share this exact result link as it is.', share: 'Share now', copy: 'Copy link', copied: 'Result link copied.', failed: 'Could not copy the link.', shared: 'Result link shared.' },
     },
+    catalog: { title: 'Browse all types', description: 'See every profile at a glance, including its tone, strengths, and how it tends to show up.', viewLabel: 'Open result page' },
     localeSwitcher: { label: 'Language' },
   },
 };

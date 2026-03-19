@@ -18,6 +18,25 @@ function createResultDefinition(type: ResultType, image: string, content: Record
   };
 }
 
+function enrichDescription(locale: Locale, content: ResultContent) {
+  const [firstStrength = '', secondStrength = ''] = content.strengths;
+  const [firstTip = ''] = content.tips;
+
+  if (locale === 'ko') {
+    return `${content.description} 특히 ${firstStrength}고, ${secondStrength} 같은 면에서 강점이 또렷하게 드러나요. ${firstTip} 같은 포인트를 의식하면 이 성향을 더 편안하고 선명하게 활용할 수 있습니다.`;
+  }
+
+  if (locale === 'ja') {
+    return `${content.description} とくに「${firstStrength}」「${secondStrength}」のような強みが出やすく、その傾向をより心地よく活かすには「${firstTip}」を意識するのが役立ちます。`;
+  }
+
+  if (locale === 'zh-TW') {
+    return `${content.description} 尤其在「${firstStrength}」和「${secondStrength}」這些面向上特別明顯；如果也記得「${firstTip}」，這種風格會更成熟、更好用。`;
+  }
+
+  return `${content.description} This tends to show up most clearly in strengths like “${firstStrength}” and “${secondStrength}.” It usually works best when you also remember to “${firstTip.toLowerCase()}.”`;
+}
+
 export const resultDefinitions: Record<ResultType, ResultDefinition> = {
   f_empathy: createResultDefinition('f_empathy', '/images/results/f-empathy.svg', {
     ko: {
@@ -543,6 +562,7 @@ export function getResultProfile(locale: Locale, type: ResultType): ResultProfil
     type,
     image: definition.image,
     ...content,
+    description: enrichDescription(locale, content),
   };
 }
 

@@ -26,6 +26,9 @@ export function Layout({ children, locale }: LayoutProps) {
             <Link href={`/${locale}`} className="brand-chip px-3.5 py-2 text-xs font-medium tracking-[0.24em] sm:text-sm">
               F와 T 사이
             </Link>
+            <Link href={`/${locale}/types`} className="rounded-full border border-white/70 bg-white/68 px-3.5 py-2 text-xs font-medium tracking-[0.08em] text-plum/80 shadow-soft transition hover:bg-white sm:text-sm">
+              {messages.header.typesTab}
+            </Link>
             <p className="hidden text-sm text-plum/60 lg:block">{messages.header.tagline}</p>
           </div>
           <LanguageSwitcher locale={locale} label={messages.localeSwitcher.label} />
