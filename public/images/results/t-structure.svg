@@ -1,0 +1,39 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="96" y1="72" x2="1104" y2="558" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#D5E1E0"/>
+      <stop offset="1" stop-color="#ADC1BF"/>
+    </linearGradient>
+    <radialGradient id="glowA" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(240 140) rotate(35) scale(280 220)">
+      <stop stop-color="#ffffff" stop-opacity="0.92"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glowB" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(980 480) rotate(-10) scale(320 240)">
+      <stop stop-color="#ffffff" stop-opacity="0.58"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="blur" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="24"/>
+    </filter>
+  </defs>
+  <rect width="1200" height="630" rx="52" fill="url(#bg)"/>
+  <g filter="url(#blur)">
+    <circle cx="220" cy="156" r="164" fill="url(#glowA)"/>
+    <circle cx="976" cy="470" r="196" fill="url(#glowB)"/>
+  </g>
+  <rect x="70" y="70" width="1060" height="490" rx="42" fill="rgba(255,255,255,0.28)" stroke="rgba(255,255,255,0.58)"/>
+  <rect x="116" y="112" width="152" height="40" rx="20" fill="rgba(255,255,255,0.74)"/>
+  <text x="150" y="138" fill="#587675" font-family="'Noto Sans KR', sans-serif" font-size="14" letter-spacing="0.28em">RESULT</text>
+  <text x="116" y="286" fill="#213534" font-family="'Cormorant Garamond', serif" font-size="72" font-weight="600">Pattern Smith</text>
+  <text x="116" y="338" fill="#4D6968" font-family="'Noto Sans KR', sans-serif" font-size="22">Blocks and blueprint lines locking chaos into form</text>
+
+  <rect x="800" y="162" width="300" height="266" rx="32" fill="rgba(255,255,255,0.42)"/>
+  <rect x="842" y="204" width="86" height="86" rx="18" fill="#EEF7F6"/>
+  <rect x="944" y="204" width="114" height="54" rx="18" fill="#D9E8E6"/>
+  <rect x="944" y="274" width="114" height="114" rx="22" fill="#F5FAF9"/>
+  <rect x="842" y="306" width="86" height="82" rx="18" fill="#C6D9D7"/>
+  <path d="M824 188H1076" stroke="rgba(88,118,117,0.28)" stroke-width="6" stroke-dasharray="10 10"/>
+  <path d="M824 408H1076" stroke="rgba(88,118,117,0.28)" stroke-width="6" stroke-dasharray="10 10"/>
+  <path d="M944 188V408" stroke="rgba(88,118,117,0.28)" stroke-width="6" stroke-dasharray="10 10"/>
+
+</svg>
