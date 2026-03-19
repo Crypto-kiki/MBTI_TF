@@ -24,52 +24,74 @@ export function ResultCard({ locale, mode, modeLabel, result }: ResultCardProps)
 
   return (
     <section className="mx-auto flex w-full max-w-6xl flex-col gap-6">
-      <ResultImageCard image={result.profile.image} title={result.profile.title} subtitle={result.profile.subtitle} />
-
-      <div className="glass-panel overflow-hidden rounded-[2.4rem] bg-hero-glow p-6 sm:p-8 lg:p-10">
-        <div className="grid gap-6 xl:grid-cols-[minmax(0,1.1fr)_minmax(19rem,0.9fr)] xl:items-start">
+      <div className="glass-panel overflow-hidden rounded-[2.6rem] bg-hero-glow p-5 sm:p-8 lg:p-10">
+        <div className="grid gap-8 xl:grid-cols-[minmax(0,1.08fr)_minmax(20rem,0.92fr)] xl:items-center">
           <div className="max-w-3xl">
-            <div className="brand-chip mb-4 px-3 py-1.5 text-xs tracking-[0.22em]">
-              <Sparkles className="h-3.5 w-3.5" />
-              {modeLabel}
-            </div>
             <div className="flex flex-wrap items-center gap-2.5">
+              <div className="brand-chip bg-white/92 px-3.5 py-1.5 text-[0.7rem] tracking-[0.24em] text-plum/88 shadow-soft">
+                <Sparkles className="h-3.5 w-3.5" />
+                {messages.finalBadge}
+              </div>
+              <span className="rounded-full border border-plum/10 bg-white/78 px-3 py-1 text-xs font-medium tracking-[0.16em] text-plum/72">
+                {modeLabel}
+              </span>
               <span className="rounded-full bg-plum/10 px-3 py-1 text-sm text-plum">{axisLabel}</span>
+            </div>
+
+            <h1 className="mt-6 text-balance text-[2.6rem] font-semibold leading-[0.95] text-ink sm:text-[3.35rem] lg:text-[4.05rem]">
+              {result.profile.title}
+            </h1>
+            <p className="mt-4 max-w-2xl text-xl font-medium leading-8 text-plum sm:text-[1.45rem] sm:leading-9">
+              {result.profile.subtitle}
+            </p>
+
+            <div className="mt-5 rounded-[1.75rem] border border-white/75 bg-white/76 px-5 py-4 shadow-soft">
+              <p className="text-base leading-8 text-ink sm:text-lg">{result.profile.quickSummary}</p>
+            </div>
+
+            <div className="mt-5 flex flex-wrap items-center gap-2.5">
               {result.dominantTags.map((tag) => (
-                <span key={tag} className="rounded-full bg-white/80 px-3 py-1 text-sm text-plum/78">
+                <span key={tag} className="rounded-full bg-white/84 px-3 py-1 text-sm text-plum/78 shadow-sm">
                   #{getTagLabel(locale, tag)}
                 </span>
               ))}
             </div>
-            <h1 className="mt-5 text-balance text-3xl font-semibold text-ink sm:text-[2.6rem]">{result.profile.title}</h1>
-            <p className="mt-3 text-lg text-plum">{result.profile.subtitle}</p>
-            <p className="mt-5 max-w-2xl text-sm leading-8 text-ink/70 sm:text-base">{result.profile.description}</p>
 
-            {hasAnsweredStats ? (
-              <div className="mt-6 grid gap-4 sm:grid-cols-2">
-                <div className="rounded-[1.7rem] bg-gradient-to-br from-plum to-[#7a6677] p-5 text-white shadow-soft">
-                  <p className="text-sm uppercase tracking-[0.24em] text-white/72">{messages.totalF}</p>
-                  <p className="mt-3 text-4xl font-semibold">{result.totals.totalFScore}</p>
-                  <p className="mt-2 text-sm text-white/72">{messages.fHint}</p>
+            <div className="mt-7 rounded-[2rem] bg-white/72 p-5 sm:p-6">
+              <p className="max-w-2xl text-sm leading-8 text-ink/72 sm:text-base">{result.profile.description}</p>
+
+              {hasAnsweredStats ? (
+                <div className="mt-6 grid gap-4 sm:grid-cols-2">
+                  <div className="rounded-[1.8rem] bg-gradient-to-br from-plum to-[#7a6677] p-5 text-white shadow-soft">
+                    <p className="text-sm uppercase tracking-[0.24em] text-white/72">{messages.totalF}</p>
+                    <p className="mt-3 text-4xl font-semibold">{result.totals.totalFScore}</p>
+                    <p className="mt-2 text-sm text-white/72">{messages.fHint}</p>
+                  </div>
+                  <div className="rounded-[1.8rem] bg-gradient-to-br from-[#2d344a] to-[#5c6b87] p-5 text-white shadow-soft">
+                    <p className="text-sm uppercase tracking-[0.24em] text-white/72">{messages.totalT}</p>
+                    <p className="mt-3 text-4xl font-semibold">{result.totals.totalTScore}</p>
+                    <p className="mt-2 text-sm text-white/72">{messages.tHint}</p>
+                  </div>
                 </div>
-                <div className="rounded-[1.7rem] bg-gradient-to-br from-[#2d344a] to-[#5c6b87] p-5 text-white shadow-soft">
-                  <p className="text-sm uppercase tracking-[0.24em] text-white/72">{messages.totalT}</p>
-                  <p className="mt-3 text-4xl font-semibold">{result.totals.totalTScore}</p>
-                  <p className="mt-2 text-sm text-white/72">{messages.tHint}</p>
-                </div>
-              </div>
-            ) : null}
+              ) : null}
+            </div>
           </div>
 
-          <div className="space-y-4 xl:pl-2">
-            <ResultShareCard
-              locale={locale}
-              resultType={result.profile.type}
-              title={result.profile.title}
-              subtitle={result.profile.subtitle}
-              messages={messages.share}
-            />
+          <div className="xl:pl-2">
+            <ResultImageCard image={result.profile.image} title={result.profile.title} subtitle={result.profile.subtitle} variant="hero" />
           </div>
+        </div>
+      </div>
+
+      <div className="flex justify-end">
+        <div className="w-full max-w-xl">
+          <ResultShareCard
+            locale={locale}
+            resultType={result.profile.type}
+            title={result.profile.title}
+            subtitle={result.profile.subtitle}
+            messages={messages.share}
+          />
         </div>
       </div>
 

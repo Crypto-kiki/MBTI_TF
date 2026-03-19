@@ -10,10 +10,12 @@ interface ResultImageCardProps {
   image: ResultImage;
   title: string;
   subtitle: string;
+  variant?: 'default' | 'hero';
 }
 
-export function ResultImageCard({ image, title, subtitle }: ResultImageCardProps) {
+export function ResultImageCard({ image, title, subtitle, variant = 'default' }: ResultImageCardProps) {
   const [hasError, setHasError] = useState(false);
+  const isHero = variant === 'hero';
 
   const fallbackInitials = useMemo(
     () =>
@@ -27,8 +29,17 @@ export function ResultImageCard({ image, title, subtitle }: ResultImageCardProps
   );
 
   return (
-    <div className="relative overflow-hidden rounded-[2rem] border border-white/70 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.95),rgba(246,233,230,0.82)_38%,rgba(221,212,239,0.75)_100%)] p-3 shadow-soft">
-      <div className="relative aspect-[16/10] overflow-hidden rounded-[1.55rem] bg-gradient-to-br from-white via-[#f8f2f7] to-[#e7e0f3]">
+    <div
+      className={`relative overflow-hidden border border-white/70 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.98),rgba(246,233,230,0.88)_34%,rgba(221,212,239,0.82)_100%)] shadow-soft ${
+        isHero ? 'rounded-[2.4rem] p-4 shadow-float' : 'rounded-[2rem] p-3'
+      }`}
+    >
+      <div
+        className={`relative overflow-hidden rounded-[1.75rem] bg-gradient-to-br from-white via-[#f8f2f7] to-[#e7e0f3] ${
+          isHero ? 'aspect-[5/5.8] min-h-[22rem] sm:min-h-[28rem]' : 'aspect-[16/10]'
+        }`}
+      >
+        {isHero ? <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0)_28%,rgba(117,86,113,0.12)_82%,rgba(52,44,67,0.18)_100%)]" /> : null}
         {!hasError ? (
           <>
             <Image
@@ -36,7 +47,7 @@ export function ResultImageCard({ image, title, subtitle }: ResultImageCardProps
               alt={`${title} representative artwork`}
               fill
               sizes="(min-width: 1280px) 420px, (min-width: 1024px) 34vw, (min-width: 640px) 88vw, 100vw"
-              className="object-contain p-6 sm:p-7"
+              className={isHero ? 'object-contain p-8 drop-shadow-[0_28px_48px_rgba(65,45,72,0.22)] sm:p-10' : 'object-contain p-6 sm:p-7'}
               onError={() => setHasError(true)}
               priority={false}
             />

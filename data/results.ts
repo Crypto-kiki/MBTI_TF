@@ -37,6 +37,24 @@ function enrichDescription(locale: Locale, content: ResultContent) {
   return `${content.description} This tends to show up most clearly in strengths like “${firstStrength}” and “${secondStrength}.” It usually works best when you also remember to “${firstTip.toLowerCase()}.”`;
 }
 
+function buildQuickSummary(locale: Locale, content: ResultContent) {
+  const [firstStrength = ''] = content.strengths;
+
+  if (locale === 'ko') {
+    return `${content.subtitle}. ${firstStrength}이 특히 선명하게 드러나는 결과예요.`;
+  }
+
+  if (locale === 'ja') {
+    return `${content.subtitle}。とくに「${firstStrength}」が印象的に表れる結果です。`;
+  }
+
+  if (locale === 'zh-TW') {
+    return `${content.subtitle}，而且特別容易展現在「${firstStrength}」這一面。`;
+  }
+
+  return `${content.subtitle}. It stands out most clearly through ${firstStrength.toLowerCase()}.`;
+}
+
 const compatibilityDefinitions: Record<ResultType, Record<Locale, { type: ResultType; reason: string }>> = {
   f_empathy: {
     ko: { type: 't_calm', reason: '당신의 공감력에 이 유형의 차분한 정리가 더해지면 서로를 안정적으로 받쳐줄 수 있어요.' },
@@ -658,6 +676,7 @@ export function getResultProfile(locale: Locale, type: ResultType): ResultProfil
     type,
     image: definition.image,
     ...content,
+    quickSummary: content.quickSummary ?? buildQuickSummary(locale, content),
     description: enrichDescription(locale, content),
     compatibility: {
       ...compatibility,

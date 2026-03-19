@@ -47,6 +47,7 @@ export const uiMessages: Record<
       answeredHint: string;
       strengths: string;
       tips: string;
+      finalBadge: string;
       goodMatch: string;
       goodMatchReason: string;
       cta: string;
@@ -90,7 +91,7 @@ export const uiMessages: Record<
       flowF: '감정 해석 흐름', flowT: '논리 판단 흐름', home: '홈으로', title: '해석 연습 시작', intro: '한 문항씩 천천히 살펴보며, 지금 가장 자연스럽게 떠오르는 해석을 골라보세요.', questionLabel: 'Question', focusF: '마음의 온도에 집중해보세요', focusT: '판단의 기준을 떠올려보세요', helper: '답을 바꿔도 괜찮아요. 너무 오래 고민하기보다 지금의 감각에 가까운 선택을 따라가보세요.', previous: '이전 질문', next: '다음 질문', result: '결과 보기', progress: '진행도', progressHint: '답을 고르며 천천히 당신의 해석 결을 따라가보세요.',
     },
     result: {
-      axis: { f: 'F 성향', t: 'T 성향', balanced: '균형형' }, summaryCard: '한눈에 보는 결과', summaryHint: '답변 점수와 자주 고른 단서를 바탕으로 지금의 해석 성향을 정리했어요.', totalF: 'F 점수', totalT: 'T 점수', answered: '응답 수', fHint: '감정과 관계 쪽에 더 가까운 흐름', tHint: '판단과 구조 쪽에 더 가까운 흐름', answeredHint: '실제로 답한 문항 수', strengths: '잘 드러난 강점', tips: '이렇게 활용해보세요', goodMatch: '나랑 잘 맞는 유형', goodMatchReason: '잘 맞는 이유', cta: '한 줄 제안', backHome: '처음으로', tryOther: '다른 모드 해보기', share: { title: '결과 공유', hint: '현재 결과 링크를 그대로 공유할 수 있어요.', share: '공유하기', copy: '링크 복사', copied: '링크가 복사되었어요.', failed: '링크를 복사하지 못했어요.', shared: '결과 링크를 공유했어요.' },
+      axis: { f: 'F 성향', t: 'T 성향', balanced: '균형형' }, summaryCard: '한눈에 보는 결과', summaryHint: '답변 점수와 자주 고른 단서를 바탕으로 지금의 해석 성향을 정리했어요.', totalF: 'F 점수', totalT: 'T 점수', answered: '응답 수', fHint: '감정과 관계 쪽에 더 가까운 흐름', tHint: '판단과 구조 쪽에 더 가까운 흐름', answeredHint: '실제로 답한 문항 수', strengths: '잘 드러난 강점', tips: '이렇게 활용해보세요', finalBadge: '당신의 결과', goodMatch: '나랑 잘 맞는 유형', goodMatchReason: '잘 맞는 이유', cta: '한 줄 제안', backHome: '처음으로', tryOther: '다른 모드 해보기', share: { title: '결과 공유', hint: '현재 결과 링크를 그대로 공유할 수 있어요.', share: '공유하기', copy: '링크 복사', copied: '링크가 복사되었어요.', failed: '링크를 복사하지 못했어요.', shared: '결과 링크를 공유했어요.' },
     },
     catalog: { title: '전체 유형 보기', description: '각 유형의 분위기와 특징, 강점과 활용 포인트를 한 번에 살펴보세요.', viewLabel: '결과 페이지 보기' },
     localeSwitcher: { label: '언어' },
@@ -114,7 +115,7 @@ export const uiMessages: Record<
       flowF: '感情解釈フロー', flowT: '論理解釈フロー', home: 'ホームへ', title: '読み取りの練習', intro: '一問ずつゆっくり見ながら、いちばん自然に浮かぶ解釈を選んでください。', questionLabel: 'Question', focusF: '気持ちの温度に意識を向けてみてください', focusT: '判断の基準を思い浮かべてみてください', helper: '答えを変えても大丈夫です。長く悩みすぎず、今の感覚に近い選択を選んでみてください。', previous: '前へ', next: '次へ', result: '結果を見る', progress: '進行状況', progressHint: '答えを選びながら、自分の解釈の流れをゆっくりたどってみましょう。',
     },
     result: {
-      axis: { f: 'F寄り', t: 'T寄り', balanced: 'バランス型' }, summaryCard: '結果の見どころ', summaryHint: '回答の点数とよく選んだ傾向から、今の読み取りスタイルをまとめました。', totalF: 'Fスコア', totalT: 'Tスコア', answered: '回答数', fHint: '感情や関係に寄った流れ', tHint: '判断や構造に寄った流れ', answeredHint: '実際に答えた設問数', strengths: 'よく出ている強み', tips: '活かし方のヒント', goodMatch: '相性のよいタイプ', goodMatchReason: '相性がよい理由', cta: 'ひとことメモ', backHome: 'はじめに戻る', tryOther: '別のモードを試す', share: { title: '結果をシェア', hint: '今の結果リンクをそのまま共有できます。', share: 'シェアする', copy: 'リンクをコピー', copied: 'リンクをコピーしました。', failed: 'リンクをコピーできませんでした。', shared: '結果リンクを共有しました。' },
+      axis: { f: 'F寄り', t: 'T寄り', balanced: 'バランス型' }, summaryCard: '結果の見どころ', summaryHint: '回答の点数とよく選んだ傾向から、今の読み取りスタイルをまとめました。', totalF: 'Fスコア', totalT: 'Tスコア', answered: '回答数', fHint: '感情や関係に寄った流れ', tHint: '判断や構造に寄った流れ', answeredHint: '実際に答えた設問数', strengths: 'よく出ている強み', tips: '活かし方のヒント', finalBadge: 'あなたの結果', goodMatch: '相性のよいタイプ', goodMatchReason: '相性がよい理由', cta: 'ひとことメモ', backHome: 'はじめに戻る', tryOther: '別のモードを試す', share: { title: '結果をシェア', hint: '今の結果リンクをそのまま共有できます。', share: 'シェアする', copy: 'リンクをコピー', copied: 'リンクをコピーしました。', failed: 'リンクをコピーできませんでした。', shared: '結果リンクを共有しました。' },
     },
     catalog: { title: '全タイプを見る', description: '各タイプの空気感や特徴、強みや活かし方をまとめて見られます。', viewLabel: '結果ページを見る' },
     localeSwitcher: { label: '言語' },
@@ -138,7 +139,7 @@ export const uiMessages: Record<
       flowF: '情感解讀流程', flowT: '邏輯判斷流程', home: '回首頁', title: '開始練習解讀', intro: '一題一題慢慢看，選出此刻最自然浮現的解讀。', questionLabel: 'Question', focusF: '先把注意力放在情緒溫度上', focusT: '先想想你的判斷基準', helper: '改答案也沒關係。不要想太久，跟著當下最接近的感覺走就好。', previous: '上一題', next: '下一題', result: '查看結果', progress: '進度', progressHint: '在作答的同時，也慢慢看見自己的解讀節奏。',
     },
     result: {
-      axis: { f: 'F 傾向', t: 'T 傾向', balanced: '平衡型' }, summaryCard: '結果重點', summaryHint: '根據你的作答分數和常出現的線索，整理出目前的解讀風格。', totalF: 'F 分數', totalT: 'T 分數', answered: '作答數', fHint: '更靠近感受與關係的一側', tHint: '更靠近判斷與結構的一側', answeredHint: '實際完成的題數', strengths: '目前的優勢', tips: '可試著這樣做', goodMatch: '和我很合的類型', goodMatchReason: '合拍原因', cta: '一句提醒', backHome: '回到最初', tryOther: '試試其他模式', share: { title: '分享結果', hint: '可以直接分享目前這份結果連結。', share: '立即分享', copy: '複製連結', copied: '已複製結果連結。', failed: '無法複製連結。', shared: '已分享結果連結。' },
+      axis: { f: 'F 傾向', t: 'T 傾向', balanced: '平衡型' }, summaryCard: '結果重點', summaryHint: '根據你的作答分數和常出現的線索，整理出目前的解讀風格。', totalF: 'F 分數', totalT: 'T 分數', answered: '作答數', fHint: '更靠近感受與關係的一側', tHint: '更靠近判斷與結構的一側', answeredHint: '實際完成的題數', strengths: '目前的優勢', tips: '可試著這樣做', finalBadge: '你的結果', goodMatch: '和我很合的類型', goodMatchReason: '合拍原因', cta: '一句提醒', backHome: '回到最初', tryOther: '試試其他模式', share: { title: '分享結果', hint: '可以直接分享目前這份結果連結。', share: '立即分享', copy: '複製連結', copied: '已複製結果連結。', failed: '無法複製連結。', shared: '已分享結果連結。' },
     },
     catalog: { title: '查看全部類型', description: '一次瀏覽所有類型的性格氣質、優勢與使用方式。', viewLabel: '查看結果頁' },
     localeSwitcher: { label: '語言' },
@@ -162,7 +163,7 @@ export const uiMessages: Record<
       flowF: 'Emotional reading flow', flowT: 'Logical judgment flow', home: 'Back home', title: 'Start your reading practice', intro: 'Move through one question at a time and choose the interpretation that feels most natural right now.', questionLabel: 'Question', focusF: 'Focus on the temperature of the feeling', focusT: 'Think about the criteria behind your judgment', helper: 'It is okay to change your answer. Instead of overthinking, follow the option that feels closest to your current instinct.', previous: 'Previous', next: 'Next', result: 'See result', progress: 'Progress', progressHint: 'As you answer, slowly trace the shape of your own interpretation style.',
     },
     result: {
-      axis: { f: 'F-leaning', t: 'T-leaning', balanced: 'Balanced' }, summaryCard: 'What stands out', summaryHint: 'We summarized your current reading style from your answers and repeated patterns.', totalF: 'F score', totalT: 'T score', answered: 'Answered', fHint: 'Closer to feeling and relationship cues', tHint: 'Closer to judgment and structure cues', answeredHint: 'Questions you actually completed', strengths: 'Strengths that stand out', tips: 'Ways to use it well', goodMatch: 'A type that fits you well', goodMatchReason: 'Why it fits', cta: 'One takeaway', backHome: 'Back to start', tryOther: 'Try the other mode', share: { title: 'Share this result', hint: 'You can share this exact result link as it is.', share: 'Share now', copy: 'Copy link', copied: 'Result link copied.', failed: 'Could not copy the link.', shared: 'Result link shared.' },
+      axis: { f: 'F-leaning', t: 'T-leaning', balanced: 'Balanced' }, summaryCard: 'What stands out', summaryHint: 'We summarized your current reading style from your answers and repeated patterns.', totalF: 'F score', totalT: 'T score', answered: 'Answered', fHint: 'Closer to feeling and relationship cues', tHint: 'Closer to judgment and structure cues', answeredHint: 'Questions you actually completed', strengths: 'Strengths that stand out', tips: 'Ways to use it well', finalBadge: 'Final Result', goodMatch: 'A type that fits you well', goodMatchReason: 'Why it fits', cta: 'One takeaway', backHome: 'Back to start', tryOther: 'Try the other mode', share: { title: 'Share this result', hint: 'You can share this exact result link as it is.', share: 'Share now', copy: 'Copy link', copied: 'Result link copied.', failed: 'Could not copy the link.', shared: 'Result link shared.' },
     },
     catalog: { title: 'Browse all types', description: 'See every profile at a glance, including its tone, strengths, and how it tends to show up.', viewLabel: 'Open result page' },
     localeSwitcher: { label: 'Language' },

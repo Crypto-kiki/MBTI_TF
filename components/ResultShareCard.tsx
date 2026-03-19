@@ -103,10 +103,10 @@ export function ResultShareCard({ locale, resultType, title, subtitle, messages 
   };
 
   return (
-    <div className="glass-panel rounded-[1.85rem] bg-white/80 p-5 sm:p-6">
+    <div className="glass-panel rounded-[1.95rem] border border-white/75 bg-white/76 p-5 shadow-soft sm:p-6">
       <div className="flex items-start justify-between gap-4">
         <div>
-          <div className="brand-chip px-3 py-1 text-[0.68rem] tracking-[0.24em]">
+          <div className="brand-chip border-white/75 bg-white/92 px-3 py-1 text-[0.68rem] tracking-[0.24em] shadow-none">
             <Link2 className="h-3.5 w-3.5" />
             SHARE
           </div>

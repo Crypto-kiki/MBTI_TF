@@ -66,6 +66,7 @@ export interface ResultImage {
 export interface ResultContent {
   title: string;
   subtitle: string;
+  quickSummary?: string;
   description: string;
   strengths: string[];
   tips: string[];
@@ -85,6 +86,7 @@ export interface ResultDefinition {
 export interface ResultProfile extends ResultContent {
   type: ResultType;
   image: ResultImage;
+  quickSummary: string;
   compatibility: NonNullable<ResultContent['compatibility']> & {
     title: string;
     subtitle: string;
