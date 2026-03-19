@@ -50,6 +50,15 @@ export const uiMessages: Record<
       cta: string;
       backHome: string;
       tryOther: string;
+      share: {
+        title: string;
+        hint: string;
+        share: string;
+        copy: string;
+        copied: string;
+        failed: string;
+        shared: string;
+      };
     };
     localeSwitcher: { label: string };
   }
@@ -78,7 +87,7 @@ export const uiMessages: Record<
       flowF: '감정 해석 흐름', flowT: '논리 판단 흐름', home: '홈으로', title: '해석 연습 시작', intro: '한 문항씩 천천히 살펴보며, 지금 가장 자연스럽게 떠오르는 해석을 골라보세요.', questionLabel: 'Question', focusF: '마음의 온도에 집중해보세요', focusT: '판단의 기준을 떠올려보세요', helper: '답을 바꿔도 괜찮아요. 너무 오래 고민하기보다 지금의 감각에 가까운 선택을 따라가보세요.', previous: '이전 질문', next: '다음 질문', result: '결과 보기', progress: '진행도', progressHint: '답을 고르며 천천히 당신의 해석 결을 따라가보세요.',
     },
     result: {
-      axis: { f: 'F 우세', t: 'T 우세', balanced: '균형형' }, summaryCard: '결과 요약 카드', summaryHint: '정적 점수와 태그 빈도를 바탕으로, 가장 닮은 해석 톤을 골라 보여드렸어요.', totalF: 'Total F', totalT: 'Total T', answered: 'Answered', fHint: '감정과 해석 쪽으로 기운 점수', tHint: '판단과 구조 쪽으로 기운 점수', answeredHint: '정적 결과 매핑으로 완성된 프로필', strengths: '당신의 강점', tips: '작은 팁', cta: 'CTA', backHome: '처음으로', tryOther: '다른 모드 해보기',
+      axis: { f: 'F 우세', t: 'T 우세', balanced: '균형형' }, summaryCard: '결과 요약 카드', summaryHint: '정적 점수와 태그 빈도를 바탕으로, 가장 닮은 해석 톤을 골라 보여드렸어요.', totalF: 'Total F', totalT: 'Total T', answered: 'Answered', fHint: '감정과 해석 쪽으로 기운 점수', tHint: '판단과 구조 쪽으로 기운 점수', answeredHint: '정적 결과 매핑으로 완성된 프로필', strengths: '당신의 강점', tips: '작은 팁', cta: 'CTA', backHome: '처음으로', tryOther: '다른 모드 해보기', share: { title: '결과 공유', hint: '지금 보고 있는 결과 링크를 그대로 공유해보세요.', share: '공유하기', copy: '링크 복사', copied: '링크가 복사되었어요.', failed: '링크를 복사하지 못했어요.', shared: '결과 링크를 공유했어요.' },
     },
     localeSwitcher: { label: '언어' },
   },
@@ -101,7 +110,7 @@ export const uiMessages: Record<
       flowF: '感情解釈フロー', flowT: '論理解釈フロー', home: 'ホームへ', title: '読み取りの練習', intro: '一問ずつゆっくり見ながら、いちばん自然に浮かぶ解釈を選んでください。', questionLabel: 'Question', focusF: '気持ちの温度に意識を向けてみてください', focusT: '判断の基準を思い浮かべてみてください', helper: '答えを変えても大丈夫です。長く悩みすぎず、今の感覚に近い選択を選んでみてください。', previous: '前へ', next: '次へ', result: '結果を見る', progress: '進行状況', progressHint: '答えを選びながら、自分の解釈の流れをゆっくりたどってみましょう。',
     },
     result: {
-      axis: { f: 'F優勢', t: 'T優勢', balanced: 'バランス型' }, summaryCard: '結果サマリーカード', summaryHint: '静的なスコアとタグ頻度をもとに、あなたに近い解釈トーンを選んで表示しています。', totalF: 'Total F', totalT: 'Total T', answered: 'Answered', fHint: '感情と解釈に寄ったスコア', tHint: '判断と構造に寄ったスコア', answeredHint: '静的マッピングで完成したプロフィール', strengths: 'あなたの強み', tips: '小さなヒント', cta: 'CTA', backHome: 'はじめに戻る', tryOther: '別のモードを試す',
+      axis: { f: 'F優勢', t: 'T優勢', balanced: 'バランス型' }, summaryCard: '結果サマリーカード', summaryHint: '静的なスコアとタグ頻度をもとに、あなたに近い解釈トーンを選んで表示しています。', totalF: 'Total F', totalT: 'Total T', answered: 'Answered', fHint: '感情と解釈に寄ったスコア', tHint: '判断と構造に寄ったスコア', answeredHint: '静的マッピングで完成したプロフィール', strengths: 'あなたの強み', tips: '小さなヒント', cta: 'CTA', backHome: 'はじめに戻る', tryOther: '別のモードを試す', share: { title: '結果をシェア', hint: '今見ている結果リンクをそのまま共有できます。', share: 'シェアする', copy: 'リンクをコピー', copied: 'リンクをコピーしました。', failed: 'リンクをコピーできませんでした。', shared: '結果リンクを共有しました。' },
     },
     localeSwitcher: { label: '言語' },
   },
@@ -124,7 +133,7 @@ export const uiMessages: Record<
       flowF: '情感解讀流程', flowT: '邏輯判斷流程', home: '回首頁', title: '開始練習解讀', intro: '一題一題慢慢看，選出此刻最自然浮現的解讀。', questionLabel: 'Question', focusF: '先把注意力放在情緒溫度上', focusT: '先想想你的判斷基準', helper: '改答案也沒關係。不要想太久，跟著當下最接近的感覺走就好。', previous: '上一題', next: '下一題', result: '查看結果', progress: '進度', progressHint: '在作答的同時，也慢慢看見自己的解讀節奏。',
     },
     result: {
-      axis: { f: 'F 偏高', t: 'T 偏高', balanced: '平衡型' }, summaryCard: '結果摘要卡', summaryHint: '根據靜態分數與標籤頻率，挑出最接近你的解讀氣質。', totalF: 'Total F', totalT: 'Total T', answered: 'Answered', fHint: '偏向情感與解讀的分數', tHint: '偏向判斷與結構的分數', answeredHint: '由靜態映射完成的結果類型', strengths: '你的優勢', tips: '小提示', cta: 'CTA', backHome: '回到最初', tryOther: '試試其他模式',
+      axis: { f: 'F 偏高', t: 'T 偏高', balanced: '平衡型' }, summaryCard: '結果摘要卡', summaryHint: '根據靜態分數與標籤頻率，挑出最接近你的解讀氣質。', totalF: 'Total F', totalT: 'Total T', answered: 'Answered', fHint: '偏向情感與解讀的分數', tHint: '偏向判斷與結構的分數', answeredHint: '由靜態映射完成的結果類型', strengths: '你的優勢', tips: '小提示', cta: 'CTA', backHome: '回到最初', tryOther: '試試其他模式', share: { title: '分享結果', hint: '把你目前看到的結果連結直接分享出去吧。', share: '立即分享', copy: '複製連結', copied: '已複製結果連結。', failed: '無法複製連結。', shared: '已分享結果連結。' },
     },
     localeSwitcher: { label: '語言' },
   },
@@ -147,7 +156,7 @@ export const uiMessages: Record<
       flowF: 'Emotional reading flow', flowT: 'Logical judgment flow', home: 'Back home', title: 'Start your reading practice', intro: 'Move through one question at a time and choose the interpretation that feels most natural right now.', questionLabel: 'Question', focusF: 'Focus on the temperature of the feeling', focusT: 'Think about the criteria behind your judgment', helper: 'It is okay to change your answer. Instead of overthinking, follow the option that feels closest to your current instinct.', previous: 'Previous', next: 'Next', result: 'See result', progress: 'Progress', progressHint: 'As you answer, slowly trace the shape of your own interpretation style.',
     },
     result: {
-      axis: { f: 'F-led', t: 'T-led', balanced: 'Balanced' }, summaryCard: 'Result summary card', summaryHint: 'Based on static scores and tag frequency, we matched you with the closest interpretation tone.', totalF: 'Total F', totalT: 'Total T', answered: 'Answered', fHint: 'Score leaning toward feeling and interpretation', tHint: 'Score leaning toward judgment and structure', answeredHint: 'Profile resolved through static mapping', strengths: 'Your strengths', tips: 'Small tips', cta: 'CTA', backHome: 'Back to start', tryOther: 'Try the other mode',
+      axis: { f: 'F-led', t: 'T-led', balanced: 'Balanced' }, summaryCard: 'Result summary card', summaryHint: 'Based on static scores and tag frequency, we matched you with the closest interpretation tone.', totalF: 'Total F', totalT: 'Total T', answered: 'Answered', fHint: 'Score leaning toward feeling and interpretation', tHint: 'Score leaning toward judgment and structure', answeredHint: 'Profile resolved through static mapping', strengths: 'Your strengths', tips: 'Small tips', cta: 'CTA', backHome: 'Back to start', tryOther: 'Try the other mode', share: { title: 'Share this result', hint: 'Share the exact result link you are viewing now.', share: 'Share now', copy: 'Copy link', copied: 'Result link copied.', failed: 'Could not copy the link.', shared: 'Result link shared.' },
     },
     localeSwitcher: { label: 'Language' },
   },

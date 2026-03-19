@@ -5,6 +5,7 @@ import { getTagLabel, uiMessages } from '@/data/i18n/messages';
 import { Locale } from '@/lib/i18n/config';
 import { QuizMode, ResolvedQuizResult } from '@/types/quiz';
 import { ResultImageCard } from '@/components/ResultImageCard';
+import { ResultShareCard } from '@/components/ResultShareCard';
 
 interface ResultCardProps {
   locale: Locale;
@@ -55,6 +56,14 @@ export function ResultCard({ locale, mode, modeLabel, result }: ResultCardProps)
           </div>
         </div>
       </div>
+
+      <ResultShareCard
+        locale={locale}
+        resultType={result.profile.type}
+        title={result.profile.title}
+        subtitle={result.profile.subtitle}
+        messages={messages.share}
+      />
 
       {hasAnsweredStats ? (
         <div className="grid gap-4 sm:grid-cols-3">
