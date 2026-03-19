@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import type { ReactNode } from 'react';
 import { Cormorant_Garamond, Noto_Sans_KR } from 'next/font/google';
 
 import './globals.css';
@@ -20,7 +21,7 @@ export const metadata: Metadata = {
   description: '감정과 판단 사이, 당신의 해석 습관을 연습해보세요.',
 };
 
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
   return (
     <html lang="ko">
       <body className={`${sans.variable} ${serif.variable} font-sans`}>

@@ -1,40 +1,24 @@
-import { ResultSummary, QuizMode, QuizTotals, QuizAnswer, Question } from '@/types/quiz';
+import { resultProfiles } from '@/data/results';
+import { Choice, Question, QuizAnswer, QuizTotals, ResolvedQuizResult, ResultType } from '@/types/quiz';
 
-const resultMap: Record<QuizMode, ResultSummary[]> = {
-  f: [
-    {
-      title: '섬세한 공감형',
-      description: '표정과 맥락 속 감정을 빠르게 포착하며, 관계의 온도를 세심하게 읽는 편입니다.',
-      mood: '따뜻한 공감과 정서적 민감도가 돋보이는 흐름',
-    },
-    {
-      title: '균형 잡힌 해석형',
-      description: '감정과 사실을 함께 살피며, 서두르지 않고 차분하게 의미를 해석하는 편입니다.',
-      mood: '공감과 현실감이 균형 있게 섞인 흐름',
-    },
-    {
-      title: '담백한 확인형',
-      description: '추측보다는 명시적인 표현과 상황의 사실성을 우선 보며 해석하는 편입니다.',
-      mood: '감정보다 명료함과 안정감을 중시하는 흐름',
-    },
-  ],
-  t: [
-    {
-      title: '구조 설계형',
-      description: '기준과 우선순위를 빠르게 세우고, 복잡한 상황도 분해해 판단하는 데 강합니다.',
-      mood: '논리와 구조가 선명한 판단 흐름',
-    },
-    {
-      title: '현실 조율형',
-      description: '실행 가능성과 사람의 흐름을 함께 보며, 무리 없는 방향을 찾아가는 편입니다.',
-      mood: '실용성과 균형감이 살아 있는 판단 흐름',
-    },
-    {
-      title: '관계 고려형',
-      description: '논리 못지않게 받아들이는 사람의 감정과 분위기도 함께 고려하며 선택하는 편입니다.',
-      mood: '정서적 수용성과 판단이 함께 가는 흐름',
-    },
-  ],
+const axisThreshold = 6;
+
+const clusterTags = {
+  f_empathy: ['공감', '배려', '경청', '지지', '수용', '안심', '관심', '격려'],
+  f_nuance: ['세심함', '해석', '맥락', '감정읽기', '숨은감정', '추론', '관찰', '감지', '회상'],
+  f_warmth: ['분위기', '관계', '조율', '이해', '유연함', '온도감', '대기', '기다림', '접근'],
+  t_calm: ['실용', '효율', '실행', '기능', '결론', '평가', '영향도', '권한'],
+  t_criteria: ['기준', '판단', '명확성', '정의', '규칙', '책임', '객관', '확인', '절차'],
+  t_structure: ['구조', '분석', '정리', '우선순위', '계획', '문제해결', '동선', '쟁점', '원인'],
+  b_balance: ['균형', '조율', '배려', '이해', '관계', '존중'],
+  b_steady: ['신중함', '유보', '거리두기', '판단유보', '명료함', '확인'],
+  b_bridge: ['역할', '행동', '정리', '실행', '경청', '기준', '조화'],
+} as const satisfies Record<ResultType, string[]>;
+
+const axisProfiles: Record<'f' | 't' | 'balanced', ResultType[]> = {
+  f: ['f_empathy', 'f_nuance', 'f_warmth'],
+  t: ['t_calm', 't_criteria', 't_structure'],
+  balanced: ['b_balance', 'b_steady', 'b_bridge'],
 };
 
 export function calculateQuizTotals(questions: Question[], answers: QuizAnswer[]): QuizTotals {
@@ -49,27 +33,121 @@ export function calculateQuizTotals(questions: Question[], answers: QuizAnswer[]
         return acc;
       }
 
+      const nextTagCounts = { ...acc.tagCounts };
+      selectedChoice.tags.forEach((tag) => {
+        nextTagCounts[tag] = (nextTagCounts[tag] ?? 0) + 1;
+      });
+
       return {
-        fScore: acc.fScore + selectedChoice.fScore,
-        tScore: acc.tScore + selectedChoice.tScore,
+        totalFScore: acc.totalFScore + selectedChoice.fScore,
+        totalTScore: acc.totalTScore + selectedChoice.tScore,
         answeredCount: acc.answeredCount + 1,
+        tagCounts: nextTagCounts,
       };
     },
-    { fScore: 0, tScore: 0, answeredCount: 0 },
+    { totalFScore: 0, totalTScore: 0, answeredCount: 0, tagCounts: {} },
   );
 }
 
-export function getResultSummary(mode: QuizMode, totals: QuizTotals): ResultSummary {
-  const summaries = resultMap[mode];
-  const delta = mode === 'f' ? totals.fScore - totals.tScore : totals.tScore - totals.fScore;
+export function serializeTagCounts(tagCounts: Record<string, number>) {
+  return encodeURIComponent(JSON.stringify(tagCounts));
+}
 
-  if (delta >= 18) {
-    return summaries[0];
+export function parseTagCounts(serialized?: string) {
+  if (!serialized) {
+    return {};
   }
 
-  if (delta >= 6) {
-    return summaries[1];
+  try {
+    const parsed = JSON.parse(decodeURIComponent(serialized));
+
+    if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) {
+      return {};
+    }
+
+    return Object.entries(parsed).reduce<Record<string, number>>((acc, [key, value]) => {
+      if (typeof value === 'number' && Number.isFinite(value)) {
+        acc[key] = value;
+      }
+      return acc;
+    }, {});
+  } catch {
+    return {};
+  }
+}
+
+export function getTopTags(tagCounts: Record<string, number>, limit = 3) {
+  return Object.entries(tagCounts)
+    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+    .slice(0, limit)
+    .map(([tag]) => tag);
+}
+
+function resolveAxis(totals: QuizTotals): 'f' | 't' | 'balanced' {
+  const diff = totals.totalFScore - totals.totalTScore;
+
+  if (diff >= axisThreshold) {
+    return 'f';
   }
 
-  return summaries[2];
+  if (diff <= -axisThreshold) {
+    return 't';
+  }
+
+  return 'balanced';
+}
+
+function getClusterScore(profileType: ResultType, tagCounts: Record<string, number>) {
+  return clusterTags[profileType].reduce((sum, tag) => sum + (tagCounts[tag] ?? 0), 0);
+}
+
+function pickProfileType(axis: 'f' | 't' | 'balanced', tagCounts: Record<string, number>): ResultType {
+  const candidates = axisProfiles[axis];
+
+  return candidates.reduce((best, current) => {
+    const bestScore = getClusterScore(best, tagCounts);
+    const currentScore = getClusterScore(current, tagCounts);
+    return currentScore > bestScore ? current : best;
+  }, candidates[0]);
+}
+
+export function resolveQuizResult(totals: QuizTotals): ResolvedQuizResult {
+  const axis = resolveAxis(totals);
+  const profileType = pickProfileType(axis, totals.tagCounts);
+
+  return {
+    axis,
+    dominantTags: getTopTags(totals.tagCounts),
+    profile: resultProfiles[profileType],
+    totals,
+  };
+}
+
+export function getSelectedChoices(questions: Question[], answers: QuizAnswer[]) {
+  const answerMap = new Map(answers.map((answer) => [answer.questionId, answer.choiceId]));
+
+  return questions.flatMap((question) => {
+    const selectedChoiceId = answerMap.get(question.id);
+    const selectedChoice = question.choices.find((choice) => choice.id === selectedChoiceId);
+    return selectedChoice ? [selectedChoice] : [];
+  });
+}
+
+export function aggregateChoices(choices: Choice[]): QuizTotals {
+  return choices.reduce<QuizTotals>(
+    (acc, choice) => {
+      const nextTagCounts = { ...acc.tagCounts };
+      choice.tags.forEach((tag) => {
+        nextTagCounts[tag] = (nextTagCounts[tag] ?? 0) + 1;
+      });
+
+      return {
+        totalFScore: acc.totalFScore + choice.fScore,
+        totalTScore: acc.totalTScore + choice.tScore,
+        answeredCount: acc.answeredCount + 1,
+        tagCounts: nextTagCounts,
+      };
+    },
+    { totalFScore: 0, totalTScore: 0, answeredCount: 0, tagCounts: {} },
+  );
 }

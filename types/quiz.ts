@@ -1,5 +1,16 @@
 export type QuizMode = 'f' | 't';
 
+export type ResultType =
+  | 'f_empathy'
+  | 'f_nuance'
+  | 'f_warmth'
+  | 't_calm'
+  | 't_criteria'
+  | 't_structure'
+  | 'b_balance'
+  | 'b_steady'
+  | 'b_bridge';
+
 export interface ModeConfig {
   mode: QuizMode;
   title: string;
@@ -29,14 +40,26 @@ export interface QuizAnswer {
   choiceId: string;
 }
 
-export interface ResultSummary {
+export interface ResultProfile {
+  type: ResultType;
   title: string;
+  subtitle: string;
   description: string;
-  mood: string;
+  strengths: string[];
+  tips: string[];
+  cta: string;
 }
 
 export interface QuizTotals {
-  fScore: number;
-  tScore: number;
+  totalFScore: number;
+  totalTScore: number;
   answeredCount: number;
+  tagCounts: Record<string, number>;
+}
+
+export interface ResolvedQuizResult {
+  axis: 'f' | 't' | 'balanced';
+  dominantTags: string[];
+  profile: ResultProfile;
+  totals: QuizTotals;
 }

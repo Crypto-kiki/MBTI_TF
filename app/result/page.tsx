@@ -1,14 +1,15 @@
 import { Layout } from '@/components/Layout';
 import { ResultCard } from '@/components/ResultCard';
-import { getResultSummary } from '@/lib/results';
-import { QuizTotals, QuizMode } from '@/types/quiz';
+import { parseTagCounts, resolveQuizResult } from '@/lib/results';
+import { QuizMode, QuizTotals } from '@/types/quiz';
 
 interface ResultPageProps {
   searchParams?: {
     mode?: string;
-    fScore?: string;
-    tScore?: string;
+    totalFScore?: string;
+    totalTScore?: string;
     answered?: string;
+    tags?: string;
   };
 }
 
@@ -20,23 +21,17 @@ function toNumber(value?: string) {
 export default function ResultPage({ searchParams }: ResultPageProps) {
   const mode: QuizMode = searchParams?.mode === 't' ? 't' : 'f';
   const totals: QuizTotals = {
-    fScore: toNumber(searchParams?.fScore),
-    tScore: toNumber(searchParams?.tScore),
+    totalFScore: toNumber(searchParams?.totalFScore),
+    totalTScore: toNumber(searchParams?.totalTScore),
     answeredCount: toNumber(searchParams?.answered),
+    tagCounts: parseTagCounts(searchParams?.tags),
   };
-  const summary = getResultSummary(mode, totals);
+  const result = resolveQuizResult(totals);
 
   return (
     <Layout>
       <div className="flex flex-1 items-center py-8">
-        <ResultCard
-          mode={mode}
-          modeLabel={mode === 'f' ? 'F Mode' : 'T Mode'}
-          fScore={totals.fScore}
-          tScore={totals.tScore}
-          answeredCount={totals.answeredCount}
-          summary={summary}
-        />
+        <ResultCard mode={mode} modeLabel={mode === 'f' ? 'F Mode' : 'T Mode'} result={result} />
       </div>
     </Layout>
   );

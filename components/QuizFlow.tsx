@@ -3,7 +3,7 @@
 import { useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
-import { calculateQuizTotals } from '@/lib/results';
+import { calculateQuizTotals, serializeTagCounts } from '@/lib/results';
 import { Choice, Question, QuizAnswer, QuizMode } from '@/types/quiz';
 
 import { QuizCard } from './QuizCard';
@@ -43,9 +43,10 @@ export function QuizFlow({ mode, modeLabel, questions }: QuizFlowProps) {
     if (currentIndex === questions.length - 1) {
       const searchParams = new URLSearchParams({
         mode,
-        fScore: String(totals.fScore),
-        tScore: String(totals.tScore),
+        totalFScore: String(totals.totalFScore),
+        totalTScore: String(totals.totalTScore),
         answered: String(totals.answeredCount),
+        tags: serializeTagCounts(totals.tagCounts),
       });
       router.push(`/result?${searchParams.toString()}`);
       return;
