@@ -19,7 +19,7 @@ function createResultDefinition(type: ResultType, image: string, content: Record
 }
 
 export const resultDefinitions: Record<ResultType, ResultDefinition> = {
-  f_empathy: createResultDefinition('f_empathy', '/images/results/f-empathy.png', {
+  f_empathy: createResultDefinition('f_empathy', '/images/results/f-empathy.svg', {
     ko: {
       title: 'Velvet Ember',
       subtitle: '마음의 온도를 먼저 읽는 섬세한 사람',
@@ -53,7 +53,7 @@ export const resultDefinitions: Record<ResultType, ResultDefinition> = {
       cta: 'Let a little of today’s kindness turn back toward you, too.',
     },
   }),
-  f_nuance: createResultDefinition('f_nuance', '/images/results/f-nuance.png', {
+  f_nuance: createResultDefinition('f_nuance', '/images/results/f-nuance.svg', {
     ko: {
       title: 'Moon Ripple',
       subtitle: '표정과 맥락 사이를 자연스럽게 해석하는 타입',
@@ -87,7 +87,7 @@ export const resultDefinitions: Record<ResultType, ResultDefinition> = {
       cta: 'Your sensitivity is already something quietly beautiful.',
     },
   }),
-  f_warmth: createResultDefinition('f_warmth', '/images/results/f-warmth.png', {
+  f_warmth: createResultDefinition('f_warmth', '/images/results/f-warmth.svg', {
     ko: {
       title: 'Rose Hush',
       subtitle: '사람과 사람 사이의 공기를 부드럽게 읽는 스타일',
@@ -121,7 +121,7 @@ export const resultDefinitions: Record<ResultType, ResultDefinition> = {
       cta: 'Your softness can change the expression of a whole room.',
     },
   }),
-  t_calm: createResultDefinition('t_calm', '/images/results/t-calm.png', {
+  t_calm: createResultDefinition('t_calm', '/images/results/t-calm.svg', {
     ko: {
       title: 'Quiet Pivot',
       subtitle: '감정에 휩쓸리기보다 상황을 정리해보는 사람',
@@ -155,7 +155,7 @@ export const resultDefinitions: Record<ResultType, ResultDefinition> = {
       cta: 'Your steadiness becomes a reliable reference point for others.',
     },
   }),
-  t_criteria: createResultDefinition('t_criteria', '/images/results/t-criteria.png', {
+  t_criteria: createResultDefinition('t_criteria', '/images/results/t-criteria.svg', {
     ko: {
       title: 'Frame Setter',
       subtitle: '무엇을 볼지 먼저 정하고 움직이는 구조형',
@@ -189,7 +189,7 @@ export const resultDefinitions: Record<ResultType, ResultDefinition> = {
       cta: 'Your clear criteria create direction inside confusion.',
     },
   }),
-  t_structure: createResultDefinition('t_structure', '/images/results/t-structure.png', {
+  t_structure: createResultDefinition('t_structure', '/images/results/t-structure.svg', {
     ko: {
       title: 'Pattern Smith',
       subtitle: '문제를 쪼개고 다시 세우는 데 강한 타입',
@@ -223,7 +223,7 @@ export const resultDefinitions: Record<ResultType, ResultDefinition> = {
       cta: 'You are the kind of person who can sketch a path inside chaos.',
     },
   }),
-  b_balance: createResultDefinition('b_balance', '/images/results/b-balance.png', {
+  b_balance: createResultDefinition('b_balance', '/images/results/b-balance.svg', {
     ko: {
       title: 'Soft Compass',
       subtitle: '공감과 판단의 무게를 나란히 두는 사람',
@@ -257,7 +257,7 @@ export const resultDefinitions: Record<ResultType, ResultDefinition> = {
       cta: 'Your sense of balance gently connects relationships and decisions.',
     },
   }),
-  b_steady: createResultDefinition('b_steady', '/images/results/b-steady.png', {
+  b_steady: createResultDefinition('b_steady', '/images/results/b-steady.svg', {
     ko: {
       title: 'Still Bloom',
       subtitle: '부드럽지만 중심이 분명한 균형형',
@@ -291,7 +291,7 @@ export const resultDefinitions: Record<ResultType, ResultDefinition> = {
       cta: 'Your quiet steadiness leaves a lasting kind of trust.',
     },
   }),
-  b_bridge: createResultDefinition('b_bridge', '/images/results/b-bridge.png', {
+  b_bridge: createResultDefinition('b_bridge', '/images/results/b-bridge.svg', {
     ko: {
       title: 'Twin Current',
       subtitle: '사람과 구조 사이를 이어주는 브릿지형',
