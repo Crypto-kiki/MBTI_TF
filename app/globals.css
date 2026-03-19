@@ -56,6 +56,11 @@ a {
   text-decoration: none;
 }
 
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
 ::selection {
   background: rgba(91, 65, 88, 0.16);
 }

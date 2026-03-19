@@ -46,40 +46,44 @@ export function ResultCatalogExplorer({ locale, resultTypes, profiles, messages 
   const visibleSections = activeFilter === 'all' ? (['f', 't', 'balanced'] as const) : ([activeFilter] as const);
 
   return (
-    <div className="space-y-6">
-      <div className="flex flex-wrap gap-2">
-        {filterOrder.map((filter) => {
-          const isActive = activeFilter === filter;
+    <div className="space-y-7 sm:space-y-8">
+      <div className="-mx-1 overflow-x-auto px-1 pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <div className="flex min-w-max gap-2">
+          {filterOrder.map((filter) => {
+            const isActive = activeFilter === filter;
 
-          return (
-            <button
-              key={filter}
-              type="button"
-              onClick={() => setActiveFilter(filter)}
-              className={`rounded-full px-4 py-2 text-sm font-medium transition duration-300 ${
-                isActive
-                  ? 'bg-plum text-white shadow-soft'
-                  : 'border border-white/70 bg-white/78 text-plum/78 shadow-soft hover:bg-white hover:text-plum'
-              }`}
-            >
-              {messages.filters[filter]}
-            </button>
-          );
-        })}
+            return (
+              <button
+                key={filter}
+                type="button"
+                onClick={() => setActiveFilter(filter)}
+                className={`interactive-card min-h-[2.9rem] rounded-full px-4 py-2 text-sm font-medium sm:min-h-[3rem] ${
+                  isActive
+                    ? 'bg-plum text-white shadow-soft'
+                    : 'border border-white/70 bg-white/82 text-plum/78 shadow-soft hover:bg-white hover:text-plum'
+                }`}
+              >
+                {messages.filters[filter]}
+              </button>
+            );
+          })}
+        </div>
       </div>
 
-      <div className="space-y-7">
+      <div className="space-y-8 sm:space-y-10">
         {visibleSections.map((section) => (
-          <section key={section} className="space-y-4">
-            <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+          <section key={section} className="space-y-4 sm:space-y-5">
+            <div className="flex flex-col gap-2.5 sm:flex-row sm:items-end sm:justify-between">
               <div>
-                <h2 className="text-2xl font-semibold text-ink">{messages.sections[section].title}</h2>
-                <p className="mt-2 text-sm leading-7 text-ink/68">{messages.sections[section].description}</p>
+                <h2 className="text-xl font-semibold text-ink sm:text-2xl">{messages.sections[section].title}</h2>
+                <p className="mt-1.5 max-w-2xl text-sm leading-6 text-ink/68 sm:mt-2 sm:leading-7">
+                  {messages.sections[section].description}
+                </p>
               </div>
               <p className="text-sm font-medium text-plum/52">{groupedTypes[section].length}</p>
             </div>
 
-            <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+            <div className="grid gap-4 sm:gap-5 md:grid-cols-2 xl:grid-cols-3">
               {groupedTypes[section].map((type) => (
                 <ResultCatalogCard key={type} locale={locale} profile={profiles[type]} viewLabel={messages.viewLabel} />
               ))}

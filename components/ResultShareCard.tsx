@@ -122,19 +122,19 @@ export function ResultShareCard({ locale, resultType, image, title, subtitle, me
   };
 
   return (
-    <div className="glass-panel rounded-[1.95rem] border border-white/75 bg-white/76 p-5 shadow-soft sm:p-6">
-      <div className="flex items-start justify-between gap-4">
+    <div className="glass-panel rounded-[1.85rem] border border-white/75 bg-white/78 p-4 shadow-soft sm:rounded-[1.95rem] sm:p-6">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
         <div>
           <div className="brand-chip border-white/75 bg-white/92 px-3 py-1 text-[0.68rem] tracking-[0.24em] shadow-none">
             <Link2 className="h-3.5 w-3.5" />
             {messages.badge}
           </div>
-          <h2 className="mt-4 text-lg font-semibold text-ink">{messages.title}</h2>
-          <p className="mt-2 max-w-2xl text-sm leading-7 text-ink/68">{messages.hint}</p>
+          <h2 className="mt-3 text-base font-semibold text-ink sm:mt-4 sm:text-lg">{messages.title}</h2>
+          <p className="mt-2 max-w-2xl text-sm leading-6 text-ink/68 sm:leading-7">{messages.hint}</p>
         </div>
         {feedback ? (
           <div
-            className={`inline-flex items-center gap-2 rounded-full px-3 py-2 text-xs font-medium shadow-sm ${
+            className={`inline-flex w-fit items-center gap-2 rounded-full px-3 py-2 text-xs font-medium shadow-sm ${
               feedback.tone === 'success' ? 'bg-emerald-50 text-emerald-700' : 'bg-rose-50 text-rose-700'
             }`}
           >
@@ -144,35 +144,35 @@ export function ResultShareCard({ locale, resultType, image, title, subtitle, me
         ) : null}
       </div>
 
-      <div className="mt-5 overflow-hidden rounded-[1.6rem] border border-white/80 bg-white/92 shadow-sm">
-        <div className="grid grid-cols-[5.2rem_minmax(0,1fr)] items-stretch">
-          <div className="relative min-h-[5.2rem] bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.98),rgba(246,233,230,0.82)_38%,rgba(221,212,239,0.78)_100%)]">
-            <Image src={image.src} alt={`${title} preview`} fill sizes="84px" className="object-contain p-3" />
+      <div className="mt-4 overflow-hidden rounded-[1.45rem] border border-white/80 bg-white/92 shadow-sm sm:mt-5 sm:rounded-[1.6rem]">
+        <div className="grid grid-cols-[4.6rem_minmax(0,1fr)] items-stretch sm:grid-cols-[5.2rem_minmax(0,1fr)]">
+          <div className="relative min-h-[4.6rem] bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.98),rgba(246,233,230,0.82)_38%,rgba(221,212,239,0.78)_100%)] sm:min-h-[5.2rem]">
+            <Image src={image.src} alt={`${title} preview`} fill sizes="84px" className="object-contain p-2.5 sm:p-3" />
           </div>
-          <div className="p-4">
-            <p className="text-[0.68rem] font-medium uppercase tracking-[0.2em] text-plum/55">{messages.previewLabel}</p>
-            <p className="mt-2 text-sm font-semibold text-ink">{title}</p>
-            <p className="mt-1 text-xs leading-6 text-plum/78">{subtitle}</p>
-            <p className="mt-3 text-sm leading-6 text-ink/68">{shareText}</p>
+          <div className="p-3.5 sm:p-4">
+            <p className="text-[0.64rem] font-medium uppercase tracking-[0.2em] text-plum/55 sm:text-[0.68rem]">{messages.previewLabel}</p>
+            <p className="mt-1.5 text-sm font-semibold text-ink sm:mt-2">{title}</p>
+            <p className="mt-1 line-clamp-2 text-xs leading-5 text-plum/78 sm:leading-6">{subtitle}</p>
+            <p className="mt-2.5 text-sm leading-6 text-ink/68 sm:mt-3">{shareText}</p>
           </div>
         </div>
       </div>
 
-      <div className="mt-5 grid gap-3 sm:grid-cols-2">
+      <div className="mt-4 grid gap-3 sm:mt-5 sm:grid-cols-2">
         <button
           type="button"
           onClick={handleNativeShare}
           aria-label={messages.share}
           title={messages.share}
-          className="inline-flex items-center justify-between rounded-[1.35rem] bg-plum px-4 py-3 text-left text-white shadow-soft transition duration-300 hover:-translate-y-0.5 hover:bg-plum/92"
+          className="interactive-card inline-flex min-h-[4.4rem] items-center justify-between rounded-[1.25rem] bg-plum px-4 py-3 text-left text-white shadow-soft hover:bg-plum/92 sm:rounded-[1.35rem]"
         >
           <span className="flex items-center gap-3">
-            <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/16">
+            <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/16 sm:h-11 sm:w-11">
               <Share2 className="h-5 w-5" />
             </span>
             <span>
               <span className="block text-sm font-semibold">{messages.share}</span>
-              <span className="mt-1 block text-xs text-white/74">{messages.shareHint}</span>
+              <span className="mt-1 block text-xs leading-5 text-white/74">{messages.shareHint}</span>
             </span>
           </span>
         </button>
@@ -182,15 +182,15 @@ export function ResultShareCard({ locale, resultType, image, title, subtitle, me
           onClick={copyToClipboard}
           aria-label={messages.copy}
           title={messages.copy}
-          className="inline-flex items-center justify-between rounded-[1.35rem] border border-plum/12 bg-white/86 px-4 py-3 text-left text-plum shadow-soft transition duration-300 hover:-translate-y-0.5 hover:bg-white"
+          className="interactive-card inline-flex min-h-[4.4rem] items-center justify-between rounded-[1.25rem] border border-plum/12 bg-white/88 px-4 py-3 text-left text-plum shadow-soft hover:bg-white sm:rounded-[1.35rem]"
         >
           <span className="flex items-center gap-3">
-            <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-plum/8">
+            <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-plum/8 sm:h-11 sm:w-11">
               <Copy className="h-5 w-5" />
             </span>
             <span>
               <span className="block text-sm font-semibold">{messages.copy}</span>
-              <span className="mt-1 block text-xs text-plum/62">{messages.copyHint}</span>
+              <span className="mt-1 block text-xs leading-5 text-plum/62">{messages.copyHint}</span>
             </span>
           </span>
         </button>
