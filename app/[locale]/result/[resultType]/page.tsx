@@ -3,10 +3,10 @@ import { redirect } from 'next/navigation';
 
 import { Layout } from '@/components/Layout';
 import { ResultCard } from '@/components/ResultCard';
-import { getResultProfile } from '@/data/results';
 import { uiMessages } from '@/data/i18n/messages';
 import { defaultLocale, isLocale, locales, type Locale } from '@/lib/i18n/config';
-import { getModeFromResultType, getResultHref, parseTagCounts, resolveQuizResult, resolveResultFromType } from '@/lib/results';
+import { getResultHref, getModeFromResultType, parseTagCounts, resolveQuizResult, resolveResultFromType } from '@/lib/results';
+import { getResultShareMetadata } from '@/lib/result-meta';
 import { defaultResultType, isResultType, resultTypes, QuizMode, QuizTotals, ResultType } from '@/types/quiz';
 
 interface DynamicResultPageProps {
@@ -44,15 +44,21 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: DynamicResultPageProps): Promise<Metadata> {
   const locale = getLocaleOrFallback(params.locale);
   const resultType = isResultType(params.resultType) ? params.resultType : defaultResultType;
-  const profile = getResultProfile(locale, resultType);
+  const metadata = getResultShareMetadata(locale, resultType);
 
   return {
-    title: `${profile.title} · ${uiMessages[locale].metadata.title}`,
-    description: profile.description,
+    title: metadata.title,
+    description: metadata.description,
     openGraph: {
-      title: profile.title,
-      description: profile.description,
-      images: [profile.image.src],
+      title: metadata.ogTitle,
+      description: metadata.ogDescription,
+      images: [metadata.imagePath],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: metadata.ogTitle,
+      description: metadata.ogDescription,
+      images: [metadata.imagePath],
     },
   };
 }
