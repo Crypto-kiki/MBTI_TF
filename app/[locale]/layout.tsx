@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
-import { notFound } from 'next/navigation';
+import { redirect } from 'next/navigation';
 
 import { uiMessages } from '@/data/i18n/messages';
 import { defaultLocale, isLocale, locales } from '@/lib/i18n/config';
@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: LocaleLayoutProps): Promise<M
 
 export default function LocaleLayout({ children, params }: LocaleLayoutProps) {
   if (!isLocale(params.locale)) {
-    notFound();
+    redirect(`/${defaultLocale}`);
   }
 
   return children;

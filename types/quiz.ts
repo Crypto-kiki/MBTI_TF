@@ -2,16 +2,25 @@ import type { Locale } from '@/lib/i18n/config';
 
 export type QuizMode = 'f' | 't';
 
-export type ResultType =
-  | 'f_empathy'
-  | 'f_nuance'
-  | 'f_warmth'
-  | 't_calm'
-  | 't_criteria'
-  | 't_structure'
-  | 'b_balance'
-  | 'b_steady'
-  | 'b_bridge';
+export const resultTypes = [
+  'f_empathy',
+  'f_nuance',
+  'f_warmth',
+  't_calm',
+  't_criteria',
+  't_structure',
+  'b_balance',
+  'b_steady',
+  'b_bridge',
+] as const;
+
+export type ResultType = (typeof resultTypes)[number];
+
+export const defaultResultType: ResultType = 'f_empathy';
+
+export function isResultType(value: string): value is ResultType {
+  return (resultTypes as readonly string[]).includes(value);
+}
 
 export interface ModeConfig {
   mode: QuizMode;

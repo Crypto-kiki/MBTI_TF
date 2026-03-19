@@ -18,6 +18,7 @@ export function ResultCard({ locale, mode, modeLabel, result }: ResultCardProps)
   const messages = uiMessages[locale].result;
   const axisLabel =
     result.axis === 'balanced' ? messages.axis.balanced : result.axis === 'f' ? messages.axis.f : messages.axis.t;
+  const hasAnsweredStats = result.totals.answeredCount > 0;
 
   return (
     <section className="mx-auto flex w-full max-w-5xl flex-col gap-6">
@@ -55,23 +56,25 @@ export function ResultCard({ locale, mode, modeLabel, result }: ResultCardProps)
         </div>
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-3">
-        <div className="glass-panel rounded-[1.75rem] bg-gradient-to-br from-plum to-[#7a6677] p-5 text-white shadow-soft">
-          <p className="text-sm uppercase tracking-[0.24em] text-white/72">{messages.totalF}</p>
-          <p className="mt-3 text-4xl font-semibold">{result.totals.totalFScore}</p>
-          <p className="mt-2 text-sm text-white/72">{messages.fHint}</p>
+      {hasAnsweredStats ? (
+        <div className="grid gap-4 sm:grid-cols-3">
+          <div className="glass-panel rounded-[1.75rem] bg-gradient-to-br from-plum to-[#7a6677] p-5 text-white shadow-soft">
+            <p className="text-sm uppercase tracking-[0.24em] text-white/72">{messages.totalF}</p>
+            <p className="mt-3 text-4xl font-semibold">{result.totals.totalFScore}</p>
+            <p className="mt-2 text-sm text-white/72">{messages.fHint}</p>
+          </div>
+          <div className="glass-panel rounded-[1.75rem] bg-gradient-to-br from-[#2d344a] to-[#5c6b87] p-5 text-white shadow-soft">
+            <p className="text-sm uppercase tracking-[0.24em] text-white/72">{messages.totalT}</p>
+            <p className="mt-3 text-4xl font-semibold">{result.totals.totalTScore}</p>
+            <p className="mt-2 text-sm text-white/72">{messages.tHint}</p>
+          </div>
+          <div className="glass-panel rounded-[1.75rem] bg-gradient-to-br from-rose-100 via-white to-white p-5 shadow-soft">
+            <p className="text-sm uppercase tracking-[0.24em] text-plum/60">{messages.answered}</p>
+            <p className="mt-3 text-4xl font-semibold text-ink">{result.totals.answeredCount}</p>
+            <p className="mt-2 text-sm text-ink/60">{messages.answeredHint}</p>
+          </div>
         </div>
-        <div className="glass-panel rounded-[1.75rem] bg-gradient-to-br from-[#2d344a] to-[#5c6b87] p-5 text-white shadow-soft">
-          <p className="text-sm uppercase tracking-[0.24em] text-white/72">{messages.totalT}</p>
-          <p className="mt-3 text-4xl font-semibold">{result.totals.totalTScore}</p>
-          <p className="mt-2 text-sm text-white/72">{messages.tHint}</p>
-        </div>
-        <div className="glass-panel rounded-[1.75rem] bg-gradient-to-br from-rose-100 via-white to-white p-5 shadow-soft">
-          <p className="text-sm uppercase tracking-[0.24em] text-plum/60">{messages.answered}</p>
-          <p className="mt-3 text-4xl font-semibold text-ink">{result.totals.answeredCount}</p>
-          <p className="mt-2 text-sm text-ink/60">{messages.answeredHint}</p>
-        </div>
-      </div>
+      ) : null}
 
       <div className="grid gap-4 md:grid-cols-2">
         <div className="glass-panel rounded-[1.9rem] bg-white/80 p-5 sm:p-6">

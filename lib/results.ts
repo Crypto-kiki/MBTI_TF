@@ -1,5 +1,5 @@
 import { getResultProfile } from '@/data/results';
-import { Choice, Question, QuizAnswer, QuizTotals, ResolvedQuizResult, ResultType } from '@/types/quiz';
+import { Choice, Question, QuizAnswer, QuizMode, QuizTotals, ResolvedQuizResult, ResultType } from '@/types/quiz';
 import type { Locale } from '@/lib/i18n/config';
 
 const axisThreshold = 6;
@@ -21,6 +21,46 @@ const axisProfiles: Record<'f' | 't' | 'balanced', ResultType[]> = {
   t: ['t_calm', 't_criteria', 't_structure'],
   balanced: ['b_balance', 'b_steady', 'b_bridge'],
 };
+
+const emptyTotals: QuizTotals = {
+  totalFScore: 0,
+  totalTScore: 0,
+  answeredCount: 0,
+  tagCounts: {},
+};
+
+export function getResultHref(locale: Locale, resultType: ResultType) {
+  return `/${locale}/result/${resultType}`;
+}
+
+export function getAxisFromResultType(resultType: ResultType): 'f' | 't' | 'balanced' {
+  if (resultType.startsWith('f_')) {
+    return 'f';
+  }
+
+  if (resultType.startsWith('t_')) {
+    return 't';
+  }
+
+  return 'balanced';
+}
+
+export function getModeFromResultType(resultType: ResultType, explicitMode?: QuizMode): QuizMode {
+  if (explicitMode) {
+    return explicitMode;
+  }
+
+  return resultType.startsWith('t_') ? 't' : 'f';
+}
+
+export function resolveResultFromType(locale: Locale, resultType: ResultType): ResolvedQuizResult {
+  return {
+    axis: getAxisFromResultType(resultType),
+    dominantTags: clusterTags[resultType].slice(0, 3),
+    profile: getResultProfile(locale, resultType),
+    totals: emptyTotals,
+  };
+}
 
 export function calculateQuizTotals(questions: Question[], answers: QuizAnswer[]): QuizTotals {
   const answerMap = new Map(answers.map((answer) => [answer.questionId, answer.choiceId]));

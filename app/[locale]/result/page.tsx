@@ -1,11 +1,10 @@
-import { Layout } from '@/components/Layout';
-import { ResultCard } from '@/components/ResultCard';
-import { parseTagCounts, resolveQuizResult } from '@/lib/results';
-import { defaultLocale, isLocale, type Locale } from '@/lib/i18n/config';
-import { QuizMode, QuizTotals } from '@/types/quiz';
-import { uiMessages } from '@/data/i18n/messages';
+import { redirect } from 'next/navigation';
 
-interface LocalizedResultPageProps {
+import { defaultResultType, QuizMode, QuizTotals } from '@/types/quiz';
+import { defaultLocale, isLocale, type Locale } from '@/lib/i18n/config';
+import { getResultHref, parseTagCounts, resolveQuizResult } from '@/lib/results';
+
+interface LegacyLocalizedResultPageProps {
   params: { locale: string };
   searchParams?: {
     mode?: string;
@@ -21,9 +20,17 @@ function toNumber(value?: string) {
   return Number.isFinite(parsed) ? parsed : 0;
 }
 
-export default function LocalizedResultPage({ params, searchParams }: LocalizedResultPageProps) {
+function hasQuizState(searchParams?: LegacyLocalizedResultPageProps['searchParams']) {
+  return Boolean(searchParams?.totalFScore || searchParams?.totalTScore || searchParams?.answered || searchParams?.tags);
+}
+
+export default function LegacyLocalizedResultPage({ params, searchParams }: LegacyLocalizedResultPageProps) {
   const locale: Locale = isLocale(params.locale) ? params.locale : defaultLocale;
-  const mode: QuizMode = searchParams?.mode === 't' ? 't' : 'f';
+
+  if (!hasQuizState(searchParams)) {
+    redirect(getResultHref(locale, defaultResultType));
+  }
+
   const totals: QuizTotals = {
     totalFScore: toNumber(searchParams?.totalFScore),
     totalTScore: toNumber(searchParams?.totalTScore),
@@ -31,12 +38,14 @@ export default function LocalizedResultPage({ params, searchParams }: LocalizedR
     tagCounts: parseTagCounts(searchParams?.tags),
   };
   const result = resolveQuizResult(locale, totals);
+  const mode: QuizMode = searchParams?.mode === 't' ? 't' : 'f';
+  const nextSearch = new URLSearchParams({
+    mode,
+    totalFScore: String(totals.totalFScore),
+    totalTScore: String(totals.totalTScore),
+    answered: String(totals.answeredCount),
+    tags: searchParams?.tags ?? '',
+  });
 
-  return (
-    <Layout locale={locale}>
-      <div className="flex flex-1 items-center py-8">
-        <ResultCard locale={locale} mode={mode} modeLabel={uiMessages[locale].modes[mode].title} result={result} />
-      </div>
-    </Layout>
-  );
+  redirect(`${getResultHref(locale, result.profile.type)}?${nextSearch.toString()}`);
 }
