@@ -75,18 +75,29 @@ a {
 
 @layer components {
   .glass-panel {
-    @apply border border-white/70 bg-white/72 shadow-glow backdrop-blur-xl;
+    @apply border shadow-glow backdrop-blur-xl;
+    border-color: rgba(255, 255, 255, 0.7);
+    background-color: rgba(255, 255, 255, 0.72);
   }
 
   .brand-chip {
-    @apply inline-flex items-center gap-2 rounded-full border border-white/70 bg-white/75 px-4 py-2 text-sm text-plum shadow-sm backdrop-blur;
+    @apply inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm text-plum shadow-sm backdrop-blur;
+    border-color: rgba(255, 255, 255, 0.7);
+    background-color: rgba(255, 255, 255, 0.75);
   }
 
   .soft-button {
-    @apply inline-flex items-center justify-center rounded-full border border-plum/12 bg-white/80 px-4 py-2.5 text-sm font-medium text-plum transition duration-300 hover:-translate-y-0.5 hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-plum/35 focus-visible:ring-offset-2 focus-visible:ring-offset-[#f6f1f8] active:translate-y-0;
+    @apply inline-flex items-center justify-center rounded-full border px-4 py-2.5 text-sm font-medium text-plum transition duration-300 hover:-translate-y-0.5 hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[#f6f1f8] active:translate-y-0;
+    border-color: rgba(91, 65, 88, 0.12);
+    background-color: rgba(255, 255, 255, 0.8);
   }
 
   .interactive-card {
-    @apply transition duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-plum/35 focus-visible:ring-offset-2 focus-visible:ring-offset-[#f6f1f8] active:translate-y-0;
+    @apply transition duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[#f6f1f8] active:translate-y-0;
+  }
+
+  .soft-button:focus-visible,
+  .interactive-card:focus-visible {
+    --tw-ring-color: rgba(91, 65, 88, 0.35);
   }
 }
