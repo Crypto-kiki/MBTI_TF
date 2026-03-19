@@ -11,10 +11,20 @@ interface ResultCatalogCardProps {
   profile: ResultProfile;
   strengthsLabel: string;
   tipsLabel: string;
+  goodMatchLabel: string;
+  goodMatchReasonLabel: string;
   viewLabel: string;
 }
 
-export function ResultCatalogCard({ locale, profile, strengthsLabel, tipsLabel, viewLabel }: ResultCatalogCardProps) {
+export function ResultCatalogCard({
+  locale,
+  profile,
+  strengthsLabel,
+  tipsLabel,
+  goodMatchLabel,
+  goodMatchReasonLabel,
+  viewLabel,
+}: ResultCatalogCardProps) {
   return (
     <article className="glass-panel rounded-[2rem] bg-white/82 p-4 shadow-soft sm:p-5">
       <ResultImageCard image={profile.image} title={profile.title} subtitle={profile.subtitle} />
@@ -46,6 +56,14 @@ export function ResultCatalogCard({ locale, profile, strengthsLabel, tipsLabel, 
             ))}
           </ul>
         </div>
+      </div>
+
+      <div className="mt-4 rounded-[1.7rem] bg-[#f8f3ff] p-4">
+        <p className="text-xs font-medium uppercase tracking-[0.18em] text-plum/60">{goodMatchLabel}</p>
+        <p className="mt-2 text-base font-semibold text-ink">{profile.compatibility.title}</p>
+        <p className="mt-1 text-sm text-plum">{profile.compatibility.subtitle}</p>
+        <p className="mt-4 text-xs font-medium uppercase tracking-[0.18em] text-plum/60">{goodMatchReasonLabel}</p>
+        <p className="mt-2 text-sm leading-7 text-ink/68">{profile.compatibility.reason}</p>
       </div>
 
       <Link

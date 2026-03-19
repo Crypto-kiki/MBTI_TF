@@ -17,6 +17,7 @@ interface ResultCardProps {
 export function ResultCard({ locale, mode, modeLabel, result }: ResultCardProps) {
   const otherRoute = mode === 'f' ? `/${locale}/quiz/t` : `/${locale}/quiz/f`;
   const messages = uiMessages[locale].result;
+  const compatibilityHref = `/${locale}/result/${result.profile.compatibility.type}`;
   const axisLabel =
     result.axis === 'balanced' ? messages.axis.balanced : result.axis === 'f' ? messages.axis.f : messages.axis.t;
   const hasAnsweredStats = result.totals.answeredCount > 0;
@@ -73,7 +74,7 @@ export function ResultCard({ locale, mode, modeLabel, result }: ResultCardProps)
       </div>
 
       <div className="glass-panel rounded-[2.2rem] bg-white/82 p-6 shadow-soft sm:p-8">
-        <div className="grid gap-6 lg:grid-cols-2">
+        <div className="grid gap-6 lg:grid-cols-3">
           <div>
             <h2 className="text-lg font-semibold text-ink">{messages.strengths}</h2>
             <ul className="mt-4 space-y-3 text-sm leading-7 text-ink/70">
@@ -95,6 +96,22 @@ export function ResultCard({ locale, mode, modeLabel, result }: ResultCardProps)
                 </li>
               ))}
             </ul>
+          </div>
+          <div>
+            <h2 className="text-lg font-semibold text-ink">{messages.goodMatch}</h2>
+            <div className="mt-4 rounded-[1.7rem] bg-[#f8f3ff] px-4 py-4">
+              <p className="text-base font-semibold text-ink">{result.profile.compatibility.title}</p>
+              <p className="mt-1 text-sm text-plum">{result.profile.compatibility.subtitle}</p>
+              <p className="mt-4 text-xs font-medium uppercase tracking-[0.18em] text-plum/60">{messages.goodMatchReason}</p>
+              <p className="mt-2 text-sm leading-7 text-ink/70">{result.profile.compatibility.reason}</p>
+              <Link
+                href={compatibilityHref}
+                className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-plum transition hover:text-plum/80"
+              >
+                {result.profile.compatibility.title}
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            </div>
           </div>
         </div>
 

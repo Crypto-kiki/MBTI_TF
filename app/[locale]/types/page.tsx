@@ -40,7 +40,7 @@ export default function AllTypesPage({ params }: AllTypesPageProps) {
           <p className="mt-4 max-w-3xl text-base leading-8 text-ink/72 sm:text-lg">{messages.catalog.description}</p>
         </div>
 
-        <div className="grid gap-5 lg:grid-cols-2">
+        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
           {resultTypes.map((type) => (
             <ResultCatalogCard
               key={type}
@@ -48,6 +48,8 @@ export default function AllTypesPage({ params }: AllTypesPageProps) {
               profile={profiles[type]}
               strengthsLabel={messages.result.strengths}
               tipsLabel={messages.result.tips}
+              goodMatchLabel={messages.result.goodMatch}
+              goodMatchReasonLabel={messages.result.goodMatchReason}
               viewLabel={messages.catalog.viewLabel}
             />
           ))}

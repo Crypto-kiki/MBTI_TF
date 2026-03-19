@@ -35,6 +35,34 @@ const emptyTotals: QuizTotals = {
   tagCounts: {},
 };
 
+function normalizeAxisScores(totalFScore: number, totalTScore: number) {
+  const total = totalFScore + totalTScore;
+
+  if (total <= 0) {
+    return { totalFScore: 0, totalTScore: 0 };
+  }
+
+  const normalizedF = Math.round((totalFScore / total) * 100);
+
+  return {
+    totalFScore: normalizedF,
+    totalTScore: 100 - normalizedF,
+  };
+}
+
+export function normalizeQuizTotals(totals: QuizTotals): QuizTotals {
+  if (totals.answeredCount <= 0) {
+    return totals;
+  }
+
+  const normalizedScores = normalizeAxisScores(totals.totalFScore, totals.totalTScore);
+
+  return {
+    ...totals,
+    ...normalizedScores,
+  };
+}
+
 export function getResultHref(locale: Locale, resultType: ResultType) {
   return `/${locale}/result/${resultType}`;
 }
@@ -70,8 +98,7 @@ export function resolveResultFromType(locale: Locale, resultType: ResultType): R
 
 export function calculateQuizTotals(questions: Question[], answers: QuizAnswer[]): QuizTotals {
   const answerMap = new Map(answers.map((answer) => [answer.questionId, answer.choiceId]));
-
-  return questions.reduce<QuizTotals>(
+  const rawTotals = questions.reduce<QuizTotals>(
     (acc, question) => {
       const selectedChoiceId = answerMap.get(question.id);
       const selectedChoice = question.choices.find((choice) => choice.id === selectedChoiceId);
@@ -94,6 +121,8 @@ export function calculateQuizTotals(questions: Question[], answers: QuizAnswer[]
     },
     { totalFScore: 0, totalTScore: 0, answeredCount: 0, tagCounts: {} },
   );
+
+  return normalizeQuizTotals(rawTotals);
 }
 
 export function serializeTagCounts(tagCounts: Record<string, number>) {
@@ -159,14 +188,15 @@ function pickProfileType(axis: 'f' | 't' | 'balanced', tagCounts: Record<string,
 }
 
 export function resolveQuizResult(locale: Locale, totals: QuizTotals): ResolvedQuizResult {
-  const axis = resolveAxis(totals);
-  const profileType = pickProfileType(axis, totals.tagCounts);
+  const normalizedTotals = normalizeQuizTotals(totals);
+  const axis = resolveAxis(normalizedTotals);
+  const profileType = pickProfileType(axis, normalizedTotals.tagCounts);
 
   return {
     axis,
-    dominantTags: getTopTags(totals.tagCounts),
+    dominantTags: getTopTags(normalizedTotals.tagCounts),
     profile: getResultProfile(locale, profileType),
-    totals,
+    totals: normalizedTotals,
   };
 }
 
@@ -181,7 +211,7 @@ export function getSelectedChoices(questions: Question[], answers: QuizAnswer[])
 }
 
 export function aggregateChoices(choices: Choice[]): QuizTotals {
-  return choices.reduce<QuizTotals>(
+  const rawTotals = choices.reduce<QuizTotals>(
     (acc, choice) => {
       const nextTagCounts = { ...acc.tagCounts };
       choice.tags.forEach((tag) => {
@@ -197,4 +227,6 @@ export function aggregateChoices(choices: Choice[]): QuizTotals {
     },
     { totalFScore: 0, totalTScore: 0, answeredCount: 0, tagCounts: {} },
   );
+
+  return normalizeQuizTotals(rawTotals);
 }

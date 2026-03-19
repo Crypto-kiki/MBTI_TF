@@ -37,6 +37,99 @@ function enrichDescription(locale: Locale, content: ResultContent) {
   return `${content.description} This tends to show up most clearly in strengths like “${firstStrength}” and “${secondStrength}.” It usually works best when you also remember to “${firstTip.toLowerCase()}.”`;
 }
 
+const compatibilityDefinitions: Record<ResultType, Record<Locale, { type: ResultType; reason: string }>> = {
+  f_empathy: {
+    ko: { type: 't_calm', reason: '당신의 공감력에 이 유형의 차분한 정리가 더해지면 서로를 안정적으로 받쳐줄 수 있어요.' },
+    ja: { type: 't_calm', reason: 'あなたの共感力に、このタイプの落ち着いた整理力が合わさると、お互いを安定して支えやすくなります。' },
+    'zh-TW': { type: 't_calm', reason: '你的共感力配上這種類型冷靜整理局面的能力，彼此更容易互相撐住。' },
+    en: { type: 't_calm', reason: 'Your empathy tends to pair well with this type’s calm sorting, creating a steady emotional balance.' },
+  },
+  f_nuance: {
+    ko: { type: 't_criteria', reason: '당신의 섬세한 해석에 이 유형의 명확한 기준이 더해지면 감각과 판단이 균형을 이룹니다.' },
+    ja: { type: 't_criteria', reason: 'あなたの繊細な読み取りに、このタイプの明確な基準が加わると、感覚と判断のバランスが取りやすくなります。' },
+    'zh-TW': { type: 't_criteria', reason: '你的細膩解讀若搭配這種類型清楚的判準，直覺與判斷會更平衡。' },
+    en: { type: 't_criteria', reason: 'Your subtle reading works well with this type’s clear criteria, balancing instinct with structure.' },
+  },
+  f_warmth: {
+    ko: { type: 't_signal', reason: '당신이 관계의 온도를 살피는 동안 이 유형은 핵심을 또렷하게 짚어줘서 소통이 부드럽고 선명해져요.' },
+    ja: { type: 't_signal', reason: 'あなたが関係の温度を整えるあいだ、このタイプは要点を明確にしてくれるので、やり取りがやわらかくもはっきりします。' },
+    'zh-TW': { type: 't_signal', reason: '你照顧關係氛圍時，這種類型能把重點講清楚，讓溝通既柔和又明確。' },
+    en: { type: 't_signal', reason: 'You soften the atmosphere while this type clarifies the signal, making communication both warm and clear.' },
+  },
+  f_shelter: {
+    ko: { type: 'b_anchor', reason: '당신의 포용력과 이 유형의 신중한 중심감이 만나면 편안함과 안정감이 오래 유지됩니다.' },
+    ja: { type: 'b_anchor', reason: 'あなたの包容力と、このタイプの慎重な安定感が合わさると、安心できる空気が長く続きやすくなります。' },
+    'zh-TW': { type: 'b_anchor', reason: '你的包容感遇上這種類型穩穩守住中心的特質，關係裡會更有長久的安心感。' },
+    en: { type: 'b_anchor', reason: 'Your protective warmth fits this type’s grounded steadiness, creating a lasting sense of safety.' },
+  },
+  f_harmony: {
+    ko: { type: 't_structure', reason: '당신이 관계의 흐름을 부드럽게 만들고 이 유형이 구조를 세워주면 팀워크가 특히 좋아집니다.' },
+    ja: { type: 't_structure', reason: 'あなたが人間関係の流れをなめらかにし、このタイプが構造を整えることで、チームワークがとてもよくなります。' },
+    'zh-TW': { type: 't_structure', reason: '你讓合作氣氛更順，這種類型則把結構搭好，彼此配合時特別有效率。' },
+    en: { type: 't_structure', reason: 'You smooth the relational flow while this type builds the structure, which makes collaboration especially strong.' },
+  },
+  t_calm: {
+    ko: { type: 'f_empathy', reason: '당신의 침착함은 이 유형의 섬세한 공감과 만나면 차갑지 않은 안정감으로 이어집니다.' },
+    ja: { type: 'f_empathy', reason: 'あなたの落ち着きは、このタイプの繊細な共感と合わさることで、冷たくない安定感へとつながります。' },
+    'zh-TW': { type: 'f_empathy', reason: '你的冷靜若配上這種類型細膩的共感，穩定感會更有溫度。' },
+    en: { type: 'f_empathy', reason: 'Your calm judgment pairs well with this type’s empathy, making steadiness feel warm rather than distant.' },
+  },
+  t_criteria: {
+    ko: { type: 'f_nuance', reason: '당신의 기준은 이 유형의 섬세한 맥락 읽기와 만나면 더 사람다운 판단으로 확장됩니다.' },
+    ja: { type: 'f_nuance', reason: 'あなたの基準は、このタイプの繊細な文脈理解と組み合わさることで、より人に寄り添った判断になります。' },
+    'zh-TW': { type: 'f_nuance', reason: '你的判準配上這種類型對細節脈絡的敏感度，決定會更完整也更貼近人。' },
+    en: { type: 'f_nuance', reason: 'Your criteria become more human-centered when paired with this type’s subtle context awareness.' },
+  },
+  t_structure: {
+    ko: { type: 'f_harmony', reason: '당신이 구조를 잡아주고 이 유형이 관계의 결을 다듬어주면 실행력과 조화가 함께 살아나요.' },
+    ja: { type: 'f_harmony', reason: 'あなたが構造をつくり、このタイプが関係の流れを整えることで、実行力と調和が両立しやすくなります。' },
+    'zh-TW': { type: 'f_harmony', reason: '你負責把事情架構好，這種類型照顧合作節奏，會讓推進力與和諧感一起提升。' },
+    en: { type: 'f_harmony', reason: 'You bring structure while this type smooths the human side, giving a project both momentum and harmony.' },
+  },
+  t_signal: {
+    ko: { type: 'f_warmth', reason: '당신이 핵심을 또렷하게 짚고 이 유형이 분위기를 부드럽게 만들면 전달력이 훨씬 좋아집니다.' },
+    ja: { type: 'f_warmth', reason: 'あなたが要点を明確にし、このタイプが空気をやわらかく整えることで、伝わり方がぐっとよくなります。' },
+    'zh-TW': { type: 'f_warmth', reason: '你把重點講清楚，這種類型則讓氣氛變柔和，因此訊息更容易被接受。' },
+    en: { type: 'f_warmth', reason: 'You sharpen the message while this type softens the atmosphere, so ideas land more smoothly.' },
+  },
+  t_drive: {
+    ko: { type: 'b_attune', reason: '당신의 추진력에 이 유형의 조율 감각이 더해지면 속도와 관계를 함께 챙길 수 있어요.' },
+    ja: { type: 'b_attune', reason: 'あなたの推進力に、このタイプの調整感覚が加わると、スピードと人間関係の両方を保ちやすくなります。' },
+    'zh-TW': { type: 'b_attune', reason: '你的推進力若搭配這種類型的協調感，做事速度和合作感都能一起顧到。' },
+    en: { type: 'b_attune', reason: 'Your drive pairs well with this type’s attunement, helping progress happen without losing the relationship.' },
+  },
+  b_balance: {
+    ko: { type: 't_structure', reason: '당신의 균형감은 이 유형의 구조화 능력과 만나면 복잡한 상황을 안정적으로 풀어냅니다.' },
+    ja: { type: 't_structure', reason: 'あなたのバランス感覚は、このタイプの構造化能力と組み合わさると、複雑な状況を安定して整理できます。' },
+    'zh-TW': { type: 't_structure', reason: '你的平衡感搭配這種類型的結構化能力，能把複雜局面穩穩整理開來。' },
+    en: { type: 't_structure', reason: 'Your balance combines well with this type’s structuring ability, bringing stability to complexity.' },
+  },
+  b_steady: {
+    ko: { type: 'f_warmth', reason: '당신의 신중함에 이 유형의 따뜻한 관계 감각이 더해지면 차분하면서도 편안한 호흡이 만들어집니다.' },
+    ja: { type: 'f_warmth', reason: 'あなたの慎重さに、このタイプのあたたかな関係感覚が加わると、落ち着きと心地よさのある空気が生まれます。' },
+    'zh-TW': { type: 'f_warmth', reason: '你的穩重如果遇上這種類型對關係溫度的敏感度，互動會更沉穩也更舒服。' },
+    en: { type: 'f_warmth', reason: 'Your steadiness fits this type’s relational warmth, creating a calm but comfortable dynamic.' },
+  },
+  b_bridge: {
+    ko: { type: 'f_harmony', reason: '당신이 서로를 연결하고 이 유형이 분위기를 다듬어주면 협업이 자연스럽게 이어집니다.' },
+    ja: { type: 'f_harmony', reason: 'あなたが人や役割をつなぎ、このタイプが空気を整えることで、協力が自然に続きやすくなります。' },
+    'zh-TW': { type: 'f_harmony', reason: '你負責把人和整體節奏串起來，這種類型再把氣氛顧好，合作會變得很順。' },
+    en: { type: 'f_harmony', reason: 'You connect people and roles while this type smooths the atmosphere, making teamwork flow naturally.' },
+  },
+  b_attune: {
+    ko: { type: 't_drive', reason: '당신의 조율감은 이 유형의 실행력과 만나면 사람을 놓치지 않으면서도 빠르게 움직일 수 있어요.' },
+    ja: { type: 't_drive', reason: 'あなたの調整感覚は、このタイプの実行力と組み合わさると、人を置き去りにせず素早く進めます。' },
+    'zh-TW': { type: 't_drive', reason: '你的協調感搭配這種類型的執行力，能在顧到人際的同時把事情推進。' },
+    en: { type: 't_drive', reason: 'Your attunement works well with this type’s execution, helping things move fast without losing people.' },
+  },
+  b_anchor: {
+    ko: { type: 'f_shelter', reason: '당신의 중심감은 이 유형의 포근한 수용력과 만나면 관계 안에 깊은 안정감을 만듭니다.' },
+    ja: { type: 'f_shelter', reason: 'あなたのぶれない中心感は、このタイプの包み込むような受容と合わさることで、深い安心感を生みます。' },
+    'zh-TW': { type: 'f_shelter', reason: '你的穩定中心若配上這種類型溫柔接住人的能力，關係裡會有很深的安心感。' },
+    en: { type: 'f_shelter', reason: 'Your grounded center pairs naturally with this type’s sheltering warmth, creating deep reassurance.' },
+  },
+};
+
 export const resultDefinitions: Record<ResultType, ResultDefinition> = {
   f_empathy: createResultDefinition('f_empathy', '/images/results/f-empathy.svg', {
     ko: {
@@ -557,12 +650,20 @@ export function getResultDefinition(type: ResultType): ResultDefinition {
 export function getResultProfile(locale: Locale, type: ResultType): ResultProfile {
   const definition = getResultDefinition(type);
   const content = definition.content[locale] ?? definition.content[defaultLocale];
+  const compatibility = compatibilityDefinitions[type][locale] ?? compatibilityDefinitions[type][defaultLocale];
+  const compatibilityContent =
+    resultDefinitions[compatibility.type].content[locale] ?? resultDefinitions[compatibility.type].content[defaultLocale];
 
   return {
     type,
     image: definition.image,
     ...content,
     description: enrichDescription(locale, content),
+    compatibility: {
+      ...compatibility,
+      title: compatibilityContent.title,
+      subtitle: compatibilityContent.subtitle,
+    },
   };
 }
 

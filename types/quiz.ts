@@ -70,6 +70,10 @@ export interface ResultContent {
   strengths: string[];
   tips: string[];
   cta: string;
+  compatibility?: {
+    type: ResultType;
+    reason: string;
+  };
 }
 
 export interface ResultDefinition {
@@ -81,6 +85,10 @@ export interface ResultDefinition {
 export interface ResultProfile extends ResultContent {
   type: ResultType;
   image: ResultImage;
+  compatibility: NonNullable<ResultContent['compatibility']> & {
+    title: string;
+    subtitle: string;
+  };
 }
 
 export interface QuizTotals {
