@@ -31,27 +31,25 @@ export function ResultImageCard({ image, title, subtitle, variant = 'default' }:
   return (
     <div
       className={`relative overflow-hidden border border-white/70 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.98),rgba(246,233,230,0.88)_34%,rgba(221,212,239,0.82)_100%)] shadow-soft ${
-        isHero ? 'rounded-[2.15rem] p-3.5 shadow-float sm:rounded-[2.4rem] sm:p-4' : 'rounded-[1.8rem] p-2.5 sm:rounded-[2rem] sm:p-3'
+        isHero ? 'rounded-[2.15rem] p-3 shadow-float sm:rounded-[2.4rem] sm:p-3.5' : 'rounded-[1.8rem] p-2.5 sm:rounded-[2rem] sm:p-3'
       }`}
     >
       <div
-        className={`relative overflow-hidden rounded-[1.75rem] bg-gradient-to-br from-white via-[#f8f2f7] to-[#e7e0f3] ${
-          isHero ? 'aspect-[4/4.9] min-h-[18.5rem] sm:aspect-[5/5.8] sm:min-h-[28rem]' : 'aspect-[16/10]'
+        className={`relative overflow-hidden rounded-[1.7rem] bg-gradient-to-br from-white via-[#f8f2f7] to-[#e7e0f3] ${
+          isHero ? 'aspect-[16/11] min-h-[15.5rem] sm:min-h-[18rem] lg:min-h-[20rem]' : 'aspect-[16/10]'
         }`}
       >
-        {isHero ? <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0)_28%,rgba(117,86,113,0.12)_82%,rgba(52,44,67,0.18)_100%)]" /> : null}
+        {isHero ? <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0)_24%,rgba(117,86,113,0.1)_78%,rgba(52,44,67,0.16)_100%)]" /> : null}
         {!hasError ? (
-          <>
-            <Image
-              src={image.src}
-              alt={`${title} representative artwork`}
-              fill
-              sizes="(min-width: 1280px) 420px, (min-width: 1024px) 34vw, (min-width: 640px) 88vw, 100vw"
-              className={isHero ? 'object-contain p-6 drop-shadow-[0_24px_42px_rgba(65,45,72,0.2)] sm:p-10' : 'object-contain p-5 sm:p-7'}
-              onError={() => setHasError(true)}
-              priority={false}
-            />
-          </>
+          <Image
+            src={image.src}
+            alt={`${title} representative artwork`}
+            fill
+            sizes="(min-width: 1280px) 520px, (min-width: 1024px) 42vw, (min-width: 640px) 88vw, 100vw"
+            className={isHero ? 'object-contain p-4 drop-shadow-[0_22px_36px_rgba(65,45,72,0.18)] sm:p-5 lg:p-6' : 'object-contain p-5 sm:p-7'}
+            onError={() => setHasError(true)}
+            priority={false}
+          />
         ) : (
           <div className="flex h-full flex-col justify-between bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.98),rgba(248,240,246,0.92)_45%,rgba(227,220,242,0.9)_100%)] p-5 sm:p-6">
             <div className="brand-chip w-fit border-white/80 bg-white/80 text-[0.7rem] tracking-[0.24em] text-plum/80 shadow-none">

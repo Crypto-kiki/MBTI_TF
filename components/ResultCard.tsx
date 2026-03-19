@@ -188,9 +188,9 @@ export function ResultCard({ locale, mode, modeLabel, result }: ResultCardProps)
 
   return (
     <section className="mx-auto flex w-full max-w-6xl flex-col gap-5 sm:gap-6">
-      <div className="glass-panel overflow-hidden rounded-[2.1rem] bg-hero-glow p-4 sm:rounded-[2.6rem] sm:p-8 lg:p-10">
-        <div className="grid gap-6 xl:grid-cols-[minmax(0,1.08fr)_minmax(20rem,0.92fr)] xl:items-center xl:gap-8">
-          <div className="max-w-3xl">
+      <div className="glass-panel overflow-hidden rounded-[2.1rem] bg-hero-glow p-4 sm:rounded-[2.6rem] sm:p-7 lg:p-8">
+        <div className="grid gap-6 xl:grid-cols-[minmax(0,1.02fr)_minmax(22rem,0.98fr)] xl:items-start xl:gap-8">
+          <div className="max-w-3xl xl:pt-2">
             <div className="flex flex-wrap items-center gap-2">
               <div className="brand-chip bg-white/92 px-3 py-1.5 text-[0.66rem] tracking-[0.22em] text-plum/88 shadow-soft sm:px-3.5 sm:text-[0.7rem] sm:tracking-[0.24em]">
                 <Sparkles className="h-3.5 w-3.5" />
@@ -202,15 +202,21 @@ export function ResultCard({ locale, mode, modeLabel, result }: ResultCardProps)
               <span className="rounded-full bg-plum/10 px-3 py-1 text-xs text-plum sm:text-sm">{axisLabel}</span>
             </div>
 
-            <h1 className="mt-5 text-balance text-[2.15rem] font-semibold leading-[0.96] text-ink sm:mt-6 sm:text-[3.35rem] lg:text-[4.05rem]">
+            <h1 className="mt-5 text-balance text-[2.2rem] font-semibold leading-[0.96] text-ink sm:mt-6 sm:text-[3.25rem] lg:text-[3.95rem]">
               {result.profile.title}
             </h1>
-            <p className="mt-3 text-lg font-medium leading-7 text-plum sm:mt-4 sm:max-w-2xl sm:text-[1.45rem] sm:leading-9">
+            <p className="mt-3 text-lg font-medium leading-7 text-plum sm:mt-4 sm:max-w-2xl sm:text-[1.42rem] sm:leading-9">
               {result.profile.subtitle}
             </p>
 
-            <div className="mt-4 rounded-[1.45rem] border border-white/75 bg-white/78 px-4 py-3.5 shadow-soft sm:mt-5 sm:rounded-[1.75rem] sm:px-5 sm:py-4">
-              <p className="text-sm leading-7 text-ink sm:text-base sm:leading-8">{result.profile.quickSummary}</p>
+            <div className="mt-5 rounded-[1.65rem] border border-white/80 bg-[linear-gradient(135deg,rgba(255,255,255,0.96),rgba(248,242,248,0.92),rgba(242,236,251,0.88))] p-4 shadow-soft sm:rounded-[1.9rem] sm:p-5">
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <div className="inline-flex items-center gap-2 rounded-full bg-plum/8 px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-plum/74 sm:text-[0.72rem]">
+                  {messages.summaryCard}
+                </div>
+                <p className="text-xs font-medium tracking-[0.08em] text-plum/50 sm:text-[0.78rem]">{messages.summaryHint}</p>
+              </div>
+              <p className="mt-3 text-base font-semibold leading-7 text-ink sm:text-[1.08rem] sm:leading-8">{result.profile.quickSummary}</p>
             </div>
 
             <div className="mt-4 flex flex-wrap items-center gap-2 sm:mt-5 sm:gap-2.5">
@@ -221,11 +227,11 @@ export function ResultCard({ locale, mode, modeLabel, result }: ResultCardProps)
               ))}
             </div>
 
-            <div className="mt-5 rounded-[1.55rem] bg-white/74 p-4 sm:mt-7 sm:rounded-[2rem] sm:p-6">
+            <div className="mt-5 rounded-[1.55rem] bg-white/74 p-4 sm:mt-6 sm:rounded-[1.9rem] sm:p-5">
               <p className="max-w-2xl text-sm leading-7 text-ink/72 sm:text-base sm:leading-8">{result.profile.description}</p>
 
               {hasAnsweredStats ? (
-                <div className="mt-5 space-y-3.5 sm:mt-6 sm:space-y-4">
+                <div className="mt-5 space-y-3.5 sm:space-y-4">
                   <div className="grid gap-3 sm:grid-cols-2 sm:gap-4">
                     <div className="rounded-[1.45rem] bg-gradient-to-br from-plum to-[#7a6677] p-4 text-white shadow-soft sm:rounded-[1.8rem] sm:p-5">
                       <p className="text-[0.68rem] uppercase tracking-[0.2em] text-white/72 sm:text-sm sm:tracking-[0.24em]">{messages.totalF}</p>
@@ -262,22 +268,20 @@ export function ResultCard({ locale, mode, modeLabel, result }: ResultCardProps)
             </div>
           </div>
 
-          <div className="xl:pl-2">
+          <div className="relative xl:pl-2">
             <ResultImageCard image={result.profile.image} title={result.profile.title} subtitle={result.profile.subtitle} variant="hero" />
+            <div className="relative z-10 mx-2 -mt-4 sm:mx-5 sm:-mt-6 lg:mx-6 xl:mx-7">
+              <ResultShareCard
+                locale={locale}
+                resultType={result.profile.type}
+                image={result.profile.image}
+                title={result.profile.title}
+                subtitle={result.profile.subtitle}
+                messages={messages.share}
+                variant="embedded"
+              />
+            </div>
           </div>
-        </div>
-      </div>
-
-      <div className="flex justify-center xl:justify-end">
-        <div className="w-full max-w-2xl xl:max-w-xl">
-          <ResultShareCard
-            locale={locale}
-            resultType={result.profile.type}
-            image={result.profile.image}
-            title={result.profile.title}
-            subtitle={result.profile.subtitle}
-            messages={messages.share}
-          />
         </div>
       </div>
 
