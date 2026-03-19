@@ -8,18 +8,24 @@ const clusterTags = {
   f_empathy: ['공감', '배려', '경청', '지지', '수용', '안심', '관심', '격려'],
   f_nuance: ['세심함', '해석', '맥락', '감정읽기', '숨은감정', '추론', '관찰', '감지', '회상'],
   f_warmth: ['분위기', '관계', '조율', '이해', '유연함', '온도감', '대기', '기다림', '접근'],
+  f_shelter: ['안심', '수용', '지지', '기다림', '배려', '관심', '관계', '격려'],
+  f_harmony: ['조율', '분위기', '이해', '관계', '유연함', '존중', '배려', '조화'],
   t_calm: ['실용', '효율', '실행', '기능', '결론', '평가', '영향도', '권한'],
   t_criteria: ['기준', '판단', '명확성', '정의', '규칙', '책임', '객관', '확인', '절차'],
   t_structure: ['구조', '분석', '정리', '우선순위', '계획', '문제해결', '동선', '쟁점', '원인'],
+  t_signal: ['확인', '명확성', '객관', '절차', '정의', '판단', '기능', '기준'],
+  t_drive: ['실행', '효율', '우선순위', '영향도', '권한', '계획', '결론', '문제해결'],
   b_balance: ['균형', '조율', '배려', '이해', '관계', '존중'],
   b_steady: ['신중함', '유보', '거리두기', '판단유보', '명료함', '확인'],
   b_bridge: ['역할', '행동', '정리', '실행', '경청', '기준', '조화'],
+  b_attune: ['조화', '경청', '이해', '균형', '관계', '행동', '배려'],
+  b_anchor: ['신중함', '명료함', '기준', '존중', '확인', '거리두기', '판단유보'],
 } as const satisfies Record<ResultType, string[]>;
 
 const axisProfiles: Record<'f' | 't' | 'balanced', ResultType[]> = {
-  f: ['f_empathy', 'f_nuance', 'f_warmth'],
-  t: ['t_calm', 't_criteria', 't_structure'],
-  balanced: ['b_balance', 'b_steady', 'b_bridge'],
+  f: ['f_empathy', 'f_nuance', 'f_warmth', 'f_shelter', 'f_harmony'],
+  t: ['t_calm', 't_criteria', 't_structure', 't_signal', 't_drive'],
+  balanced: ['b_balance', 'b_steady', 'b_bridge', 'b_attune', 'b_anchor'],
 };
 
 const emptyTotals: QuizTotals = {

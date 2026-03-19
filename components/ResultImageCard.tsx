@@ -28,7 +28,7 @@ export function ResultImageCard({ image, title, subtitle }: ResultImageCardProps
 
   return (
     <div className="relative overflow-hidden rounded-[2rem] border border-white/70 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.95),rgba(246,233,230,0.82)_38%,rgba(221,212,239,0.75)_100%)] p-3 shadow-soft">
-      <div className="relative aspect-[6/5] overflow-hidden rounded-[1.55rem] bg-gradient-to-br from-white via-[#f8f2f7] to-[#e7e0f3] sm:aspect-[16/11] lg:aspect-[5/6]">
+      <div className="relative aspect-[16/10] overflow-hidden rounded-[1.55rem] bg-gradient-to-br from-white via-[#f8f2f7] to-[#e7e0f3]">
         {!hasError ? (
           <>
             <Image
@@ -36,11 +36,11 @@ export function ResultImageCard({ image, title, subtitle }: ResultImageCardProps
               alt={`${title} representative artwork`}
               fill
               sizes="(min-width: 1280px) 420px, (min-width: 1024px) 34vw, (min-width: 640px) 88vw, 100vw"
-              className="object-cover"
+              className="object-contain p-6 sm:p-7"
               onError={() => setHasError(true)}
               priority={false}
             />
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#211d28]/28 via-transparent to-white/18" />
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#211d28]/18 via-transparent to-white/16" />
           </>
         ) : (
           <div className="flex h-full flex-col justify-between bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.98),rgba(248,240,246,0.92)_45%,rgba(227,220,242,0.9)_100%)] p-5 sm:p-6">

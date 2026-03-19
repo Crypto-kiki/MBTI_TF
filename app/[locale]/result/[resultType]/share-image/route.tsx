@@ -230,7 +230,8 @@ export async function GET(request: Request, { params }: { params: { locale: stri
                 style={{
                   width: '100%',
                   height: '100%',
-                  objectFit: 'cover',
+                  objectFit: 'contain',
+                  padding: '26px',
                 }}
               />
               <div

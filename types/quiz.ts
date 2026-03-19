@@ -6,12 +6,18 @@ export const resultTypes = [
   'f_empathy',
   'f_nuance',
   'f_warmth',
+  'f_shelter',
+  'f_harmony',
   't_calm',
   't_criteria',
   't_structure',
+  't_signal',
+  't_drive',
   'b_balance',
   'b_steady',
   'b_bridge',
+  'b_attune',
+  'b_anchor',
 ] as const;
 
 export type ResultType = (typeof resultTypes)[number];
