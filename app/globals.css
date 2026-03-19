@@ -6,13 +6,45 @@
   color-scheme: light;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   @apply bg-mist text-ink antialiased;
   background-image:
-    radial-gradient(circle at top left, rgba(246, 233, 230, 0.95), transparent 30%),
-    radial-gradient(circle at top right, rgba(220, 212, 239, 0.85), transparent 35%),
-    linear-gradient(180deg, #fcfbff 0%, #f5f2f8 100%);
+    radial-gradient(circle at top left, rgba(246, 233, 230, 0.95), transparent 28%),
+    radial-gradient(circle at top right, rgba(220, 212, 239, 0.82), transparent 34%),
+    linear-gradient(180deg, #fcfbff 0%, #f5f2f8 48%, #f8f6fb 100%);
   min-height: 100vh;
+}
+
+body::before,
+body::after {
+  content: '';
+  position: fixed;
+  inset: auto;
+  z-index: -1;
+  pointer-events: none;
+  filter: blur(28px);
+}
+
+body::before {
+  right: -5rem;
+  top: 5rem;
+  height: 12rem;
+  width: 12rem;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.55);
+}
+
+body::after {
+  left: -4rem;
+  bottom: 4rem;
+  height: 11rem;
+  width: 11rem;
+  border-radius: 9999px;
+  background: rgba(246, 233, 230, 0.55);
 }
 
 * {
@@ -26,4 +58,26 @@ a {
 
 ::selection {
   background: rgba(91, 65, 88, 0.16);
+}
+
+@layer base {
+  h1,
+  h2,
+  h3 {
+    @apply tracking-tight;
+  }
+}
+
+@layer components {
+  .glass-panel {
+    @apply border border-white/70 bg-white/72 shadow-glow backdrop-blur-xl;
+  }
+
+  .brand-chip {
+    @apply inline-flex items-center gap-2 rounded-full border border-white/70 bg-white/75 px-4 py-2 text-sm text-plum shadow-sm backdrop-blur;
+  }
+
+  .soft-button {
+    @apply inline-flex items-center justify-center rounded-full border border-plum/12 bg-white/80 px-4 py-2.5 text-sm font-medium text-plum transition duration-300 hover:-translate-y-0.5 hover:bg-white;
+  }
 }

@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, HeartHandshake, ScanSearch } from 'lucide-react';
 
 import { ModeConfig } from '@/types/quiz';
 
@@ -8,21 +8,42 @@ interface ModeCardProps {
 }
 
 export function ModeCard({ config }: ModeCardProps) {
+  const isFMode = config.mode === 'f';
+  const Icon = isFMode ? HeartHandshake : ScanSearch;
+  const accentBadge = isFMode ? '공감 & 해석' : '판단 & 구조화';
+  const accentText = isFMode ? '표정과 맥락의 온도를 읽는 연습' : '기준과 우선순위를 세우는 연습';
+
   return (
     <Link
       href={config.route}
-      className={`group rounded-[2rem] border border-white/70 bg-gradient-to-br ${config.accentClass} p-6 shadow-glow transition duration-300 hover:-translate-y-1 hover:shadow-2xl`}
+      className={`group relative overflow-hidden rounded-[2rem] border border-white/75 bg-gradient-to-br ${config.accentClass} p-6 shadow-glow transition duration-300 hover:-translate-y-1 hover:shadow-float sm:p-7`}
     >
+      <div className="absolute right-5 top-5 rounded-full border border-white/70 bg-white/65 p-3 text-plum/80 shadow-soft">
+        <Icon className="h-5 w-5" />
+      </div>
+
       <div className="flex h-full flex-col gap-5">
-        <div className="space-y-2">
-          <p className="text-sm font-medium uppercase tracking-[0.24em] text-plum/60">Mode Select</p>
-          <h3 className="text-2xl font-semibold text-ink">{config.title}</h3>
-          <p className="text-sm text-plum/70">{config.subtitle}</p>
+        <div className="space-y-3">
+          <div className="flex items-center gap-2">
+            <span className="rounded-full bg-white/75 px-3 py-1 text-xs font-medium tracking-[0.22em] text-plum/75">
+              {accentBadge}
+            </span>
+          </div>
+          <div>
+            <p className="text-sm uppercase tracking-[0.24em] text-plum/55">Mode Select</p>
+            <h3 className="mt-2 text-3xl font-semibold text-ink">{config.title}</h3>
+            <p className="mt-2 text-sm text-plum/72">{config.subtitle}</p>
+          </div>
         </div>
-        <p className="flex-1 leading-7 text-ink/70">{config.description}</p>
-        <div className="flex items-center justify-between text-sm font-medium text-plum">
-          <span>테스트 시작하기</span>
-          <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
+
+        <p className="flex-1 text-sm leading-7 text-ink/72 sm:text-base">{config.description}</p>
+
+        <div className="rounded-[1.5rem] border border-white/65 bg-white/65 p-4 shadow-soft backdrop-blur-sm">
+          <p className="text-sm font-medium text-ink">{accentText}</p>
+          <div className="mt-3 flex items-center justify-between text-sm font-medium text-plum">
+            <span>테스트 시작하기</span>
+            <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
+          </div>
         </div>
       </div>
     </Link>
