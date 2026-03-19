@@ -1,17 +1,21 @@
 import Link from 'next/link';
 import { ArrowRight, HeartHandshake, ScanSearch } from 'lucide-react';
 
+import { uiMessages } from '@/data/i18n/messages';
+import { Locale } from '@/lib/i18n/config';
 import { ModeConfig } from '@/types/quiz';
 
 interface ModeCardProps {
   config: ModeConfig;
+  locale: Locale;
 }
 
-export function ModeCard({ config }: ModeCardProps) {
+export function ModeCard({ config, locale }: ModeCardProps) {
   const isFMode = config.mode === 'f';
   const Icon = isFMode ? HeartHandshake : ScanSearch;
-  const accentBadge = isFMode ? '공감 & 해석' : '판단 & 구조화';
-  const accentText = isFMode ? '표정과 맥락의 온도를 읽는 연습' : '기준과 우선순위를 세우는 연습';
+  const messages = uiMessages[locale].modes;
+  const accentBadge = isFMode ? messages.f.badge : messages.t.badge;
+  const accentText = isFMode ? messages.f.accentText : messages.t.accentText;
 
   return (
     <Link
@@ -30,7 +34,7 @@ export function ModeCard({ config }: ModeCardProps) {
             </span>
           </div>
           <div>
-            <p className="text-sm uppercase tracking-[0.24em] text-plum/55">Mode Select</p>
+            <p className="text-sm uppercase tracking-[0.24em] text-plum/55">{messages.modeSelect}</p>
             <h3 className="mt-2 text-3xl font-semibold text-ink">{config.title}</h3>
             <p className="mt-2 text-sm text-plum/72">{config.subtitle}</p>
           </div>
@@ -41,7 +45,7 @@ export function ModeCard({ config }: ModeCardProps) {
         <div className="rounded-[1.5rem] border border-white/65 bg-white/65 p-4 shadow-soft backdrop-blur-sm">
           <p className="text-sm font-medium text-ink">{accentText}</p>
           <div className="mt-3 flex items-center justify-between text-sm font-medium text-plum">
-            <span>테스트 시작하기</span>
+            <span>{messages.start}</span>
             <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
           </div>
         </div>

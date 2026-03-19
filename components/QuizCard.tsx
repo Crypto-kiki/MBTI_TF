@@ -1,11 +1,14 @@
 import Link from 'next/link';
 import { ChevronLeft, ChevronRight, CircleCheckBig, Sparkles } from 'lucide-react';
 
+import { getTagLabel, uiMessages } from '@/data/i18n/messages';
+import { Locale } from '@/lib/i18n/config';
 import { Choice, Question, QuizMode } from '@/types/quiz';
 
 import { ProgressBar } from './ProgressBar';
 
 interface QuizCardProps {
+  locale: Locale;
   mode: QuizMode;
   modeLabel: string;
   question: Question;
@@ -20,6 +23,7 @@ interface QuizCardProps {
 }
 
 export function QuizCard({
+  locale,
   mode,
   modeLabel,
   question,
@@ -33,6 +37,7 @@ export function QuizCard({
   isLastQuestion,
 }: QuizCardProps) {
   const isFMode = mode === 'f';
+  const messages = uiMessages[locale].quiz;
 
   return (
     <section className="glass-panel mx-auto w-full max-w-3xl overflow-hidden rounded-[2.25rem] bg-white/80 p-5 sm:p-7">
@@ -41,29 +46,27 @@ export function QuizCard({
           <div className="max-w-xl">
             <div className="brand-chip mb-4 px-3 py-1.5 text-xs tracking-[0.22em]">
               <Sparkles className="h-3.5 w-3.5" />
-              {isFMode ? '감정 해석 흐름' : '논리 판단 흐름'}
+              {isFMode ? messages.flowF : messages.flowT}
             </div>
             <p className="text-sm uppercase tracking-[0.24em] text-plum/55">{modeLabel}</p>
-            <h1 className="mt-2 text-3xl font-semibold text-ink sm:text-[2rem]">해석 연습 시작</h1>
-            <p className="mt-3 text-sm leading-7 text-ink/68 sm:text-base">
-              한 문항씩 천천히 살펴보며, 지금 가장 자연스럽게 떠오르는 해석을 골라보세요.
-            </p>
+            <h1 className="mt-2 text-3xl font-semibold text-ink sm:text-[2rem]">{messages.title}</h1>
+            <p className="mt-3 text-sm leading-7 text-ink/68 sm:text-base">{messages.intro}</p>
           </div>
-          <Link href="/" className="soft-button shrink-0">
-            홈으로
+          <Link href={`/${locale}`} className="soft-button shrink-0">
+            {messages.home}
           </Link>
         </div>
 
         <div className="mt-5">
-          <ProgressBar current={questionNumber} total={totalQuestions} />
+          <ProgressBar current={questionNumber} total={totalQuestions} label={messages.progress} hint={messages.progressHint} />
         </div>
       </div>
 
       <div className="space-y-6">
         <div className="rounded-[1.75rem] border border-plum/10 bg-white/70 p-5 shadow-soft sm:p-6">
           <div className="flex items-center justify-between gap-3 text-sm text-plum/60">
-            <p>Question {questionNumber}</p>
-            <p>{isFMode ? '마음의 온도에 집중해보세요' : '판단의 기준을 떠올려보세요'}</p>
+            <p>{messages.questionLabel} {questionNumber}</p>
+            <p>{isFMode ? messages.focusF : messages.focusT}</p>
           </div>
           <h2 className="mt-4 text-2xl font-medium leading-9 text-ink sm:text-[1.75rem] sm:leading-[2.6rem]">
             {question.prompt}
@@ -111,7 +114,7 @@ export function QuizCard({
                             isSelected ? 'bg-white/85 text-plum' : 'bg-plum/8 text-plum/70'
                           }`}
                         >
-                          #{tag}
+                          #{getTagLabel(locale, tag)}
                         </span>
                       ))}
                     </div>
@@ -123,7 +126,7 @@ export function QuizCard({
         </div>
 
         <div className="rounded-[1.6rem] border border-plum/10 bg-gradient-to-r from-white to-plum/5 p-4 text-sm leading-6 text-plum/72 shadow-soft">
-          답을 바꿔도 괜찮아요. 너무 오래 고민하기보다 지금의 감각에 가까운 선택을 따라가보세요.
+          {messages.helper}
         </div>
 
         <div className="flex flex-col gap-3 border-t border-plum/10 pt-2 sm:flex-row sm:items-center sm:justify-between">
@@ -134,7 +137,7 @@ export function QuizCard({
             className="inline-flex items-center justify-center gap-2 rounded-full border border-plum/12 bg-white/80 px-5 py-3 text-sm font-medium text-plum transition hover:-translate-y-0.5 hover:bg-white disabled:cursor-not-allowed disabled:opacity-35"
           >
             <ChevronLeft className="h-4 w-4" />
-            이전 질문
+            {messages.previous}
           </button>
           <button
             type="button"
@@ -142,7 +145,7 @@ export function QuizCard({
             disabled={!selectedChoiceId}
             className="inline-flex items-center justify-center gap-2 rounded-full bg-ink px-5 py-3 text-sm font-medium text-white transition duration-300 hover:-translate-y-0.5 hover:bg-ink/92 disabled:cursor-not-allowed disabled:bg-ink/35"
           >
-            {isLastQuestion ? '결과 보기' : '다음 질문'}
+            {isLastQuestion ? messages.result : messages.next}
             <ChevronRight className="h-4 w-4" />
           </button>
         </div>

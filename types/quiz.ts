@@ -1,3 +1,5 @@
+import type { Locale } from '@/lib/i18n/config';
+
 export type QuizMode = 'f' | 't';
 
 export type ResultType =
@@ -17,7 +19,7 @@ export interface ModeConfig {
   subtitle: string;
   description: string;
   accentClass: string;
-  route: `/quiz/${QuizMode}`;
+  route: `/${Locale}/quiz/${QuizMode}`;
 }
 
 export interface Choice {

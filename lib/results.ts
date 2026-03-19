@@ -1,5 +1,6 @@
-import { resultProfiles } from '@/data/results';
+import { getLocalizedResultProfiles } from '@/data/result-localizations';
 import { Choice, Question, QuizAnswer, QuizTotals, ResolvedQuizResult, ResultType } from '@/types/quiz';
+import type { Locale } from '@/lib/i18n/config';
 
 const axisThreshold = 6;
 
@@ -111,14 +112,16 @@ function pickProfileType(axis: 'f' | 't' | 'balanced', tagCounts: Record<string,
   }, candidates[0]);
 }
 
-export function resolveQuizResult(totals: QuizTotals): ResolvedQuizResult {
+export function resolveQuizResult(locale: Locale, totals: QuizTotals): ResolvedQuizResult {
   const axis = resolveAxis(totals);
   const profileType = pickProfileType(axis, totals.tagCounts);
+
+  const localizedProfiles = getLocalizedResultProfiles(locale);
 
   return {
     axis,
     dominantTags: getTopTags(totals.tagCounts),
-    profile: resultProfiles[profileType],
+    profile: localizedProfiles[profileType],
     totals,
   };
 }

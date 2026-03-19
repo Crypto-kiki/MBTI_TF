@@ -1,10 +1,5 @@
-import { HeroSection } from '@/components/HeroSection';
-import { Layout } from '@/components/Layout';
+import { redirect } from 'next/navigation';
 
-export default function HomePage() {
-  return (
-    <Layout>
-      <HeroSection />
-    </Layout>
-  );
+export default function RootPage() {
+  redirect('/ko');
 }
