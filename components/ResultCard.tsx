@@ -88,6 +88,7 @@ export function ResultCard({ locale, mode, modeLabel, result }: ResultCardProps)
           <ResultShareCard
             locale={locale}
             resultType={result.profile.type}
+            image={result.profile.image}
             title={result.profile.title}
             subtitle={result.profile.subtitle}
             messages={messages.share}
@@ -144,12 +145,12 @@ export function ResultCard({ locale, mode, modeLabel, result }: ResultCardProps)
       </div>
 
       <div className="flex flex-col gap-3 sm:flex-row">
-        <Link href={`/${locale}`} className="inline-flex items-center justify-center rounded-full bg-ink px-5 py-3 text-sm font-medium text-white transition duration-300 hover:-translate-y-0.5 hover:bg-ink/92">
-          {messages.backHome}
-        </Link>
-        <Link href={otherRoute} className="inline-flex items-center justify-center gap-2 rounded-full border border-plum/12 bg-white/82 px-5 py-3 text-sm font-medium text-plum transition duration-300 hover:-translate-y-0.5 hover:bg-white">
+        <Link href={otherRoute} className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-plum to-[#8d7488] px-6 py-3.5 text-sm font-semibold text-white shadow-soft transition duration-300 hover:-translate-y-0.5 hover:shadow-float">
           {messages.tryOther}
           <ArrowRight className="h-4 w-4" />
+        </Link>
+        <Link href={`/${locale}`} className="inline-flex items-center justify-center rounded-full border border-plum/12 bg-white/82 px-5 py-3 text-sm font-medium text-plum transition duration-300 hover:-translate-y-0.5 hover:bg-white">
+          {messages.backHome}
         </Link>
       </div>
     </section>
