@@ -1,0 +1,38 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="96" y1="72" x2="1104" y2="558" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#D9D8F9"/>
+      <stop offset="1" stop-color="#C9B9EC"/>
+    </linearGradient>
+    <radialGradient id="glowA" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(240 140) rotate(35) scale(280 220)">
+      <stop stop-color="#ffffff" stop-opacity="0.92"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glowB" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(980 480) rotate(-10) scale(320 240)">
+      <stop stop-color="#ffffff" stop-opacity="0.58"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="blur" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="24"/>
+    </filter>
+  </defs>
+  <rect width="1200" height="630" rx="52" fill="url(#bg)"/>
+  <g filter="url(#blur)">
+    <circle cx="220" cy="156" r="164" fill="url(#glowA)"/>
+    <circle cx="976" cy="470" r="196" fill="url(#glowB)"/>
+  </g>
+  <rect x="70" y="70" width="1060" height="490" rx="42" fill="rgba(255,255,255,0.28)" stroke="rgba(255,255,255,0.58)"/>
+  <rect x="116" y="112" width="152" height="40" rx="20" fill="rgba(255,255,255,0.74)"/>
+  <text x="150" y="138" fill="#6E6593" font-family="'Noto Sans KR', sans-serif" font-size="14" letter-spacing="0.28em">RESULT</text>
+  <text x="116" y="286" fill="#2E2640" font-family="'Cormorant Garamond', serif" font-size="72" font-weight="600">Moon Ripple</text>
+  <text x="116" y="338" fill="#5A527A" font-family="'Noto Sans KR', sans-serif" font-size="22">A quiet moon reflected through layered ripples</text>
+
+  <circle cx="964" cy="222" r="120" fill="rgba(255,255,255,0.62)"/>
+  <circle cx="1002" cy="190" r="96" fill="rgba(255,255,255,0.88)"/>
+  <circle cx="1038" cy="178" r="84" fill="rgba(214,192,245,0.9)"/>
+  <path d="M792 384C850 350 923 338 996 346C1069 354 1128 381 1162 420" stroke="rgba(255,255,255,0.75)" stroke-width="18" stroke-linecap="round"/>
+  <path d="M770 434C836 400 923 388 1010 398C1088 407 1145 438 1170 470" stroke="rgba(255,255,255,0.56)" stroke-width="18" stroke-linecap="round"/>
+  <path d="M830 248C862 214 905 192 947 188" stroke="#8B82B6" stroke-width="12" stroke-linecap="round"/>
+  <circle cx="938" cy="190" r="8" fill="#8B82B6"/>
+
+</svg>
