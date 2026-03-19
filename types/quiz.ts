@@ -1,29 +1,42 @@
-export type Mode = 'f' | 't';
+export type QuizMode = 'f' | 't';
 
 export interface ModeConfig {
-  mode: Mode;
+  mode: QuizMode;
   title: string;
   subtitle: string;
   description: string;
   accentClass: string;
-  route: `/quiz/${Mode}`;
+  route: `/quiz/${QuizMode}`;
 }
 
-export interface QuizChoice {
+export interface Choice {
   id: string;
   text: string;
-  score: number;
+  fScore: number;
+  tScore: number;
+  tags: string[];
 }
 
-export interface QuizQuestion {
+export interface Question {
   id: string;
   prompt: string;
   context: string;
-  choices: QuizChoice[];
+  choices: Choice[];
+}
+
+export interface QuizAnswer {
+  questionId: string;
+  choiceId: string;
 }
 
 export interface ResultSummary {
   title: string;
   description: string;
   mood: string;
+}
+
+export interface QuizTotals {
+  fScore: number;
+  tScore: number;
+  answeredCount: number;
 }
