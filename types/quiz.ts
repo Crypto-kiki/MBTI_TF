@@ -42,14 +42,30 @@ export interface QuizAnswer {
   choiceId: string;
 }
 
-export interface ResultProfile {
-  type: ResultType;
+export interface ResultImage {
+  src: string;
+  width: number;
+  height: number;
+}
+
+export interface ResultContent {
   title: string;
   subtitle: string;
   description: string;
   strengths: string[];
   tips: string[];
   cta: string;
+}
+
+export interface ResultDefinition {
+  type: ResultType;
+  image: ResultImage;
+  content: Record<Locale, ResultContent>;
+}
+
+export interface ResultProfile extends ResultContent {
+  type: ResultType;
+  image: ResultImage;
 }
 
 export interface QuizTotals {

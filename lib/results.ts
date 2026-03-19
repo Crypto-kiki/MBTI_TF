@@ -1,4 +1,4 @@
-import { getLocalizedResultProfiles } from '@/data/result-localizations';
+import { getResultProfile } from '@/data/results';
 import { Choice, Question, QuizAnswer, QuizTotals, ResolvedQuizResult, ResultType } from '@/types/quiz';
 import type { Locale } from '@/lib/i18n/config';
 
@@ -116,12 +116,10 @@ export function resolveQuizResult(locale: Locale, totals: QuizTotals): ResolvedQ
   const axis = resolveAxis(totals);
   const profileType = pickProfileType(axis, totals.tagCounts);
 
-  const localizedProfiles = getLocalizedResultProfiles(locale);
-
   return {
     axis,
     dominantTags: getTopTags(totals.tagCounts),
-    profile: localizedProfiles[profileType],
+    profile: getResultProfile(locale, profileType),
     totals,
   };
 }
