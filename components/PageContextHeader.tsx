@@ -35,19 +35,19 @@ export function PageContextHeader({ locale, series, activeNav, contextTitle }: P
   const subtitle = activeNav === 'overview' ? seriesDefinition.content.summaryLine : null;
 
   return (
-    <div className="mb-6 rounded-[1.8rem] border border-white/10 bg-[linear-gradient(135deg,rgba(12,13,24,0.88),rgba(19,21,37,0.9),rgba(32,28,49,0.88))] px-4 py-4 shadow-soft backdrop-blur-xl sm:mb-7 sm:px-5 sm:py-5">
+    <div className="mb-6 rounded-[1.6rem] border border-plum/8 bg-white/90 px-4 py-4 shadow-soft backdrop-blur-xl sm:mb-7 sm:px-5 sm:py-5">
       <div className="flex flex-col gap-4">
         {showBreadcrumb ? (
-          <div className="flex flex-wrap items-center gap-2 text-xs font-medium tracking-[0.06em] text-white/46 sm:text-sm">
-            <Link href={`/${locale}` as Route} className="transition hover:text-white/80">
+          <div className="flex flex-wrap items-center gap-2 text-xs font-medium tracking-[0.06em] text-ink/46 sm:text-sm">
+            <Link href={`/${locale}` as Route} className="transition hover:text-ink/80">
               {copy.seriesHub}
             </Link>
             <ChevronRight className="h-3.5 w-3.5" />
-            <Link href={getSeriesHomeHref(locale, series) as Route} className="transition hover:text-white/80">
+            <Link href={getSeriesHomeHref(locale, series) as Route} className="transition hover:text-ink/80">
               {seriesDefinition.content.label}
             </Link>
             <ChevronRight className="h-3.5 w-3.5" />
-            <span className="text-white/82">{contextTitle ?? copy.sectionLabel}</span>
+            <span className="text-ink/82">{contextTitle ?? copy.sectionLabel}</span>
           </div>
         ) : null}
 
@@ -57,8 +57,8 @@ export function PageContextHeader({ locale, series, activeNav, contextTitle }: P
               <span className="pill-accent">{seriesDefinition.badge}</span>
               <span className="pill-muted">{seriesDefinition.content.label}</span>
             </div>
-            <h2 className="mt-3 text-lg font-semibold text-white sm:text-[1.35rem]">{contextTitle ?? seriesDefinition.content.title}</h2>
-            {subtitle ? <p className="mt-1 text-sm text-white/62 sm:text-[0.96rem]">{subtitle}</p> : null}
+            <h2 className="mt-3 text-lg font-semibold text-ink sm:text-[1.35rem]">{contextTitle ?? seriesDefinition.content.title}</h2>
+            {subtitle ? <p className="mt-1 text-sm text-ink/62 sm:text-[0.96rem]">{subtitle}</p> : null}
           </div>
 
           <nav className="flex flex-wrap items-center gap-2" aria-label={copy.localNav}>

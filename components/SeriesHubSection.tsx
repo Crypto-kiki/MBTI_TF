@@ -86,9 +86,9 @@ export function SeriesHubSection({ locale }: SeriesHubSectionProps) {
         </div>
         <div className="grid gap-6 xl:grid-cols-[minmax(0,1.2fr)_22rem] xl:items-start">
           <div>
-            <h1 className="text-balance font-serif text-5xl font-semibold leading-[1.05] text-white sm:text-6xl lg:text-7xl">F와 T 사이</h1>
-            <p className="mt-5 max-w-4xl text-balance text-lg leading-8 text-white/86 sm:text-[1.35rem]">{copy.title}</p>
-            <p className="mt-3 max-w-3xl text-balance text-base leading-7 text-white/68 sm:text-lg">{copy.description}</p>
+            <h1 className="text-balance font-serif text-5xl font-semibold leading-[1.05] text-ink sm:text-6xl lg:text-7xl">F와 T 사이</h1>
+            <p className="mt-5 max-w-4xl text-balance text-lg leading-8 text-ink sm:text-[1.35rem]">{copy.title}</p>
+            <p className="mt-3 max-w-3xl text-balance text-base leading-7 text-ink/68 sm:text-lg">{copy.description}</p>
           </div>
 
           <div className="surface-panel-strong p-5 text-white">
@@ -102,11 +102,13 @@ export function SeriesHubSection({ locale }: SeriesHubSectionProps) {
             </div>
             <ul className="mt-4 space-y-3 text-sm leading-6 text-white/74 sm:text-base sm:leading-7">
               {copy.points.map((point, index) => (
-                <li key={point} className="surface-panel-muted flex items-center gap-3 px-4 py-3">
-                  <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-white/10 text-xs font-semibold text-white/86">
-                    {index + 1}
-                  </span>
-                  <span>{point}</span>
+                <li key={point} className="rounded-[1.2rem] border border-white/12 bg-white/8 px-4 py-3">
+                  <div className="flex items-center gap-3">
+                    <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-white/14 text-xs font-semibold text-white/92">
+                      {index + 1}
+                    </span>
+                    <span>{point}</span>
+                  </div>
                 </li>
               ))}
             </ul>

@@ -43,14 +43,14 @@ export function ResultCatalogCard({ locale, series, profile, viewLabel }: Result
   const summaryLabel = getSummaryLabel(series, locale);
   const isLoveSeries = series === 'love';
   const articleClass = isLoveSeries
-    ? 'border-[#ffd4ea]/14 bg-[linear-gradient(180deg,rgba(33,20,38,0.94),rgba(17,21,34,0.96))] shadow-[0_24px_72px_rgba(38,18,42,0.24)]'
-    : 'shadow-soft';
+    ? 'border-[#e5d2e2] bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(252,246,250,0.96))]'
+    : 'border-plum/8 bg-white';
   const keywordClass = isLoveSeries
-    ? 'border border-[#ffd4ea]/14 bg-white/7 text-[#fbe4f0]'
-    : 'bg-white/6 text-white/86';
+    ? 'border border-[#e5d2e2] bg-[#f9eef5] text-plum'
+    : 'bg-[#f2edf4] text-plum';
   const buttonClass = isLoveSeries
-    ? 'bg-[#ffe9f5] text-[#5e2d4f] group-hover:bg-[#ffd1e6] group-hover:text-[#4b2242]'
-    : 'group-hover:bg-white group-hover:text-ink';
+    ? 'bg-[#f7e8f1] text-plum group-hover:bg-[#eed9e7] group-hover:text-[#4b2242]'
+    : 'bg-[#f2edf4] text-ink group-hover:bg-white group-hover:text-ink';
 
   return (
     <Link href={getResultHref(locale, profile.type, series) as Route} className="interactive-card group block h-full rounded-[1.8rem] sm:rounded-[2rem]">
@@ -59,8 +59,8 @@ export function ResultCatalogCard({ locale, series, profile, viewLabel }: Result
 
         <div className="mt-4 min-h-[5.6rem] sm:min-h-[5.9rem]">
           <span className="pill-muted">{getSeriesBadge(series, locale)}</span>
-          <h2 className="mt-3 line-clamp-2 max-w-[14ch] text-[1.35rem] font-semibold leading-tight text-white sm:text-[1.55rem]">{profile.title}</h2>
-          <p className="mt-1.5 line-clamp-1 text-sm leading-6 text-white/74">{profile.subtitle}</p>
+          <h2 className="mt-3 line-clamp-2 max-w-[14ch] text-[1.35rem] font-semibold leading-tight text-ink sm:text-[1.55rem]">{profile.title}</h2>
+          <p className="mt-1.5 line-clamp-1 text-sm leading-6 text-ink/74">{profile.subtitle}</p>
         </div>
 
         <div className="mt-4 flex min-h-[2.4rem] flex-wrap gap-2">
@@ -71,8 +71,8 @@ export function ResultCatalogCard({ locale, series, profile, viewLabel }: Result
           ))}
         </div>
 
-        {summaryLabel ? <p className="mt-4 text-[0.68rem] font-medium uppercase tracking-[0.16em] text-white/46">{summaryLabel}</p> : null}
-        <p className="mt-2 line-clamp-3 min-h-[4.2rem] text-sm leading-6 text-white/70 sm:mt-2.5">{profile.quickSummary}</p>
+        {summaryLabel ? <p className="mt-4 text-[0.68rem] font-medium uppercase tracking-[0.16em] text-plum/46">{summaryLabel}</p> : null}
+        <p className="mt-2 line-clamp-3 min-h-[4.2rem] text-sm leading-6 text-ink/70 sm:mt-2.5">{profile.quickSummary}</p>
 
         <div className="mt-auto pt-5">
           <div className={`button-secondary w-fit ${buttonClass}`}>

@@ -21,15 +21,15 @@ export function ResultImageCard({ image, title, subtitle, series, variant = 'def
   const isLoveSeries = series === 'love' || image.src.includes('/love-');
 
   const shellClass = isLoveSeries
-    ? 'border-[#ffd5ea]/14 bg-[linear-gradient(180deg,rgba(24,17,34,0.98),rgba(10,13,24,0.96))] shadow-[0_26px_80px_rgba(46,20,45,0.32)]'
-    : 'border-white/10 bg-[linear-gradient(180deg,rgba(17,18,31,0.96),rgba(10,11,22,0.92))] shadow-soft';
+    ? 'border-[#e5d2e2] bg-white shadow-soft'
+    : 'border-plum/8 bg-white shadow-soft';
   const frameClass = isLoveSeries
-    ? 'bg-[radial-gradient(circle_at_18%_18%,rgba(255,189,222,0.26),transparent_24%),radial-gradient(circle_at_82%_20%,rgba(137,172,255,0.18),transparent_26%),radial-gradient(circle_at_74%_82%,rgba(255,255,255,0.08),transparent_22%),linear-gradient(135deg,rgba(36,20,44,0.98),rgba(17,24,40,0.96))]'
-    : 'bg-gradient-to-br from-[#1d2035] via-[#171a2e] to-[#10121f]';
+    ? 'bg-[radial-gradient(circle_at_18%_18%,rgba(255,224,238,0.88),transparent_24%),radial-gradient(circle_at_82%_20%,rgba(213,224,246,0.8),transparent_26%),linear-gradient(135deg,rgba(255,255,255,0.98),rgba(248,243,248,0.96))]'
+    : 'bg-[linear-gradient(135deg,rgba(255,255,255,0.98),rgba(246,242,247,0.96),rgba(241,241,246,0.94))]';
   const badgeLabel = isLoveSeries ? 'LOVE SERIES' : 'CORE SERIES';
   const badgeClass = isLoveSeries
-    ? 'border-[#ffd5ea]/18 bg-white/10 text-[#ffe7f4]'
-    : 'border-white/10 bg-white/8 text-white/82';
+    ? 'border-[#e5d2e2] bg-white/80 text-plum'
+    : 'border-plum/10 bg-white/80 text-plum/82';
 
   const fallbackInitials = useMemo(
     () =>
@@ -66,16 +66,16 @@ export function ResultImageCard({ image, title, subtitle, series, variant = 'def
         <div className="absolute inset-[12%] rounded-[1.35rem] border border-white/6" />
         {isLoveSeries ? (
           <>
-            <div className="absolute -left-10 top-8 h-40 w-40 rounded-full border border-white/12" />
-            <div className="absolute -right-12 bottom-6 h-52 w-52 rounded-full border border-white/10" />
-            <div className="absolute left-[14%] top-[16%] h-px w-[72%] bg-gradient-to-r from-transparent via-white/18 to-transparent" />
+            <div className="absolute -left-10 top-8 h-40 w-40 rounded-full border border-plum/10" />
+            <div className="absolute -right-12 bottom-6 h-52 w-52 rounded-full border border-plum/10" />
+            <div className="absolute left-[14%] top-[16%] h-px w-[72%] bg-gradient-to-r from-transparent via-plum/12 to-transparent" />
           </>
         ) : (
           <>
-            <div className="absolute inset-x-0 top-[24%] border-t border-white/6" />
-            <div className="absolute inset-x-0 bottom-[24%] border-t border-white/6" />
-            <div className="absolute inset-y-0 left-[24%] border-l border-white/6" />
-            <div className="absolute inset-y-0 right-[24%] border-l border-white/6" />
+            <div className="absolute inset-x-0 top-[24%] border-t border-plum/6" />
+            <div className="absolute inset-x-0 bottom-[24%] border-t border-plum/6" />
+            <div className="absolute inset-y-0 left-[24%] border-l border-plum/6" />
+            <div className="absolute inset-y-0 right-[24%] border-l border-plum/6" />
           </>
         )}
         <div className={`absolute left-4 top-4 z-10 inline-flex items-center rounded-full border px-3 py-1 text-[0.62rem] font-semibold tracking-[0.24em] ${badgeClass}`}>

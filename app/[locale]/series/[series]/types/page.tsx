@@ -98,9 +98,9 @@ export default function SeriesTypesPage({ params }: SeriesTypesPageProps) {
           </div>
           <div className="mt-4 grid gap-6 xl:grid-cols-[minmax(0,1fr)_22rem] xl:items-start">
             <div>
-              <h1 className="text-balance font-serif text-4xl font-semibold leading-[1.06] text-white sm:text-5xl">{copy.title}</h1>
-              <p className="mt-4 max-w-3xl text-lg leading-8 text-white/84 sm:text-xl">{seriesDefinition.content.summaryLine}</p>
-              <p className="mt-3 max-w-3xl text-base leading-8 text-white/68 sm:text-lg">{copy.description}</p>
+              <h1 className="text-balance font-serif text-4xl font-semibold leading-[1.06] text-ink sm:text-5xl">{copy.title}</h1>
+              <p className="mt-4 max-w-3xl text-lg leading-8 text-ink sm:text-xl">{seriesDefinition.content.summaryLine}</p>
+              <p className="mt-3 max-w-3xl text-base leading-8 text-ink/68 sm:text-lg">{copy.description}</p>
             </div>
 
             <div className="surface-panel-strong p-5 text-white sm:p-6">

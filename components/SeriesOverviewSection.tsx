@@ -105,15 +105,15 @@ export function SeriesOverviewSection({ locale, series }: SeriesOverviewSectionP
 
         <div className="mt-5 grid gap-6 xl:grid-cols-[minmax(0,1fr)_22rem] xl:items-start">
           <div>
-            <h1 className="text-balance font-serif text-4xl font-semibold leading-[1.05] text-white sm:text-5xl lg:text-6xl">
+            <h1 className="text-balance font-serif text-4xl font-semibold leading-[1.05] text-ink sm:text-5xl lg:text-6xl">
               {seriesDefinition.content.title}
             </h1>
-            <p className="mt-4 max-w-3xl text-lg leading-8 text-white/86 sm:text-xl">{seriesDefinition.content.summaryLine}</p>
-            <p className="mt-3 max-w-3xl text-base leading-7 text-white/68 sm:text-lg">{seriesDefinition.content.description}</p>
+            <p className="mt-4 max-w-3xl text-lg leading-8 text-ink sm:text-xl">{seriesDefinition.content.summaryLine}</p>
+            <p className="mt-3 max-w-3xl text-base leading-7 text-ink/68 sm:text-lg">{seriesDefinition.content.description}</p>
 
             <div className="mt-6 grid gap-3 lg:grid-cols-3">
               {[seriesDefinition.content.questionCount, seriesDefinition.content.estimatedTime, seriesDefinition.content.topicSummary].map((item) => (
-                <span key={item} className="metric-tile text-sm text-white/82">
+                <span key={item} className="metric-tile text-sm text-ink/82">
                   {item}
                 </span>
               ))}
@@ -139,24 +139,24 @@ export function SeriesOverviewSection({ locale, series }: SeriesOverviewSectionP
         </div>
       </div>
 
-      <div className="grid gap-5 lg:grid-cols-2">
-        <div className="surface-panel p-5 sm:p-6">
-          <p className="text-[0.68rem] uppercase tracking-[0.18em] text-white/46">{copy.whatItReads}</p>
-          <p className="mt-3 text-base font-semibold text-white">{seriesDefinition.content.topicSummary}</p>
-          <p className="mt-3 text-sm leading-7 text-white/72 sm:text-base">{seriesDefinition.content.recommendedFor}</p>
+        <div className="grid gap-5 lg:grid-cols-2">
+          <div className="surface-panel p-5 sm:p-6">
+          <p className="text-[0.68rem] uppercase tracking-[0.18em] text-plum/46">{copy.whatItReads}</p>
+          <p className="mt-3 text-base font-semibold text-ink">{seriesDefinition.content.topicSummary}</p>
+          <p className="mt-3 text-sm leading-7 text-ink/72 sm:text-base">{seriesDefinition.content.recommendedFor}</p>
+          </div>
+          <div className="surface-panel p-5 sm:p-6">
+          <p className="text-[0.68rem] uppercase tracking-[0.18em] text-plum/46">{copy.reportIncludes}</p>
+          <p className="mt-3 text-base font-semibold text-ink">{seriesDefinition.content.accentLabel}</p>
+          <p className="mt-3 text-sm leading-7 text-ink/72 sm:text-base">{seriesDefinition.content.reportIncludes}</p>
+          </div>
         </div>
-        <div className="surface-panel p-5 sm:p-6">
-          <p className="text-[0.68rem] uppercase tracking-[0.18em] text-white/46">{copy.reportIncludes}</p>
-          <p className="mt-3 text-base font-semibold text-white">{seriesDefinition.content.accentLabel}</p>
-          <p className="mt-3 text-sm leading-7 text-white/72 sm:text-base">{seriesDefinition.content.reportIncludes}</p>
-        </div>
-      </div>
 
       <div className="glass-panel rounded-[2rem] p-5 shadow-soft sm:p-6">
-        <p className="text-[0.68rem] uppercase tracking-[0.18em] text-white/46">{copy.modeSection}</p>
+        <p className="text-[0.68rem] uppercase tracking-[0.18em] text-plum/46">{copy.modeSection}</p>
         <div className="mt-3 flex flex-col gap-2 lg:flex-row lg:items-end lg:justify-between">
-          <h2 className="text-2xl font-semibold text-white sm:text-[1.8rem]">{messages.modes.modeSelect}</h2>
-          <p className="max-w-2xl text-sm leading-7 text-white/70 sm:text-base">{copy.modeDescription}</p>
+          <h2 className="text-2xl font-semibold text-ink sm:text-[1.8rem]">{messages.modes.modeSelect}</h2>
+          <p className="max-w-2xl text-sm leading-7 text-ink/70 sm:text-base">{copy.modeDescription}</p>
         </div>
         <div className="mt-5 grid gap-5 md:grid-cols-2">
           {modeConfigs.map((config) => (
@@ -173,7 +173,7 @@ export function SeriesOverviewSection({ locale, series }: SeriesOverviewSectionP
                 <Layers3 className="h-3.5 w-3.5" />
                 {copy.otherSeries}
               </div>
-              <p className="mt-3 max-w-3xl text-sm leading-6 text-white/72 sm:text-base">{copy.otherSeriesDescription}</p>
+              <p className="mt-3 max-w-3xl text-sm leading-6 text-ink/72 sm:text-base">{copy.otherSeriesDescription}</p>
             </div>
             <Link href={`/${locale}` as Route} className="button-tertiary">
               {copy.exploreOther}
@@ -188,9 +188,9 @@ export function SeriesOverviewSection({ locale, series }: SeriesOverviewSectionP
                   <span className="pill-accent">{item.badge}</span>
                   <span className="pill-muted">{item.content.label}</span>
                 </div>
-                <h3 className="mt-3 text-lg font-semibold text-white">{item.content.summaryLine}</h3>
-                <p className="mt-2 text-sm leading-6 text-white/68">{item.content.topicSummary}</p>
-                <div className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-white/88">
+                <h3 className="mt-3 text-lg font-semibold text-ink">{item.content.summaryLine}</h3>
+                <p className="mt-2 text-sm leading-6 text-ink/68">{item.content.topicSummary}</p>
+                <div className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-plum">
                   {copy.moveToSeries}
                   <ArrowRight className="h-4 w-4" />
                 </div>

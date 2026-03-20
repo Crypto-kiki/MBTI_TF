@@ -71,12 +71,12 @@ export function QuizCard({
 
       <div className="space-y-6">
         <div className="surface-panel p-5 sm:p-6">
-          <div className="flex items-center justify-between gap-3 text-sm text-white/54">
+          <div className="flex items-center justify-between gap-3 text-sm text-plum/54">
             <p>{messages.questionLabel} {questionNumber}</p>
             <p>{questionNumber} / {totalQuestions}</p>
           </div>
-          <h2 className="mt-4 text-2xl font-medium leading-9 text-white sm:text-[1.75rem] sm:leading-[2.6rem]">{question.prompt}</h2>
-          <p className="mt-3 text-sm leading-7 text-white/68 sm:text-base">{question.context}</p>
+          <h2 className="mt-4 text-2xl font-medium leading-9 text-ink sm:text-[1.75rem] sm:leading-[2.6rem]">{question.prompt}</h2>
+          <p className="mt-3 text-sm leading-7 text-ink/68 sm:text-base">{question.context}</p>
         </div>
 
         <div className="space-y-3">
@@ -90,22 +90,22 @@ export function QuizCard({
                 onClick={() => onSelectChoice(choice)}
                 className={`group w-full rounded-[1.6rem] border px-4 py-4 text-left transition duration-300 sm:px-5 sm:py-5 ${
                   isSelected
-                    ? 'border-[#e7ccff]/28 bg-[linear-gradient(135deg,rgba(53,39,86,0.88),rgba(26,30,54,0.92),rgba(15,16,29,0.96))] shadow-float'
-                    : 'border-white/8 bg-[linear-gradient(180deg,rgba(19,21,38,0.92),rgba(12,13,24,0.9))] hover:-translate-y-0.5 hover:border-white/16 hover:shadow-soft'
+                    ? 'border-plum/18 bg-[linear-gradient(135deg,rgba(238,229,239,0.96),rgba(233,238,248,0.92),rgba(255,255,255,0.98))] shadow-soft'
+                    : 'border-plum/8 bg-white hover:-translate-y-0.5 hover:border-plum/16 hover:shadow-soft'
                 }`}
               >
                 <div className="flex items-start gap-4">
-                  <div className={`mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-sm font-semibold transition ${isSelected ? 'bg-white text-ink' : 'bg-white/8 text-white/82 group-hover:bg-white/12'}`}>
+                  <div className={`mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-sm font-semibold transition ${isSelected ? 'bg-plum text-white' : 'bg-plum/8 text-plum group-hover:bg-plum/12'}`}>
                     {String.fromCharCode(65 + index)}
                   </div>
                   <div className="min-w-0 flex-1 space-y-3">
                     <div className="flex items-start justify-between gap-4">
-                      <p className="text-base leading-7 text-white sm:text-[1.02rem]">{choice.text}</p>
-                      <CircleCheckBig className={`mt-0.5 h-5 w-5 shrink-0 transition ${isSelected ? 'text-[#f0d7ff] opacity-100' : 'text-white/25 opacity-0 group-hover:opacity-60'}`} />
+                      <p className="text-base leading-7 text-ink sm:text-[1.02rem]">{choice.text}</p>
+                      <CircleCheckBig className={`mt-0.5 h-5 w-5 shrink-0 transition ${isSelected ? 'text-plum opacity-100' : 'text-plum/25 opacity-0 group-hover:opacity-60'}`} />
                     </div>
                     <div className="flex flex-wrap gap-2">
                       {choice.tags.map((tag) => (
-                        <span key={tag} className={`rounded-full px-2.5 py-1 text-xs ${isSelected ? 'bg-white/14 text-white' : 'bg-white/6 text-white/66'}`}>
+                        <span key={tag} className={`rounded-full px-2.5 py-1 text-xs ${isSelected ? 'bg-plum/10 text-plum' : 'bg-[#f5f0f5] text-plum/66'}`}>
                           #{getTagLabel(locale, tag)}
                         </span>
                       ))}
@@ -117,7 +117,7 @@ export function QuizCard({
           })}
         </div>
 
-        <div className="flex flex-col gap-3 border-t border-white/8 pt-2 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-col gap-3 border-t border-plum/8 pt-2 sm:flex-row sm:items-center sm:justify-between">
           <button
             type="button"
             onClick={onPrevious}
