@@ -1,4 +1,5 @@
 import { uiMessages } from '@/data/i18n/messages';
+import { localizedLoveModeContent } from '@/data/i18n/series-ui';
 import { getModeConfigs as getBaseModeConfigs } from '@/data/modes';
 import { getLoveQuestions } from '@/data/love-questions';
 import { getLocalizedLoveResultProfiles, getLoveResultProfile } from '@/data/love-results';
@@ -171,22 +172,14 @@ export function getSeriesList(locale: Locale) {
 
 export function getSeriesModeConfigs(locale: Locale, series: SeriesKey) {
   if (series === 'love') {
+    const content = localizedLoveModeContent[locale];
+
     return [
       {
         mode: 'f' as const,
-        title: locale === 'ko' ? '종합 연애 리포트' : locale === 'en' ? 'Love Relationship Report' : uiMessages[locale].modes.f.title,
-        subtitle:
-          locale === 'ko'
-            ? '30문항으로 갈등, 연락, 서운함, 애정 표현, 안정감, 회복 방식을 한 번에 읽어요.'
-            : locale === 'en'
-              ? 'A single 30-question read on conflict, contact, hurt, affection, reassurance, and repair.'
-              : uiMessages[locale].modes.f.subtitle,
-        description:
-          locale === 'ko'
-            ? '세부 테스트로 쪼개지지 않는 한 번의 연애 종합 테스트예요.'
-            : locale === 'en'
-              ? 'A single integrated relationship test rather than multiple split quizzes.'
-              : uiMessages[locale].modes.f.description,
+        title: content.title,
+        subtitle: content.subtitle,
+        description: content.description,
         accentClass: 'from-[#f9dbe5] via-white to-[#f4d9ee]',
         route: `/${locale}/series/${series}/quiz/f`,
       },
@@ -244,13 +237,7 @@ export function getSeriesPrimaryMode(series: SeriesKey): QuizMode {
 
 export function getSeriesModeLabel(locale: Locale, mode: QuizMode, series?: SeriesKey) {
   if (series === 'love') {
-    if (locale === 'ko') {
-      return '연애 종합 리포트';
-    }
-
-    if (locale === 'en') {
-      return 'Love Relationship Report';
-    }
+    return localizedLoveModeContent[locale].modeLabel;
   }
 
   return uiMessages[locale].modes[mode].title;

@@ -1,6 +1,6 @@
 import { Locale } from '@/lib/i18n/config';
 
-export const loveQuestionTranslations: Partial<Record<Locale, Record<string, { prompt: string; choices: Record<string, string> }>>> = {
+export const loveQuestionTranslations: Record<Exclude<Locale, 'ko'>, Record<string, { prompt: string; choices: Record<string, string> }>> = {
   ja: {
     'love-1': { prompt: '恋人とケンカになり始めたとき、あなたが最初に気にするのは？', choices: { 'love-1-a': '今お互いがどれだけ傷ついているかを先に感じる。', 'love-1-b': '感情が大きくなる前に、言い方をやわらかく整えようとする。', 'love-1-c': 'なぜ衝突したのか、争点を素早く整理する。', 'love-1-d': '感情より先に、解決の順番と基準を立てる。' } },
     'love-2': { prompt: 'ケンカ中に相手が泣きそうになったら、あなたは？', choices: { 'love-2-a': 'まず感情を落ち着かせて、安心できる感じを渡したい。', 'love-2-b': '話を止めて、なぜつらいのか十分に聞く。', 'love-2-c': '泣きそうになった核心の原因を落ち着いてたどる。', 'love-2-d': '感情が落ち着いたら改めて話そうと提案する。' } },

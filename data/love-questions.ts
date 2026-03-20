@@ -1,5 +1,6 @@
 import { loveQuestionTranslations } from '@/data/i18n/love-question-translations';
 import { Locale } from '@/lib/i18n/config';
+import { getLocalizedValue } from '@/lib/i18n/localized';
 import { Question } from '@/types/quiz';
 
 const loveQuestionContexts: Record<Locale, string> = {
@@ -343,8 +344,8 @@ const loveQuestionsKo: Question[] = [
 ];
 
 export function getLoveQuestions(locale: Locale): Question[] {
-  const context = loveQuestionContexts[locale] ?? loveQuestionContexts.ko;
-  const translatedQuestions = loveQuestionTranslations[locale] ?? {};
+  const context = getLocalizedValue(loveQuestionContexts, locale);
+  const translatedQuestions = locale === 'ko' ? {} : loveQuestionTranslations[locale];
 
   return loveQuestionsKo.map((question) => {
     const translatedQuestion = translatedQuestions[question.id];

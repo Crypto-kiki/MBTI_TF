@@ -1,6 +1,6 @@
 import { Locale } from '@/lib/i18n/config';
 
-export const questionTranslations: Partial<Record<Locale, Record<string, { prompt: string; choices: Record<string, string> }>>> = {
+export const questionTranslations: Record<Exclude<Locale, 'ko'>, Record<string, { prompt: string; choices: Record<string, string> }>> = {
   ja: {
     'f-1': { prompt: '友だちが「大丈夫」と言ったのに、表情は暗く見えます。', choices: { 'f-1-a': '大丈夫ではない理由があるのか、そっと聞いてみる。', 'f-1-b': '少し待って、落ち着いた頃にまた声をかける。', 'f-1-c': '事実がわからないので、ひとまず言葉どおり受け取る。', 'f-1-d': '深く聞かず、別の話題で空気をやわらげる。' } },
     'f-2': { prompt: '返事がいつもより短いとき、最初に浮かぶ考えは？', choices: { 'f-2-a': '今日は疲れていたり、余裕がないのかもしれない。', 'f-2-b': '別の文脈があるか、もう少し様子を見る。', 'f-2-c': 'メッセージの長さだけでは判断できないと思う。', 'f-2-d': '必要なことだけ書いたのだと受け止める。' } },
