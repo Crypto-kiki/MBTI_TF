@@ -4,8 +4,8 @@ import { ArrowRight, Layers3, Sparkles } from 'lucide-react';
 
 import { getSeriesDefinition, getSeriesList, getSeriesModeConfigs } from '@/data/series';
 import { uiMessages } from '@/data/i18n/messages';
-import { getSeriesTypesHref } from '@/lib/series';
 import { Locale } from '@/lib/i18n/config';
+import { getSeriesQuizHubHref, getSeriesTypesHref } from '@/lib/series';
 import { SeriesKey } from '@/types/series';
 
 import { ModeCard } from './ModeCard';
@@ -18,40 +18,72 @@ interface SeriesOverviewSectionProps {
 function getCopy(locale: Locale) {
   if (locale === 'ko') {
     return {
-      summary: '이 시리즈는 이렇게 읽어요',
-      includes: '이 시리즈에서 받게 되는 리포트',
-      more: '같은 서비스 안의 다른 시리즈',
-      moreDescription: '시리즈는 늘어나도 같은 탐색 규칙을 유지해요. 지금 보고 있는 시리즈를 마친 뒤 다른 시리즈로 자연스럽게 이어질 수 있어요.',
-      explore: '다른 시리즈 둘러보기',
+      intro: '이 시리즈는 무엇을 보는지',
+      startTitle: '이제 바로 시작할 수 있어요',
+      startDescription: '소개를 읽고 바로 테스트를 시작하거나, 먼저 전체 유형을 훑어본 뒤 결정해도 됩니다.',
+      startQuiz: '바로 테스트 시작',
+      viewTypes: '전체 유형 보기',
+      exploreOther: '다른 시리즈 보기',
+      whatItReads: '무엇을 측정하는지',
+      reportIncludes: '결과에서 보게 되는 것',
+      modeSection: '테스트 선택',
+      modeDescription: '현재 시리즈 안에서 원하는 흐름을 선택해 이어서 진행하세요.',
+      otherSeries: '다른 시리즈로 이동',
+      otherSeriesDescription: '이 시리즈를 둘러본 뒤 바로 다른 시리즈로 넘어갈 수 있게 동선을 짧게 유지했습니다.',
+      moveToSeries: '이 시리즈 보기',
     };
   }
 
   if (locale === 'ja') {
     return {
-      summary: 'このシリーズの見方',
-      includes: 'このシリーズで受け取るレポート',
-      more: '同じサービス内の別シリーズ',
-      moreDescription: 'シリーズが増えても同じ導線ルールを保てるようにしています。今のシリーズを終えたあと、別シリーズへ自然に続けられます。',
-      explore: '別シリーズを見る',
+      intro: 'このシリーズで見ること',
+      startTitle: 'ここからすぐ始められます',
+      startDescription: '紹介を読んだらそのままテストを始めても、先に全タイプを見てから決めても大丈夫です。',
+      startQuiz: 'すぐテストを始める',
+      viewTypes: '全タイプを見る',
+      exploreOther: '別シリーズを見る',
+      whatItReads: '何を見ているか',
+      reportIncludes: '結果で受け取る内容',
+      modeSection: 'テストを選ぶ',
+      modeDescription: 'このシリーズの中で進みたい流れを選んでください。',
+      otherSeries: '別シリーズへ移動',
+      otherSeriesDescription: '今のシリーズを見たあと、そのまま別シリーズへ自然につながるようにしています。',
+      moveToSeries: 'このシリーズを見る',
     };
   }
 
   if (locale === 'zh-TW') {
     return {
-      summary: '這個系列會怎麼讀你',
-      includes: '你會拿到的報告內容',
-      more: '同服務中的其他系列',
-      moreDescription: '即使之後系列增加，也會維持相同探索規則，讓你完成目前系列後能自然延伸到其他系列。',
-      explore: '瀏覽其他系列',
+      intro: '這個系列在看什麼',
+      startTitle: '接下來可以直接開始',
+      startDescription: '你可以先讀介紹後直接開始測驗，也可以先看全部類型再決定。',
+      startQuiz: '直接開始測驗',
+      viewTypes: '查看全部類型',
+      exploreOther: '查看其他系列',
+      whatItReads: '測量重點',
+      reportIncludes: '結果會看到什麼',
+      modeSection: '選擇測驗',
+      modeDescription: '在目前系列中選擇你想開始的流程。',
+      otherSeries: '前往其他系列',
+      otherSeriesDescription: '看完目前系列後，也能立刻延伸到其他系列，不用重新找路。',
+      moveToSeries: '查看這個系列',
     };
   }
 
   return {
-    summary: 'How this series reads you',
-    includes: 'What this report covers',
-    more: 'Other series in the same service',
-    moreDescription: 'The product keeps the same navigation pattern as more series are added, so finishing one series naturally leads into another.',
-    explore: 'Browse other series',
+    intro: 'What this series reads',
+    startTitle: 'You can start from here',
+    startDescription: 'Read the intro, start the quiz right away, or browse all types first before deciding.',
+    startQuiz: 'Start the quiz',
+    viewTypes: 'Browse all types',
+    exploreOther: 'Browse other series',
+    whatItReads: 'What it measures',
+    reportIncludes: 'What the result includes',
+    modeSection: 'Choose a quiz',
+    modeDescription: 'Pick the flow you want to start inside this series.',
+    otherSeries: 'Go to another series',
+    otherSeriesDescription: 'After checking this series, you can move straight into another one without losing your place.',
+    moveToSeries: 'Open this series',
   };
 }
 
@@ -69,12 +101,14 @@ export function SeriesOverviewSection({ locale, series }: SeriesOverviewSectionP
           <Sparkles className="h-4 w-4" />
           {seriesDefinition.content.eyebrow}
         </div>
+
         <div className="flex flex-wrap items-center gap-2">
           <span className="rounded-full bg-white/82 px-3 py-1 text-[0.68rem] font-semibold tracking-[0.22em] text-plum/76 shadow-sm">
             {seriesDefinition.badge}
           </span>
           <span className="rounded-full bg-plum/8 px-3 py-1 text-xs font-medium text-plum/72">{seriesDefinition.content.label}</span>
         </div>
+
         <h1 className="mt-5 text-balance font-serif text-4xl font-semibold leading-[1.05] text-ink sm:text-5xl lg:text-6xl">
           {seriesDefinition.content.title}
         </h1>
@@ -89,31 +123,57 @@ export function SeriesOverviewSection({ locale, series }: SeriesOverviewSectionP
           ))}
         </div>
 
-        <div className="mt-6 grid gap-3 lg:grid-cols-2">
-          <div className="rounded-[1.6rem] border border-white/72 bg-white/78 p-4 shadow-soft sm:p-5">
-            <p className="text-[0.68rem] uppercase tracking-[0.18em] text-plum/54">{copy.summary}</p>
-            <p className="mt-3 text-sm leading-7 text-ink/72 sm:text-base">{seriesDefinition.content.recommendedFor}</p>
+        <div className="mt-6 rounded-[1.75rem] border border-white/72 bg-white/82 p-5 shadow-soft sm:p-6">
+          <p className="text-[0.68rem] uppercase tracking-[0.18em] text-plum/54">{copy.startTitle}</p>
+          <p className="mt-3 max-w-3xl text-sm leading-7 text-ink/72 sm:text-base">{copy.startDescription}</p>
+          <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+            <Link
+              href={getSeriesQuizHubHref(locale, series) as Route}
+              className={`interactive-card inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r px-5 py-3 text-sm font-semibold text-white shadow-soft ${seriesDefinition.accentClass}`}
+            >
+              {copy.startQuiz}
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+            <Link
+              href={getSeriesTypesHref(locale, series) as Route}
+              className="interactive-card inline-flex items-center justify-center rounded-full border border-plum/12 bg-white px-5 py-3 text-sm font-medium text-plum hover:bg-plum hover:text-white"
+            >
+              {copy.viewTypes}
+            </Link>
+            <Link
+              href={`/${locale}` as Route}
+              className="interactive-card inline-flex items-center justify-center rounded-full border border-plum/12 bg-white/84 px-5 py-3 text-sm font-medium text-plum hover:bg-white"
+            >
+              {copy.exploreOther}
+            </Link>
           </div>
-          <div className="rounded-[1.6rem] border border-white/72 bg-white/78 p-4 shadow-soft sm:p-5">
-            <p className="text-[0.68rem] uppercase tracking-[0.18em] text-plum/54">{copy.includes}</p>
-            <p className="mt-3 text-sm leading-7 text-ink/72 sm:text-base">{seriesDefinition.content.reportIncludes}</p>
-          </div>
-        </div>
-
-        <div className="mt-6">
-          <Link
-            href={getSeriesTypesHref(locale, series) as Route}
-            className="interactive-card inline-flex items-center justify-center rounded-full border border-plum/12 bg-white/84 px-5 py-3 text-sm font-medium text-plum hover:bg-white"
-          >
-            {messages.header.typesTab}
-          </Link>
         </div>
       </div>
 
-      <div className="grid gap-5 md:grid-cols-2">
-        {modeConfigs.map((config) => (
-          <ModeCard key={config.mode} config={config} locale={locale} />
-        ))}
+      <div className="grid gap-5 lg:grid-cols-2">
+        <div className="rounded-[1.85rem] border border-white/72 bg-white/82 p-5 shadow-soft sm:p-6">
+          <p className="text-[0.68rem] uppercase tracking-[0.18em] text-plum/54">{copy.whatItReads}</p>
+          <p className="mt-3 text-base font-semibold text-ink">{seriesDefinition.content.topicSummary}</p>
+          <p className="mt-3 text-sm leading-7 text-ink/72 sm:text-base">{seriesDefinition.content.recommendedFor}</p>
+        </div>
+        <div className="rounded-[1.85rem] border border-white/72 bg-white/82 p-5 shadow-soft sm:p-6">
+          <p className="text-[0.68rem] uppercase tracking-[0.18em] text-plum/54">{copy.reportIncludes}</p>
+          <p className="mt-3 text-base font-semibold text-ink">{seriesDefinition.content.accentLabel}</p>
+          <p className="mt-3 text-sm leading-7 text-ink/72 sm:text-base">{seriesDefinition.content.reportIncludes}</p>
+        </div>
+      </div>
+
+      <div className="rounded-[2rem] border border-white/72 bg-white/82 p-5 shadow-soft sm:p-6">
+        <p className="text-[0.68rem] uppercase tracking-[0.18em] text-plum/54">{copy.modeSection}</p>
+        <div className="mt-3 flex flex-col gap-2 lg:flex-row lg:items-end lg:justify-between">
+          <h2 className="text-2xl font-semibold text-ink sm:text-[1.8rem]">{messages.modes.modeSelect}</h2>
+          <p className="max-w-2xl text-sm leading-7 text-ink/72 sm:text-base">{copy.modeDescription}</p>
+        </div>
+        <div className="mt-5 grid gap-5 md:grid-cols-2">
+          {modeConfigs.map((config) => (
+            <ModeCard key={config.mode} config={config} locale={locale} />
+          ))}
+        </div>
       </div>
 
       {otherSeries.length ? (
@@ -122,29 +182,37 @@ export function SeriesOverviewSection({ locale, series }: SeriesOverviewSectionP
             <div>
               <div className="inline-flex items-center gap-2 rounded-full bg-plum/8 px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-plum/74">
                 <Layers3 className="h-3.5 w-3.5" />
-                {copy.more}
+                {copy.otherSeries}
               </div>
-              <p className="mt-3 max-w-3xl text-sm leading-7 text-ink/72 sm:text-base">{copy.moreDescription}</p>
+              <p className="mt-3 max-w-3xl text-sm leading-7 text-ink/72 sm:text-base">{copy.otherSeriesDescription}</p>
             </div>
             <Link
               href={`/${locale}` as Route}
               className="interactive-card inline-flex items-center gap-2 rounded-full border border-plum/12 bg-white px-4 py-2.5 text-sm font-medium text-plum hover:bg-plum hover:text-white"
             >
-              {copy.explore}
+              {copy.exploreOther}
               <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
 
           <div className="mt-4 grid gap-3 md:grid-cols-2">
             {otherSeries.map((item) => (
-              <div key={item.key} className="rounded-[1.5rem] border border-white/78 bg-[linear-gradient(180deg,rgba(248,245,251,0.95),rgba(255,255,255,0.95))] p-4 shadow-sm">
+              <Link
+                key={item.key}
+                href={`/${locale}/series/${item.key}` as Route}
+                className="interactive-card rounded-[1.5rem] border border-white/78 bg-[linear-gradient(180deg,rgba(248,245,251,0.95),rgba(255,255,255,0.95))] p-4 shadow-sm"
+              >
                 <div className="flex flex-wrap items-center gap-2">
                   <span className="rounded-full bg-white px-3 py-1 text-[0.68rem] font-semibold tracking-[0.18em] text-plum/74 shadow-sm">{item.badge}</span>
                   <span className="rounded-full bg-plum/8 px-3 py-1 text-xs font-medium text-plum/72">{item.content.label}</span>
                 </div>
                 <h3 className="mt-3 text-lg font-semibold text-ink">{item.content.summaryLine}</h3>
                 <p className="mt-2 text-sm leading-6 text-ink/70">{item.content.description}</p>
-              </div>
+                <div className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-plum">
+                  {copy.moveToSeries}
+                  <ArrowRight className="h-4 w-4" />
+                </div>
+              </Link>
             ))}
           </div>
         </div>
