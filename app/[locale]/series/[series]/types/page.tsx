@@ -5,7 +5,7 @@ import { redirect } from 'next/navigation';
 
 import { Layout } from '@/components/Layout';
 import { ResultCatalogExplorer } from '@/components/ResultCatalogExplorer';
-import { getSeriesDefinition, getSeriesLocalizedResultProfiles, getSeriesModeConfigs, getSeriesResultTypes, isSeriesKey } from '@/data/series';
+import { getSeriesDefinition, getSeriesList, getSeriesLocalizedResultProfiles, getSeriesResultTypes, isSeriesKey } from '@/data/series';
 import { uiMessages } from '@/data/i18n/messages';
 import { defaultLocale, isLocale, type Locale } from '@/lib/i18n/config';
 import { defaultSeries, getSeriesQuizHubHref } from '@/lib/series';
@@ -21,32 +21,44 @@ function getLocaleOrFallback(locale: string): Locale {
 function getPageCopy(locale: Locale) {
   if (locale === 'ko') {
     return {
-      contextLabel: '이 페이지는 이런 흐름이에요',
-      contextDescription: '같은 시리즈 안의 전체 유형만 모아 보여주기 때문에, 기본편과 연애편의 유형이 섞여 보이지 않아요.',
-      actionLabel: '이 시리즈 테스트하러 가기',
+      title: '이 시리즈의 전체 유형',
+      description: '현재 시리즈 안에서 나올 수 있는 결과를 한 번에 훑어볼 수 있어요. 결과를 미리 보고, 바로 테스트로 돌아가거나 다른 시리즈로 넘어갈 수 있습니다.',
+      startSeries: '이 시리즈 테스트 시작',
+      goHome: '시리즈 허브로',
+      otherSeries: '다른 시리즈 보기',
+      catalogLabel: '현재 시리즈만 모아보기',
     };
   }
 
   if (locale === 'ja') {
     return {
-      contextLabel: 'このページの見方',
-      contextDescription: '同じシリーズのタイプだけをまとめているので、基本編と恋愛編のタイプが混ざって見えることはありません。',
-      actionLabel: 'このシリーズのテストへ',
+      title: 'このシリーズの全タイプ',
+      description: 'このシリーズで出る結果だけをまとめて見られます。結果を先に見てから、そのままテストへ戻ったり別シリーズへ移動できます。',
+      startSeries: 'このシリーズのテストへ',
+      goHome: 'シリーズハブへ',
+      otherSeries: '別シリーズを見る',
+      catalogLabel: 'このシリーズだけを表示',
     };
   }
 
   if (locale === 'zh-TW') {
     return {
-      contextLabel: '這頁的閱讀方式',
-      contextDescription: '這裡只會顯示同一系列的全部類型，所以不會把基本篇與戀愛篇的結果混在一起。',
-      actionLabel: '前往這個系列的測驗',
+      title: '目前系列的全部類型',
+      description: '這裡只整理目前系列會出現的結果。你可以先看結果，再直接開始測驗或切換到其他系列。',
+      startSeries: '開始這個系列的測驗',
+      goHome: '回系列中心',
+      otherSeries: '查看其他系列',
+      catalogLabel: '只看目前系列',
     };
   }
 
   return {
-    contextLabel: 'How to read this page',
-    contextDescription: 'This catalog only shows types from the current series, so Core and Love never blur together.',
-    actionLabel: 'Take this series',
+    title: 'All types in this series',
+    description: 'This page only shows outcomes from the current series, so you can preview results and move straight back into the quiz or another series.',
+    startSeries: 'Start this series',
+    goHome: 'Go to series hub',
+    otherSeries: 'Browse other series',
+    catalogLabel: 'Current series only',
   };
 }
 
@@ -73,7 +85,7 @@ export default function SeriesTypesPage({ params }: SeriesTypesPageProps) {
   const messages = uiMessages[locale];
   const profiles = getSeriesLocalizedResultProfiles(series, locale);
   const seriesDefinition = getSeriesDefinition(locale, series);
-  const modeConfigs = getSeriesModeConfigs(locale, series);
+  const otherSeries = getSeriesList(locale).filter((item) => item.key !== series);
   const copy = getPageCopy(locale);
 
   return (
@@ -84,35 +96,32 @@ export default function SeriesTypesPage({ params }: SeriesTypesPageProps) {
             <span className="rounded-full bg-white/82 px-3 py-1 text-[0.68rem] font-semibold tracking-[0.22em] text-plum/76 shadow-sm">
               {seriesDefinition.badge}
             </span>
-            <span className="rounded-full bg-plum/8 px-3 py-1 text-xs font-medium text-plum/72">{seriesDefinition.content.label}</span>
+            <span className="rounded-full bg-plum/8 px-3 py-1 text-xs font-medium text-plum/72">{copy.catalogLabel}</span>
           </div>
-          <h1 className="mt-4 text-balance font-serif text-4xl font-semibold leading-[1.06] text-ink sm:text-5xl">
-            {messages.catalog.title}
-          </h1>
+          <h1 className="mt-4 text-balance font-serif text-4xl font-semibold leading-[1.06] text-ink sm:text-5xl">{copy.title}</h1>
           <p className="mt-4 max-w-3xl text-lg leading-8 text-plum sm:text-xl">{seriesDefinition.content.summaryLine}</p>
-          <p className="mt-3 max-w-3xl text-base leading-8 text-ink/72 sm:text-lg">{messages.catalog.description}</p>
+          <p className="mt-3 max-w-3xl text-base leading-8 text-ink/72 sm:text-lg">{copy.description}</p>
 
-          <div className="mt-6 grid gap-3 lg:grid-cols-3">
-            <div className="rounded-[1.45rem] border border-white/72 bg-white/76 p-4 shadow-soft">
-              <p className="text-[0.68rem] uppercase tracking-[0.18em] text-plum/54">{copy.contextLabel}</p>
-              <p className="mt-3 text-sm leading-7 text-ink/72 sm:text-base">{copy.contextDescription}</p>
-            </div>
-            <div className="rounded-[1.45rem] border border-white/72 bg-white/76 p-4 shadow-soft">
-              <p className="text-[0.68rem] uppercase tracking-[0.18em] text-plum/54">{seriesDefinition.content.accentLabel}</p>
-              <p className="mt-3 text-sm leading-7 text-ink/72 sm:text-base">{seriesDefinition.content.reportIncludes}</p>
-            </div>
-            <div className="rounded-[1.45rem] border border-white/72 bg-white/76 p-4 shadow-soft">
-              <p className="text-[0.68rem] uppercase tracking-[0.18em] text-plum/54">{messages.modes.modeSelect}</p>
-              <p className="mt-3 text-sm leading-7 text-ink/72 sm:text-base">{modeConfigs.map((config) => config.title).join(' · ')}</p>
-            </div>
-          </div>
-
-          <div className="mt-6">
+          <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
             <Link
               href={getSeriesQuizHubHref(locale, series) as Route}
+              className="interactive-card inline-flex items-center justify-center rounded-full border border-plum/12 bg-white px-5 py-3 text-sm font-medium text-plum hover:bg-plum hover:text-white"
+            >
+              {copy.startSeries}
+            </Link>
+            {otherSeries[0] ? (
+              <Link
+                href={`/${locale}/series/${otherSeries[0].key}` as Route}
+                className="interactive-card inline-flex items-center justify-center rounded-full border border-plum/12 bg-white/84 px-5 py-3 text-sm font-medium text-plum hover:bg-white"
+              >
+                {otherSeries[0].content.label} · {copy.otherSeries}
+              </Link>
+            ) : null}
+            <Link
+              href={`/${locale}` as Route}
               className="interactive-card inline-flex items-center justify-center rounded-full border border-plum/12 bg-white/84 px-5 py-3 text-sm font-medium text-plum hover:bg-white"
             >
-              {copy.actionLabel}
+              {copy.goHome}
             </Link>
           </div>
         </div>
