@@ -22,43 +22,43 @@ function getPageCopy(locale: Locale) {
   if (locale === 'ko') {
     return {
       title: '이 시리즈의 전체 유형',
-      description: '현재 시리즈 안에서 나올 수 있는 결과를 한 번에 훑어볼 수 있어요. 결과를 미리 보고, 바로 테스트로 돌아가거나 다른 시리즈로 넘어갈 수 있습니다.',
+      description: '현재 시리즈 안에서 나올 수 있는 결과를 카탈로그처럼 비교해볼 수 있어요. 필터로 빠르게 좁히고, 마음에 드는 유형을 열어 상세 결과로 이어질 수 있습니다.',
       startSeries: '이 시리즈 테스트 시작',
       goHome: '시리즈 허브로',
       otherSeries: '다른 시리즈 보기',
-      catalogLabel: '현재 시리즈만 모아보기',
+      catalogLabel: '현재 시리즈 카탈로그',
     };
   }
 
   if (locale === 'ja') {
     return {
       title: 'このシリーズの全タイプ',
-      description: 'このシリーズで出る結果だけをまとめて見られます。結果を先に見てから、そのままテストへ戻ったり別シリーズへ移動できます。',
+      description: 'このシリーズで出る結果をカタログのように比較できます。フィルターで絞り込み、気になるタイプをそのまま詳細結果へ開けます。',
       startSeries: 'このシリーズのテストへ',
       goHome: 'シリーズハブへ',
       otherSeries: '別シリーズを見る',
-      catalogLabel: 'このシリーズだけを表示',
+      catalogLabel: 'このシリーズのカタログ',
     };
   }
 
   if (locale === 'zh-TW') {
     return {
       title: '目前系列的全部類型',
-      description: '這裡只整理目前系列會出現的結果。你可以先看結果，再直接開始測驗或切換到其他系列。',
+      description: '這裡像型錄一樣整理了目前系列的結果。你可以先用篩選快速縮小，再打開有興趣的類型查看完整結果。',
       startSeries: '開始這個系列的測驗',
       goHome: '回系列中心',
       otherSeries: '查看其他系列',
-      catalogLabel: '只看目前系列',
+      catalogLabel: '目前系列型錄',
     };
   }
 
   return {
     title: 'All types in this series',
-    description: 'This page only shows outcomes from the current series, so you can preview results and move straight back into the quiz or another series.',
+    description: 'This page works like a catalog for the current series. Filter quickly, compare outcomes, and open any type into the full result page.',
     startSeries: 'Start this series',
     goHome: 'Go to series hub',
     otherSeries: 'Browse other series',
-    catalogLabel: 'Current series only',
+    catalogLabel: 'Current series catalog',
   };
 }
 
@@ -93,36 +93,32 @@ export default function SeriesTypesPage({ params }: SeriesTypesPageProps) {
       <section className="flex flex-1 flex-col gap-6 py-3 sm:gap-8 sm:py-8">
         <div className={`glass-panel rounded-[2.25rem] px-6 py-8 sm:px-8 sm:py-10 ${seriesDefinition.surfaceClass}`}>
           <div className="flex flex-wrap items-center gap-2">
-            <span className="rounded-full bg-white/82 px-3 py-1 text-[0.68rem] font-semibold tracking-[0.22em] text-plum/76 shadow-sm">
-              {seriesDefinition.badge}
-            </span>
-            <span className="rounded-full bg-plum/8 px-3 py-1 text-xs font-medium text-plum/72">{copy.catalogLabel}</span>
+            <span className="pill-accent">{seriesDefinition.badge}</span>
+            <span className="pill-muted">{copy.catalogLabel}</span>
           </div>
-          <h1 className="mt-4 text-balance font-serif text-4xl font-semibold leading-[1.06] text-ink sm:text-5xl">{copy.title}</h1>
-          <p className="mt-4 max-w-3xl text-lg leading-8 text-plum sm:text-xl">{seriesDefinition.content.summaryLine}</p>
-          <p className="mt-3 max-w-3xl text-base leading-8 text-ink/72 sm:text-lg">{copy.description}</p>
+          <div className="mt-4 grid gap-6 xl:grid-cols-[minmax(0,1fr)_22rem] xl:items-start">
+            <div>
+              <h1 className="text-balance font-serif text-4xl font-semibold leading-[1.06] text-white sm:text-5xl">{copy.title}</h1>
+              <p className="mt-4 max-w-3xl text-lg leading-8 text-white/84 sm:text-xl">{seriesDefinition.content.summaryLine}</p>
+              <p className="mt-3 max-w-3xl text-base leading-8 text-white/68 sm:text-lg">{copy.description}</p>
+            </div>
 
-          <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-            <Link
-              href={getSeriesQuizHubHref(locale, series) as Route}
-              className="interactive-card inline-flex items-center justify-center rounded-full border border-plum/12 bg-white px-5 py-3 text-sm font-medium text-plum hover:bg-plum hover:text-white"
-            >
-              {copy.startSeries}
-            </Link>
-            {otherSeries[0] ? (
-              <Link
-                href={`/${locale}/series/${otherSeries[0].key}` as Route}
-                className="interactive-card inline-flex items-center justify-center rounded-full border border-plum/12 bg-white/84 px-5 py-3 text-sm font-medium text-plum hover:bg-white"
-              >
-                {otherSeries[0].content.label} · {copy.otherSeries}
-              </Link>
-            ) : null}
-            <Link
-              href={`/${locale}` as Route}
-              className="interactive-card inline-flex items-center justify-center rounded-full border border-plum/12 bg-white/84 px-5 py-3 text-sm font-medium text-plum hover:bg-white"
-            >
-              {copy.goHome}
-            </Link>
+            <div className="surface-panel-strong p-5 text-white sm:p-6">
+              <p className="text-[0.68rem] uppercase tracking-[0.18em] text-white/50">{messages.catalog.title}</p>
+              <div className="mt-4 flex flex-col gap-3">
+                <Link href={getSeriesQuizHubHref(locale, series) as Route} className="button-primary w-full justify-center">
+                  {copy.startSeries}
+                </Link>
+                {otherSeries[0] ? (
+                  <Link href={`/${locale}/series/${otherSeries[0].key}` as Route} className="button-secondary w-full justify-center">
+                    {otherSeries[0].content.label} · {copy.otherSeries}
+                  </Link>
+                ) : null}
+                <Link href={`/${locale}` as Route} className="button-tertiary w-full justify-center">
+                  {copy.goHome}
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
 
