@@ -1,4 +1,5 @@
 import { uiMessages } from '@/data/i18n/messages';
+import { localizedLoveModeContent } from '@/data/i18n/series-ui';
 import { getModeConfigs as getBaseModeConfigs } from '@/data/modes';
 import { getLoveQuestions } from '@/data/love-questions';
 import { getLocalizedLoveResultProfiles, getLoveResultProfile } from '@/data/love-results';
@@ -94,8 +95,8 @@ const seriesDefinitions: Record<SeriesKey, SeriesDefinition> = {
   love: {
     key: 'love',
     badge: 'LOVE',
-    accentClass: 'from-[#f9dbe5] via-white to-[#f4d9ee]',
-    surfaceClass: 'bg-[linear-gradient(135deg,rgba(255,255,255,0.95),rgba(249,219,229,0.9),rgba(244,217,238,0.88))]',
+    accentClass: 'from-[#ffd7ea] via-[#fff3f8] to-[#dfe7ff]',
+    surfaceClass: 'bg-[radial-gradient(circle_at_top_left,rgba(255,209,233,0.24),transparent_22%),radial-gradient(circle_at_78%_18%,rgba(160,184,255,0.16),transparent_20%),linear-gradient(135deg,rgba(255,255,255,0.97),rgba(255,245,250,0.95),rgba(238,241,255,0.93))]',
     localized: {
       ko: {
         label: '연애편',
@@ -171,23 +172,15 @@ export function getSeriesList(locale: Locale) {
 
 export function getSeriesModeConfigs(locale: Locale, series: SeriesKey) {
   if (series === 'love') {
+    const content = localizedLoveModeContent[locale];
+
     return [
       {
         mode: 'f' as const,
-        title: locale === 'ko' ? '종합 연애 리포트' : locale === 'en' ? 'Love Relationship Report' : uiMessages[locale].modes.f.title,
-        subtitle:
-          locale === 'ko'
-            ? '30문항으로 갈등, 연락, 서운함, 애정 표현, 안정감, 회복 방식을 한 번에 읽어요.'
-            : locale === 'en'
-              ? 'A single 30-question read on conflict, contact, hurt, affection, reassurance, and repair.'
-              : uiMessages[locale].modes.f.subtitle,
-        description:
-          locale === 'ko'
-            ? '세부 테스트로 쪼개지지 않는 한 번의 연애 종합 테스트예요.'
-            : locale === 'en'
-              ? 'A single integrated relationship test rather than multiple split quizzes.'
-              : uiMessages[locale].modes.f.description,
-        accentClass: 'from-[#f9dbe5] via-white to-[#f4d9ee]',
+        title: content.title,
+        subtitle: content.subtitle,
+        description: content.description,
+        accentClass: 'from-[#ffd7ea] via-[#fff3f8] to-[#dfe7ff]',
         route: `/${locale}/series/${series}/quiz/f`,
       },
     ];
@@ -244,13 +237,7 @@ export function getSeriesPrimaryMode(series: SeriesKey): QuizMode {
 
 export function getSeriesModeLabel(locale: Locale, mode: QuizMode, series?: SeriesKey) {
   if (series === 'love') {
-    if (locale === 'ko') {
-      return '연애 종합 리포트';
-    }
-
-    if (locale === 'en') {
-      return 'Love Relationship Report';
-    }
+    return localizedLoveModeContent[locale].modeLabel;
   }
 
   return uiMessages[locale].modes[mode].title;
