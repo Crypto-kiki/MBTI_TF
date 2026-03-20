@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import type { Route } from 'next';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 
@@ -108,7 +109,7 @@ export default function SeriesTypesPage({ params }: SeriesTypesPageProps) {
 
           <div className="mt-6">
             <Link
-              href={getSeriesQuizHubHref(locale, series)}
+              href={getSeriesQuizHubHref(locale, series) as Route}
               className="interactive-card inline-flex items-center justify-center rounded-full border border-plum/12 bg-white/84 px-5 py-3 text-sm font-medium text-plum hover:bg-white"
             >
               {copy.actionLabel}

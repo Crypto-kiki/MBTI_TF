@@ -1,3 +1,4 @@
+import { loveQuestionTranslations } from '@/data/i18n/love-question-translations';
 import { Locale } from '@/lib/i18n/config';
 import { Question } from '@/types/quiz';
 
@@ -343,9 +344,19 @@ const loveQuestionsKo: Question[] = [
 
 export function getLoveQuestions(locale: Locale): Question[] {
   const context = loveQuestionContexts[locale] ?? loveQuestionContexts.ko;
+  const translatedQuestions = loveQuestionTranslations[locale] ?? {};
 
-  return loveQuestionsKo.map((question) => ({
-    ...question,
-    context,
-  }));
+  return loveQuestionsKo.map((question) => {
+    const translatedQuestion = translatedQuestions[question.id];
+
+    return {
+      ...question,
+      prompt: translatedQuestion?.prompt ?? question.prompt,
+      context,
+      choices: question.choices.map((choice) => ({
+        ...choice,
+        text: translatedQuestion?.choices[choice.id] ?? choice.text,
+      })),
+    };
+  });
 }

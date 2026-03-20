@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="640" viewBox="0 0 640 640" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="80" y1="72" x2="560" y2="584" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#2b3148"/>
+      <stop offset="1" stop-color="#120f18"/>
+    </linearGradient>
+    <radialGradient id="mist" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(180 148) rotate(45) scale(360)">
+      <stop stop-color="#b3badd" stop-opacity="0.42"/>
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="stroke" x1="180" y1="176" x2="480" y2="470" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#f1f4ff"/>
+      <stop offset="1" stop-color="#b3badd"/>
+    </linearGradient>
+  </defs>
+  <rect width="640" height="640" rx="88" fill="url(#bg)"/>
+  <rect x="38" y="38" width="564" height="564" rx="60" fill="url(#mist)" stroke="rgba(255,255,255,0.16)"/>
+  <circle cx="320" cy="320" r="170" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.14)" stroke-width="2"/>
+  <circle cx="320" cy="320" r="118" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.12)" stroke-width="2"/>
+  <g stroke="url(#stroke)" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"><rect x="214" y="174" width="212" height="292" rx="36"/><path d="M272 280C272 252 290 234 312 234C327 234 340 241 348 254C356 241 369 234 384 234C406 234 424 252 424 280C424 315 385 341 348 375C311 341 272 315 272 280Z"/><path d="M262 422H378"/></g>
+  <circle cx="320" cy="320" r="230" stroke="rgba(255,255,255,0.08)" stroke-width="1.5" stroke-dasharray="6 12"/>
+</svg>

@@ -136,12 +136,26 @@ const tagTranslations: Record<string, Record<Exclude<Locale, 'ko'>, string>> = {
   'repair_time': { ja: '回復の時間', 'zh-TW': '修復時間', en: 'repair time' },
   'repair_explanation': { ja: '回復の説明', 'zh-TW': '修復說明', en: 'repair explanation' },
 };
+
+const koTagLabels: Record<string, string> = {
+  conflict_emotion: '감정 반응',
+  conflict_logic: '갈등 정리',
+  contact_frequency: '연락 빈도',
+  contact_stability: '연락 안정감',
+  hurt_expression: '서운함 표현',
+  hurt_priority: '우선순위 상처',
+  affection_words: '말로 표현하는 애정',
+  affection_actions: '행동으로 표현하는 애정',
+  reassurance_consistency: '안심의 일관성',
+  repair_time: '회복 시간',
+  repair_explanation: '회복 설명',
+};
 const localizedTagLabels = Object.fromEntries(
   (Object.keys(tagTranslations) as Array<keyof typeof tagTranslations>).map((tag) => [tag, tagTranslations[tag]])
 ) as Record<keyof typeof tagTranslations, Record<Exclude<Locale, 'ko'>, string>>;
 
 export const translatedTagLabels: Record<Locale, Record<string, string>> = {
-  ko: {},
+  ko: koTagLabels,
   ja: Object.fromEntries(Object.entries(localizedTagLabels).map(([tag, labels]) => [tag, labels.ja])),
   'zh-TW': Object.fromEntries(Object.entries(localizedTagLabels).map(([tag, labels]) => [tag, labels['zh-TW']])),
   en: Object.fromEntries(Object.entries(localizedTagLabels).map(([tag, labels]) => [tag, labels.en])),

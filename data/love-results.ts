@@ -121,7 +121,7 @@ const compatibilityDefinitions: Record<LoveResultType, LocalizedRecord<{ type: L
 export const loveResultDefinitions: Record<LoveResultType, ResultDefinition> = {
   love_resonant_anchor: createLoveResultDefinition(
     'love_resonant_anchor',
-    '/images/results/f-empathy.svg',
+    '/images/results/love-resonant-anchor.svg',
     localizedResultContent(
       {
         title: 'Resonant Anchor',
@@ -149,7 +149,7 @@ export const loveResultDefinitions: Record<LoveResultType, ResultDefinition> = {
   ),
   love_midnight_listener: createLoveResultDefinition(
     'love_midnight_listener',
-    '/images/results/f-nuance.svg',
+    '/images/results/love-midnight-listener.svg',
     localizedResultContent(
       {
         title: 'Midnight Listener',
@@ -177,7 +177,7 @@ export const loveResultDefinitions: Record<LoveResultType, ResultDefinition> = {
   ),
   love_heartbeat_reader: createLoveResultDefinition(
     'love_heartbeat_reader',
-    '/images/results/f-warmth.svg',
+    '/images/results/love-heartbeat-reader.svg',
     localizedResultContent(
       {
         title: 'Heartbeat Reader',
@@ -205,7 +205,7 @@ export const loveResultDefinitions: Record<LoveResultType, ResultDefinition> = {
   ),
   love_tender_guardian: createLoveResultDefinition(
     'love_tender_guardian',
-    '/images/results/f-shelter.svg',
+    '/images/results/love-tender-guardian.svg',
     localizedResultContent(
       {
         title: 'Tender Guardian',
@@ -233,7 +233,7 @@ export const loveResultDefinitions: Record<LoveResultType, ResultDefinition> = {
   ),
   love_signal_cartographer: createLoveResultDefinition(
     'love_signal_cartographer',
-    '/images/results/t-signal.svg',
+    '/images/results/love-signal-cartographer.svg',
     localizedResultContent(
       {
         title: 'Signal Cartographer',
@@ -261,7 +261,7 @@ export const loveResultDefinitions: Record<LoveResultType, ResultDefinition> = {
   ),
   love_boundary_strategist: createLoveResultDefinition(
     'love_boundary_strategist',
-    '/images/results/t-criteria.svg',
+    '/images/results/love-boundary-strategist.svg',
     localizedResultContent(
       {
         title: 'Boundary Strategist',
@@ -289,7 +289,7 @@ export const loveResultDefinitions: Record<LoveResultType, ResultDefinition> = {
   ),
   love_clear_current: createLoveResultDefinition(
     'love_clear_current',
-    '/images/results/t-calm.svg',
+    '/images/results/love-clear-current.svg',
     localizedResultContent(
       {
         title: 'Clear Current',
@@ -317,7 +317,7 @@ export const loveResultDefinitions: Record<LoveResultType, ResultDefinition> = {
   ),
   love_repair_architect: createLoveResultDefinition(
     'love_repair_architect',
-    '/images/results/t-structure.svg',
+    '/images/results/love-repair-architect.svg',
     localizedResultContent(
       {
         title: 'Repair Architect',
@@ -345,7 +345,7 @@ export const loveResultDefinitions: Record<LoveResultType, ResultDefinition> = {
   ),
   love_steady_weaver: createLoveResultDefinition(
     'love_steady_weaver',
-    '/images/results/b_attune.svg',
+    '/images/results/love-steady-weaver.svg',
     localizedResultContent(
       {
         title: 'Steady Weaver',
@@ -373,7 +373,7 @@ export const loveResultDefinitions: Record<LoveResultType, ResultDefinition> = {
   ),
   love_gentle_negotiator: createLoveResultDefinition(
     'love_gentle_negotiator',
-    '/images/results/b_bridge.svg',
+    '/images/results/love-gentle-negotiator.svg',
     localizedResultContent(
       {
         title: 'Gentle Negotiator',

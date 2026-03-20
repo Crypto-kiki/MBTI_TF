@@ -219,7 +219,7 @@ export async function GET(request: Request, { params }: { params: { locale: stri
                   fontWeight: 600,
                 }}
               >
-                Shared Result
+                {messages.finalBadge}
               </div>
             )}
           </div>

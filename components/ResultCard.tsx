@@ -378,6 +378,27 @@ function getGuidanceMessage(locale: Locale, axis: 'f' | 't' | 'balanced') {
   };
 }
 
+function getLoveReportLabel(locale: Locale) {
+  if (locale === 'ko') return '연애 리포트';
+  if (locale === 'ja') return '恋愛レポート';
+  if (locale === 'zh-TW') return '戀愛報告';
+  return 'LOVE REPORT';
+}
+
+function getLoveSummaryLabel(locale: Locale, fallback: string) {
+  if (locale === 'ko') return '한 줄 핵심 해석';
+  if (locale === 'ja') return 'ひとことで見る核心';
+  if (locale === 'zh-TW') return '一句核心解讀';
+  return fallback;
+}
+
+function getLoveDetailsLabel(locale: Locale, fallback: string) {
+  if (locale === 'ko') return '연애 세부 리포트';
+  if (locale === 'ja') return '恋愛ディテールレポート';
+  if (locale === 'zh-TW') return '戀愛細節報告';
+  return fallback;
+}
+
 function getSeriesSwitchCopy(locale: Locale, currentSeries: SeriesKey, nextSeriesLabel: string) {
   if (locale === 'ko') {
     return currentSeries === 'love'
@@ -508,7 +529,7 @@ export function ResultCard({ locale, series, mode, modeLabel, result }: ResultCa
 
             {isLoveSeries ? (
               <div className="mt-4 inline-flex items-center rounded-full bg-[#f9dbe5]/70 px-3 py-1 text-[0.68rem] font-semibold tracking-[0.18em] text-plum/78">
-                {locale === 'ko' ? 'LOVE REPORT' : 'LOVE REPORT'}
+                {getLoveReportLabel(locale)}
               </div>
             ) : null}
 
@@ -522,7 +543,7 @@ export function ResultCard({ locale, series, mode, modeLabel, result }: ResultCa
             <div className="mt-5 rounded-[1.65rem] border border-white/80 bg-[linear-gradient(135deg,rgba(255,255,255,0.96),rgba(248,242,248,0.92),rgba(242,236,251,0.88))] p-4 shadow-soft sm:rounded-[1.9rem] sm:p-5">
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <div className="inline-flex items-center gap-2 rounded-full bg-plum/8 px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-plum/74 sm:text-[0.72rem]">
-                  {isLoveSeries && locale === 'ko' ? '한 줄 핵심 해석' : messages.summaryCard}
+                  {isLoveSeries ? getLoveSummaryLabel(locale, messages.summaryCard) : messages.summaryCard}
                 </div>
                 <p className="text-xs font-medium tracking-[0.08em] text-plum/50 sm:text-[0.78rem]">{messages.summaryHint}</p>
               </div>
@@ -634,7 +655,7 @@ export function ResultCard({ locale, series, mode, modeLabel, result }: ResultCa
             <div className="flex flex-col gap-2">
               <div className="inline-flex items-center gap-2 rounded-full bg-plum/8 px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-plum/74 sm:text-[0.72rem]">
                 <Fingerprint className="h-3.5 w-3.5" />
-                {locale === 'ko' ? '연애 세부 리포트' : locale === 'en' ? 'Relationship report details' : messages.patternsTitle}
+                {getLoveDetailsLabel(locale, locale === 'en' ? 'Relationship report details' : messages.patternsTitle)}
               </div>
               <p className="text-sm leading-6 text-ink/68 sm:text-[0.96rem] sm:leading-7">
                 {locale === 'ko'

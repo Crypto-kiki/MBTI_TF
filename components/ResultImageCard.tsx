@@ -54,7 +54,6 @@ export function ResultImageCard({ image, title, subtitle, variant = 'default' }:
           <div className="flex h-full flex-col justify-between bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.98),rgba(248,240,246,0.92)_45%,rgba(227,220,242,0.9)_100%)] p-5 sm:p-6">
             <div className="brand-chip w-fit border-white/80 bg-white/80 text-[0.7rem] tracking-[0.24em] text-plum/80 shadow-none">
               <ImageOff className="h-3.5 w-3.5" />
-              FALLBACK
             </div>
             <div className="space-y-4">
               <div className="flex h-20 w-20 items-center justify-center rounded-[1.65rem] border border-white/80 bg-white/85 text-2xl font-semibold tracking-[0.18em] text-plum shadow-sm sm:h-24 sm:w-24 sm:text-3xl">
