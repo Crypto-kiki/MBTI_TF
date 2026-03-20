@@ -9,20 +9,19 @@ interface SeriesHubSectionProps {
   locale: Locale;
 }
 
-function getHubCopy(locale: Locale, seriesCount: number) {
+function getHubCopy(locale: Locale) {
   if (locale === 'ko') {
     return {
       label: '시리즈 허브',
-      title: '여러 리포트 시리즈를 한눈에 읽고, 가장 먼저 시작할 흐름을 바로 고를 수 있게 정리했어요.',
-      description:
-        '기본편과 연애편을 같은 규칙으로 보여주되, 카드 위계와 CTA를 더 선명하게 만들어 어디서 시작해야 하는지 한눈에 보이도록 다듬었습니다.',
-      statLabel: '현재 공개된 시리즈',
-      statValue: `${seriesCount}개`,
-      patternTitle: '탐색 원칙',
+      title: '지금 시작할 시리즈를 고르세요.',
+      description: '각 시리즈의 주제와 소요 시간을 먼저 보고, 마음에 드는 흐름으로 바로 시작할 수 있어요.',
+      statLabel: '바로 진행하는 순서',
+      statValue: '3단계',
+      patternTitle: '시작 가이드',
       points: [
-        '배경은 더 어둡게, 카드와 텍스트는 더 선명하게 대비를 올렸습니다.',
-        'Primary CTA는 테스트 시작, Secondary CTA는 전체 유형 보기로 위계를 분리했습니다.',
-        '같은 정보는 반복하지 않고, 시리즈 비교에 필요한 핵심 정보만 남겼습니다.',
+        '시리즈를 고른다',
+        '테스트를 시작한다',
+        '결과를 읽고 공유한다',
       ],
     };
   }
@@ -30,16 +29,15 @@ function getHubCopy(locale: Locale, seriesCount: number) {
   if (locale === 'ja') {
     return {
       label: 'シリーズハブ',
-      title: '複数のレポートシリーズを見比べて、最初に始める流れをすぐ選べるよう整理しました。',
-      description:
-        '基本編と恋愛編を同じルールで見せつつ、カードの強弱とCTAをはっきりさせて、どこから始めるかが一目でわかるように調整しています。',
-      statLabel: '公開中のシリーズ',
-      statValue: `${seriesCount}`,
-      patternTitle: '探索ルール',
+      title: '今始めるシリーズを選びましょう。',
+      description: '各シリーズのテーマと所要時間を見て、気になる流れからすぐ始められます。',
+      statLabel: 'すぐ進める流れ',
+      statValue: '3 steps',
+      patternTitle: 'スタートガイド',
       points: [
-        '背景はより深く、カードと文字はよりはっきり見えるようにしました。',
-        'Primary CTA はテスト開始、Secondary CTA は全タイプ閲覧として役割を分けました。',
-        '同じ情報を繰り返さず、比較に必要な要点だけを残しています。',
+        'シリーズを選ぶ',
+        'テストを始める',
+        '結果を読んでシェアする',
       ],
     };
   }
@@ -47,39 +45,37 @@ function getHubCopy(locale: Locale, seriesCount: number) {
   if (locale === 'zh-TW') {
     return {
       label: '系列中心',
-      title: '你可以先快速看懂各系列，再直接選擇最適合先開始的流程。',
-      description:
-        '基本篇與戀愛篇以同一套結構呈現，但重新拉開卡片與 CTA 的視覺層級，讓你第一眼就知道該從哪裡開始。',
-      statLabel: '目前系列數',
-      statValue: `${seriesCount}`,
-      patternTitle: '瀏覽原則',
+      title: '先選一個你想開始的系列。',
+      description: '先看主題與時間，再直接從最適合你的流程開始就好。',
+      statLabel: '立即開始流程',
+      statValue: '3 steps',
+      patternTitle: '開始方式',
       points: [
-        '整體背景更深，卡片與文字對比更清楚。',
-        'Primary CTA 是開始測驗，Secondary CTA 是查看全部類型。',
-        '刪掉重複資訊，只保留比較系列所需的重點。',
+        '先選系列',
+        '再開始測驗',
+        '最後看結果並分享',
       ],
     };
   }
 
   return {
     label: 'Series hub',
-    title: 'Browse the report series clearly and choose the best place to start at a glance.',
-    description:
-      'Core and Love now follow the same visual rules, with stronger CTA hierarchy and clearer contrast so the next action is obvious immediately.',
-    statLabel: 'Live series',
-    statValue: `${seriesCount}`,
-    patternTitle: 'Browsing rules',
+    title: 'Choose the series you want to start now.',
+    description: 'Check the topic and timing first, then move straight into the flow that fits you best.',
+    statLabel: 'Fastest path',
+    statValue: '3 steps',
+    patternTitle: 'Start guide',
     points: [
-      'The background is deeper while cards and text are much clearer against it.',
-      'Primary CTA means start the quiz, while Secondary CTA means browse all types.',
-      'Repeated context was removed so only comparison-worthy information remains.',
+      'Pick a series',
+      'Start the quiz',
+      'Read and share your result',
     ],
   };
 }
 
 export function SeriesHubSection({ locale }: SeriesHubSectionProps) {
   const seriesList = getSeriesList(locale);
-  const copy = getHubCopy(locale, seriesList.length);
+  const copy = getHubCopy(locale);
 
   return (
     <section className="flex flex-1 flex-col gap-8 py-3 sm:gap-10 sm:py-8">
@@ -92,7 +88,7 @@ export function SeriesHubSection({ locale }: SeriesHubSectionProps) {
           <div>
             <h1 className="text-balance font-serif text-5xl font-semibold leading-[1.05] text-white sm:text-6xl lg:text-7xl">F와 T 사이</h1>
             <p className="mt-5 max-w-4xl text-balance text-lg leading-8 text-white/86 sm:text-[1.35rem]">{copy.title}</p>
-            <p className="mt-4 max-w-3xl text-balance text-base leading-8 text-white/68 sm:text-lg">{copy.description}</p>
+            <p className="mt-3 max-w-3xl text-balance text-base leading-7 text-white/68 sm:text-lg">{copy.description}</p>
           </div>
 
           <div className="surface-panel-strong p-5 text-white">
@@ -102,12 +98,15 @@ export function SeriesHubSection({ locale }: SeriesHubSectionProps) {
             </div>
             <div className="mt-4 rounded-[1.35rem] border border-white/10 bg-black/18 p-4">
               <p className="text-[0.68rem] uppercase tracking-[0.18em] text-white/48">{copy.statLabel}</p>
-              <p className="mt-2 text-3xl font-semibold text-white">{copy.statValue}</p>
+              <p className="mt-2 text-2xl font-semibold text-white">{copy.statValue}</p>
             </div>
             <ul className="mt-4 space-y-3 text-sm leading-6 text-white/74 sm:text-base sm:leading-7">
-              {copy.points.map((point) => (
-                <li key={point} className="surface-panel-muted px-4 py-3">
-                  {point}
+              {copy.points.map((point, index) => (
+                <li key={point} className="surface-panel-muted flex items-center gap-3 px-4 py-3">
+                  <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-white/10 text-xs font-semibold text-white/86">
+                    {index + 1}
+                  </span>
+                  <span>{point}</span>
                 </li>
               ))}
             </ul>
@@ -116,13 +115,8 @@ export function SeriesHubSection({ locale }: SeriesHubSectionProps) {
       </div>
 
       <div className="grid gap-5 xl:grid-cols-2">
-        {seriesList.map((series, index) => (
-          <SeriesHubCard
-            key={series.key}
-            locale={locale}
-            series={series}
-            companionSeriesLabel={seriesList[(index + 1) % seriesList.length]?.content.label}
-          />
+        {seriesList.map((series) => (
+          <SeriesHubCard key={series.key} locale={locale} series={series} />
         ))}
       </div>
     </section>

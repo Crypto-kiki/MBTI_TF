@@ -17,12 +17,12 @@ interface PageContextHeaderProps {
 function getCopy(locale: Locale, activeNav: PageContextHeaderProps['activeNav']) {
   const labels =
     locale === 'ko'
-      ? { seriesHub: '시리즈 허브', overview: '시리즈 소개', quiz: '테스트 시작', types: '전체 유형 보기', result: '결과', localNav: '현재 시리즈 이동' }
+      ? { seriesHub: '시리즈 허브', overview: '소개', quiz: '시작', types: '유형', result: '결과', localNav: '현재 시리즈 이동' }
       : locale === 'ja'
-        ? { seriesHub: 'シリーズハブ', overview: 'シリーズ紹介', quiz: 'テスト開始', types: '全タイプを見る', result: '結果', localNav: 'このシリーズ内の移動' }
+        ? { seriesHub: 'シリーズハブ', overview: '紹介', quiz: '開始', types: 'タイプ', result: '結果', localNav: 'このシリーズ内の移動' }
         : locale === 'zh-TW'
-          ? { seriesHub: '系列中心', overview: '系列介紹', quiz: '開始測驗', types: '查看全部類型', result: '結果', localNav: '目前系列導覽' }
-          : { seriesHub: 'Series hub', overview: 'Series overview', quiz: 'Start quiz', types: 'Browse all types', result: 'Result', localNav: 'Current series navigation' };
+          ? { seriesHub: '系列中心', overview: '介紹', quiz: '開始', types: '類型', result: '結果', localNav: '目前系列導覽' }
+          : { seriesHub: 'Series hub', overview: 'Overview', quiz: 'Start', types: 'Types', result: 'Result', localNav: 'Current series navigation' };
 
   const sectionLabel = activeNav === 'overview' ? labels.overview : activeNav === 'quiz' ? labels.quiz : activeNav === 'types' ? labels.types : labels.result;
   return { ...labels, sectionLabel };
@@ -32,6 +32,7 @@ export function PageContextHeader({ locale, series, activeNav, contextTitle }: P
   const copy = getCopy(locale, activeNav);
   const seriesDefinition = getSeriesDefinition(locale, series);
   const showBreadcrumb = activeNav === 'types' || activeNav === 'result';
+  const subtitle = activeNav === 'overview' ? seriesDefinition.content.summaryLine : null;
 
   return (
     <div className="mb-6 rounded-[1.8rem] border border-white/10 bg-[linear-gradient(135deg,rgba(12,13,24,0.88),rgba(19,21,37,0.9),rgba(32,28,49,0.88))] px-4 py-4 shadow-soft backdrop-blur-xl sm:mb-7 sm:px-5 sm:py-5">
@@ -57,7 +58,7 @@ export function PageContextHeader({ locale, series, activeNav, contextTitle }: P
               <span className="pill-muted">{seriesDefinition.content.label}</span>
             </div>
             <h2 className="mt-3 text-lg font-semibold text-white sm:text-[1.35rem]">{contextTitle ?? seriesDefinition.content.title}</h2>
-            <p className="mt-1 text-sm text-white/62 sm:text-[0.96rem]">{seriesDefinition.content.summaryLine}</p>
+            {subtitle ? <p className="mt-1 text-sm text-white/62 sm:text-[0.96rem]">{subtitle}</p> : null}
           </div>
 
           <nav className="flex flex-wrap items-center gap-2" aria-label={copy.localNav}>

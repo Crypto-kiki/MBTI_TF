@@ -16,7 +16,6 @@ export function ModeCard({ config, locale }: ModeCardProps) {
   const Icon = isFMode ? HeartHandshake : ScanSearch;
   const messages = uiMessages[locale].modes;
   const accentBadge = isFMode ? messages.f.badge : messages.t.badge;
-  const accentText = isFMode ? messages.f.accentText : messages.t.accentText;
 
   return (
     <Link
@@ -34,7 +33,6 @@ export function ModeCard({ config, locale }: ModeCardProps) {
             <span className="pill-accent">{accentBadge}</span>
           </div>
           <div>
-            <p className="text-xs uppercase tracking-[0.24em] text-white/56">{messages.modeSelect}</p>
             <h3 className="mt-2 text-3xl font-semibold text-white">{config.title}</h3>
             <p className="mt-2 text-sm leading-6 text-white/74">{config.subtitle}</p>
           </div>
@@ -42,13 +40,10 @@ export function ModeCard({ config, locale }: ModeCardProps) {
 
         <p className="flex-1 text-sm leading-7 text-white/82 sm:text-base">{config.description}</p>
 
-        <div className="surface-panel-strong p-4 text-white">
-          <p className="text-sm font-medium text-white/78">{accentText}</p>
-          <div className="mt-4 flex items-center justify-between text-sm font-semibold text-white">
-            <span>{messages.start}</span>
-            <div className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/10">
-              <ArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5" />
-            </div>
+        <div className="surface-panel-strong flex items-center justify-between p-4 text-white">
+          <span className="text-sm font-semibold text-white">{messages.start}</span>
+          <div className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/10">
+            <ArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5" />
           </div>
         </div>
       </div>

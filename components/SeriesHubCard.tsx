@@ -1,6 +1,6 @@
 import type { Route } from 'next';
 import Link from 'next/link';
-import { ArrowRight, Compass, Layers3, TimerReset } from 'lucide-react';
+import { ArrowRight, Compass, TimerReset } from 'lucide-react';
 
 import { uiMessages } from '@/data/i18n/messages';
 import { Locale } from '@/lib/i18n/config';
@@ -28,7 +28,6 @@ interface SeriesHubCardProps {
       reportIncludes: string;
     };
   };
-  companionSeriesLabel?: string;
 }
 
 function getMetricLabels(locale: Locale) {
@@ -36,13 +35,9 @@ function getMetricLabels(locale: Locale) {
     return {
       questions: '문항 수',
       time: '예상 시간',
-      focus: '리포트 성격',
       topic: '무엇을 읽는지',
       bestFor: '추천하는 상황',
-      includes: '리포트 구성',
       browse: '전체 유형 보기',
-      next: '다음으로 이어보기',
-      independent: '독립된 시리즈',
     };
   }
 
@@ -50,13 +45,9 @@ function getMetricLabels(locale: Locale) {
     return {
       questions: '設問数',
       time: '所要時間',
-      focus: 'レポートの性格',
       topic: '読み取ること',
       bestFor: 'おすすめの場面',
-      includes: 'レポート構成',
       browse: '全タイプを見る',
-      next: '次に続ける',
-      independent: '独立したシリーズ',
     };
   }
 
@@ -64,30 +55,22 @@ function getMetricLabels(locale: Locale) {
     return {
       questions: '題數',
       time: '時間',
-      focus: '報告類型',
       topic: '閱讀重點',
       bestFor: '推薦情境',
-      includes: '報告內容',
       browse: '查看全部類型',
-      next: '下一步延伸',
-      independent: '獨立系列',
     };
   }
 
   return {
     questions: 'Questions',
     time: 'Time',
-    focus: 'Report style',
     topic: 'What it reads',
     bestFor: 'Best for',
-    includes: 'What’s inside',
     browse: 'Browse all types',
-    next: 'Continue with',
-    independent: 'Independent series',
   };
 }
 
-export function SeriesHubCard({ locale, series, companionSeriesLabel }: SeriesHubCardProps) {
+export function SeriesHubCard({ locale, series }: SeriesHubCardProps) {
   const labels = getMetricLabels(locale);
   const messages = uiMessages[locale];
 
@@ -97,7 +80,6 @@ export function SeriesHubCard({ locale, series, companionSeriesLabel }: SeriesHu
         <div className="flex flex-wrap items-center gap-2">
           <span className="pill-accent">{series.badge}</span>
           <span className="pill-muted">{series.content.label}</span>
-          <span className="pill-muted">{labels.independent}</span>
         </div>
 
         <div className="space-y-3">
@@ -107,7 +89,7 @@ export function SeriesHubCard({ locale, series, companionSeriesLabel }: SeriesHu
           <p className="max-w-2xl text-sm leading-7 text-white/68 sm:text-base">{series.content.description}</p>
         </div>
 
-        <div className="grid gap-3 sm:grid-cols-3">
+        <div className="grid gap-3 sm:grid-cols-2">
           <div className="metric-tile">
             <p className="text-[0.68rem] uppercase tracking-[0.18em] text-white/46">{labels.questions}</p>
             <p className="mt-2 text-base font-semibold text-white">{series.content.questionCount}</p>
@@ -115,10 +97,6 @@ export function SeriesHubCard({ locale, series, companionSeriesLabel }: SeriesHu
           <div className="metric-tile">
             <p className="text-[0.68rem] uppercase tracking-[0.18em] text-white/46">{labels.time}</p>
             <p className="mt-2 text-base font-semibold text-white">{series.content.estimatedTime}</p>
-          </div>
-          <div className="metric-tile">
-            <p className="text-[0.68rem] uppercase tracking-[0.18em] text-white/46">{labels.focus}</p>
-            <p className="mt-2 text-base font-semibold text-white">{series.content.accentLabel}</p>
           </div>
         </div>
 
@@ -137,19 +115,6 @@ export function SeriesHubCard({ locale, series, companionSeriesLabel }: SeriesHu
             </div>
             <p className="mt-3 text-sm leading-7 text-white/76 sm:text-base">{series.content.recommendedFor}</p>
           </div>
-        </div>
-
-        <div className="surface-panel-strong px-4 py-4 text-white">
-          <div className="flex items-center gap-2 text-white/78">
-            <Layers3 className="h-4 w-4" />
-            <p className="text-[0.68rem] uppercase tracking-[0.18em]">{labels.includes}</p>
-          </div>
-          <p className="mt-3 text-sm leading-7 text-white/80 sm:text-base">{series.content.reportIncludes}</p>
-          {companionSeriesLabel ? (
-            <p className="mt-3 text-xs font-medium tracking-[0.06em] text-white/60 sm:text-sm">
-              {labels.next}: {companionSeriesLabel}
-            </p>
-          ) : null}
         </div>
 
         <div className="mt-auto flex flex-col gap-3 sm:flex-row">

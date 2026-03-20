@@ -18,16 +18,7 @@ interface LayoutProps {
   contextTitle?: string;
 }
 
-function getHeaderCopy(locale: Locale) {
-  if (locale === 'ko') return { seriesHub: '시리즈 허브' };
-  if (locale === 'ja') return { seriesHub: 'シリーズハブ' };
-  if (locale === 'zh-TW') return { seriesHub: '系列中心' };
-  return { seriesHub: 'Series hub' };
-}
-
 export function Layout({ children, locale, activeNav, series, contextTitle }: LayoutProps) {
-  const copy = getHeaderCopy(locale);
-
   return (
     <div className="relative min-h-screen overflow-hidden">
       <div className="absolute inset-x-0 top-0 -z-10 h-[28rem] bg-soft-grid blur-3xl" />
@@ -42,9 +33,6 @@ export function Layout({ children, locale, activeNav, series, contextTitle }: La
               <div className="flex flex-wrap items-center gap-2.5">
                 <Link href={`/${locale}` as Route} className="brand-chip border-white/12 bg-white/8 px-3.5 py-2 text-xs font-medium tracking-[0.24em] text-white sm:text-sm">
                   F와 T 사이
-                </Link>
-                <Link href={`/${locale}` as Route} className="button-tertiary min-h-[2.8rem] px-4 py-2 text-sm">
-                  {copy.seriesHub}
                 </Link>
               </div>
 

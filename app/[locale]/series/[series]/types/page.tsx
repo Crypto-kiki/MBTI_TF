@@ -22,7 +22,7 @@ function getPageCopy(locale: Locale) {
   if (locale === 'ko') {
     return {
       title: '이 시리즈의 전체 유형',
-      description: '현재 시리즈 안에서 나올 수 있는 결과를 카탈로그처럼 비교해볼 수 있어요. 필터로 빠르게 좁히고, 마음에 드는 유형을 열어 상세 결과로 이어질 수 있습니다.',
+      description: '필터로 좁히고, 궁금한 유형을 열어보세요.',
       startSeries: '이 시리즈 테스트 시작',
       goHome: '시리즈 허브로',
       otherSeries: '다른 시리즈 보기',
@@ -33,7 +33,7 @@ function getPageCopy(locale: Locale) {
   if (locale === 'ja') {
     return {
       title: 'このシリーズの全タイプ',
-      description: 'このシリーズで出る結果をカタログのように比較できます。フィルターで絞り込み、気になるタイプをそのまま詳細結果へ開けます。',
+      description: 'フィルターで絞って、気になるタイプを開いてください。',
       startSeries: 'このシリーズのテストへ',
       goHome: 'シリーズハブへ',
       otherSeries: '別シリーズを見る',
@@ -44,7 +44,7 @@ function getPageCopy(locale: Locale) {
   if (locale === 'zh-TW') {
     return {
       title: '目前系列的全部類型',
-      description: '這裡像型錄一樣整理了目前系列的結果。你可以先用篩選快速縮小，再打開有興趣的類型查看完整結果。',
+      description: '先用篩選縮小，再打開有興趣的類型。',
       startSeries: '開始這個系列的測驗',
       goHome: '回系列中心',
       otherSeries: '查看其他系列',
@@ -54,7 +54,7 @@ function getPageCopy(locale: Locale) {
 
   return {
     title: 'All types in this series',
-    description: 'This page works like a catalog for the current series. Filter quickly, compare outcomes, and open any type into the full result page.',
+    description: 'Filter fast and open the type you want to compare.',
     startSeries: 'Start this series',
     goHome: 'Go to series hub',
     otherSeries: 'Browse other series',

@@ -18,67 +18,67 @@ interface SeriesOverviewSectionProps {
 function getCopy(locale: Locale) {
   if (locale === 'ko') {
     return {
-      startTitle: '이 시리즈에서 바로 할 수 있는 것',
-      startDescription: '핵심 설명을 읽은 뒤 바로 테스트를 시작하거나, 전체 유형을 먼저 훑어보고 결정할 수 있습니다.',
+      startTitle: '지금 할 일',
+      startDescription: '설명을 읽었으면 바로 시작하거나, 전체 유형을 먼저 비교해보세요.',
       startQuiz: '테스트 시작',
       viewTypes: '전체 유형 보기',
       exploreOther: '다른 시리즈 보기',
       whatItReads: '무엇을 측정하는지',
-      reportIncludes: '결과에서 받는 리포트',
-      modeSection: '테스트 선택',
-      modeDescription: '아래에서 원하는 흐름을 선택하면 바로 테스트로 이어집니다.',
+      reportIncludes: '결과에서 받는 것',
+      modeSection: '시작할 테스트',
+      modeDescription: '원하는 흐름을 고르면 바로 이어집니다.',
       otherSeries: '다른 시리즈 추천',
-      otherSeriesDescription: '지금 시리즈를 본 뒤 곧바로 다른 시리즈로 넘어갈 수 있게 동선을 짧게 유지했습니다.',
+      otherSeriesDescription: '비교만 하고 넘어가고 싶다면 여기서 바로 이동하세요.',
       moveToSeries: '이 시리즈 열기',
     };
   }
 
   if (locale === 'ja') {
     return {
-      startTitle: 'このシリーズですぐできること',
-      startDescription: '概要を読んだあとすぐテストを始めても、全タイプを先に見てから決めても大丈夫です。',
+      startTitle: '今すること',
+      startDescription: '説明を読んだら、そのまま始めるか全タイプを先に見て決められます。',
       startQuiz: 'テストを始める',
       viewTypes: '全タイプを見る',
       exploreOther: '別シリーズを見る',
       whatItReads: '何を測るか',
-      reportIncludes: '結果で受け取る内容',
-      modeSection: 'テスト選択',
-      modeDescription: '下の流れから一つ選ぶと、そのままテストへ進めます。',
+      reportIncludes: '結果で受け取るもの',
+      modeSection: '始めるテスト',
+      modeDescription: '一つ選ぶと、そのまま進めます。',
       otherSeries: '別シリーズのおすすめ',
-      otherSeriesDescription: '今のシリーズを見たあと、そのまま別シリーズへ自然につながるようにしています。',
+      otherSeriesDescription: '比較だけして次へ進みたいときはここから移動できます。',
       moveToSeries: 'このシリーズを開く',
     };
   }
 
   if (locale === 'zh-TW') {
     return {
-      startTitle: '你現在可以直接做的事',
-      startDescription: '看完核心介紹後，可以直接開始測驗，也可以先看完整類型再決定。',
+      startTitle: '現在就能做的事',
+      startDescription: '看完介紹後，可以直接開始，也可以先看全部類型再決定。',
       startQuiz: '開始測驗',
       viewTypes: '查看全部類型',
       exploreOther: '查看其他系列',
       whatItReads: '測量重點',
-      reportIncludes: '你會拿到的結果',
-      modeSection: '選擇測驗',
-      modeDescription: '從下方選擇想開始的流程後，就能直接進入測驗。',
+      reportIncludes: '你會拿到什麼',
+      modeSection: '要開始的測驗',
+      modeDescription: '選好後就能直接進入。',
       otherSeries: '其他系列推薦',
-      otherSeriesDescription: '看完目前系列後，也能立刻延伸到其他系列，不需要重新找入口。',
+      otherSeriesDescription: '如果只想快速比較，也可以直接跳到別的系列。',
       moveToSeries: '打開這個系列',
     };
   }
 
   return {
-    startTitle: 'What you can do from here',
-    startDescription: 'Read the core intro, start the quiz immediately, or browse all types first before deciding.',
+    startTitle: 'What to do now',
+    startDescription: 'Start right away or compare all types first.',
     startQuiz: 'Start the quiz',
     viewTypes: 'Browse all types',
     exploreOther: 'Browse other series',
     whatItReads: 'What it measures',
-    reportIncludes: 'What the report includes',
-    modeSection: 'Choose a quiz',
-    modeDescription: 'Pick a flow below and move directly into the quiz.',
+    reportIncludes: 'What you get',
+    modeSection: 'Pick a quiz',
+    modeDescription: 'Choose a flow and continue.',
     otherSeries: 'Other recommended series',
-    otherSeriesDescription: 'After checking this series, you can move straight into another one without hunting for the next path.',
+    otherSeriesDescription: 'If you only want to compare first, move straight into another series here.',
     moveToSeries: 'Open this series',
   };
 }
@@ -109,7 +109,7 @@ export function SeriesOverviewSection({ locale, series }: SeriesOverviewSectionP
               {seriesDefinition.content.title}
             </h1>
             <p className="mt-4 max-w-3xl text-lg leading-8 text-white/86 sm:text-xl">{seriesDefinition.content.summaryLine}</p>
-            <p className="mt-3 max-w-3xl text-base leading-8 text-white/68 sm:text-lg">{seriesDefinition.content.description}</p>
+            <p className="mt-3 max-w-3xl text-base leading-7 text-white/68 sm:text-lg">{seriesDefinition.content.description}</p>
 
             <div className="mt-6 grid gap-3 lg:grid-cols-3">
               {[seriesDefinition.content.questionCount, seriesDefinition.content.estimatedTime, seriesDefinition.content.topicSummary].map((item) => (
@@ -173,7 +173,7 @@ export function SeriesOverviewSection({ locale, series }: SeriesOverviewSectionP
                 <Layers3 className="h-3.5 w-3.5" />
                 {copy.otherSeries}
               </div>
-              <p className="mt-3 max-w-3xl text-sm leading-7 text-white/72 sm:text-base">{copy.otherSeriesDescription}</p>
+              <p className="mt-3 max-w-3xl text-sm leading-6 text-white/72 sm:text-base">{copy.otherSeriesDescription}</p>
             </div>
             <Link href={`/${locale}` as Route} className="button-tertiary">
               {copy.exploreOther}
@@ -189,7 +189,7 @@ export function SeriesOverviewSection({ locale, series }: SeriesOverviewSectionP
                   <span className="pill-muted">{item.content.label}</span>
                 </div>
                 <h3 className="mt-3 text-lg font-semibold text-white">{item.content.summaryLine}</h3>
-                <p className="mt-2 text-sm leading-6 text-white/68">{item.content.description}</p>
+                <p className="mt-2 text-sm leading-6 text-white/68">{item.content.topicSummary}</p>
                 <div className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-white/88">
                   {copy.moveToSeries}
                   <ArrowRight className="h-4 w-4" />

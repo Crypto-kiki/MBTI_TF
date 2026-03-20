@@ -96,7 +96,6 @@ export function ResultCatalogExplorer({ locale, series, resultTypes, profiles, m
                 <div>
                   <span className="section-label">{messages.filters[section]}</span>
                   <h2 className="mt-3 text-xl font-semibold text-white sm:text-2xl">{messages.sections[section].title}</h2>
-                  <p className="mt-2 max-w-2xl text-sm leading-6 text-white/72 sm:leading-7">{messages.sections[section].description}</p>
                 </div>
                 <span className="pill-accent w-fit">{getCountLabel(locale, groupedTypes[section].length)}</span>
               </div>

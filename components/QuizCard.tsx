@@ -58,7 +58,6 @@ export function QuizCard({
             </div>
             <p className="text-sm uppercase tracking-[0.24em] text-white/56">{modeLabel}</p>
             <h1 className="mt-2 text-3xl font-semibold text-white sm:text-[2rem]">{messages.title}</h1>
-            <p className="mt-3 text-sm leading-7 text-white/76 sm:text-base">{messages.intro}</p>
           </div>
           <Link href={`/${locale}`} className="button-tertiary shrink-0">
             {copy.hub}
@@ -73,10 +72,8 @@ export function QuizCard({
       <div className="space-y-6">
         <div className="surface-panel p-5 sm:p-6">
           <div className="flex items-center justify-between gap-3 text-sm text-white/54">
-            <p>
-              {messages.questionLabel} {questionNumber}
-            </p>
-            <p>{isFMode ? messages.focusF : messages.focusT}</p>
+            <p>{messages.questionLabel} {questionNumber}</p>
+            <p>{questionNumber} / {totalQuestions}</p>
           </div>
           <h2 className="mt-4 text-2xl font-medium leading-9 text-white sm:text-[1.75rem] sm:leading-[2.6rem]">{question.prompt}</h2>
           <p className="mt-3 text-sm leading-7 text-white/68 sm:text-base">{question.context}</p>
@@ -119,8 +116,6 @@ export function QuizCard({
             );
           })}
         </div>
-
-        <div className="surface-panel-muted p-4 text-sm leading-6 text-white/72 shadow-soft">{messages.helper}</div>
 
         <div className="flex flex-col gap-3 border-t border-white/8 pt-2 sm:flex-row sm:items-center sm:justify-between">
           <button
