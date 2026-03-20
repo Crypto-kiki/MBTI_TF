@@ -65,43 +65,40 @@ export function ResultCatalogExplorer({ locale, series, resultTypes, profiles, m
 
   return (
     <div className="space-y-7 sm:space-y-8">
-      <div className="-mx-1 overflow-x-auto px-1 pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-        <div className="flex min-w-max gap-2">
-          {filterOrder.map((filter) => {
-            const isActive = activeFilter === filter;
+      <div className="surface-panel p-4 sm:p-5">
+        <div className="-mx-1 overflow-x-auto px-1 pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          <div className="flex min-w-max gap-2">
+            {filterOrder.map((filter) => {
+              const isActive = activeFilter === filter;
 
-            return (
-              <button
-                key={filter}
-                type="button"
-                onClick={() => setActiveFilter(filter)}
-                className={`interactive-card min-h-[2.9rem] rounded-full px-4 py-2 text-sm font-medium sm:min-h-[3rem] ${
-                  isActive
-                    ? 'bg-gradient-to-r from-plum to-[#7a6677] text-white shadow-soft'
-                    : 'border border-white/70 bg-white/82 text-plum/78 shadow-soft hover:bg-white hover:text-plum'
-                }`}
-              >
-                {messages.filters[filter]}
-              </button>
-            );
-          })}
+              return (
+                <button
+                  key={filter}
+                  type="button"
+                  onClick={() => setActiveFilter(filter)}
+                  className={`interactive-card min-h-[2.9rem] rounded-full px-4 py-2 text-sm font-medium sm:min-h-[3rem] ${
+                    isActive ? 'button-primary' : 'button-tertiary'
+                  }`}
+                >
+                  {messages.filters[filter]}
+                </button>
+              );
+            })}
+          </div>
         </div>
       </div>
 
       <div className="space-y-8 sm:space-y-10">
         {visibleSections.map((section) => (
           <section key={section} className="space-y-4 sm:space-y-5">
-            <div className="rounded-[1.45rem] border border-white/72 bg-white/64 px-4 py-4 shadow-soft sm:rounded-[1.7rem] sm:px-5 sm:py-5">
+            <div className="surface-panel-strong px-5 py-5 sm:px-6 sm:py-6">
               <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                 <div>
-                  <h2 className="text-xl font-semibold text-ink sm:text-2xl">{messages.sections[section].title}</h2>
-                  <p className="mt-1.5 max-w-2xl text-sm leading-6 text-ink/64 sm:mt-2 sm:leading-7">
-                    {messages.sections[section].description}
-                  </p>
+                  <span className="section-label">{messages.filters[section]}</span>
+                  <h2 className="mt-3 text-xl font-semibold text-white sm:text-2xl">{messages.sections[section].title}</h2>
+                  <p className="mt-2 max-w-2xl text-sm leading-6 text-white/72 sm:leading-7">{messages.sections[section].description}</p>
                 </div>
-                <span className="inline-flex w-fit items-center rounded-full border border-plum/10 bg-white/88 px-3 py-1 text-xs font-medium tracking-[0.08em] text-plum/70 shadow-sm sm:text-sm">
-                  {getCountLabel(locale, groupedTypes[section].length)}
-                </span>
+                <span className="pill-accent w-fit">{getCountLabel(locale, groupedTypes[section].length)}</span>
               </div>
             </div>
 
