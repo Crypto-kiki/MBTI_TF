@@ -41,11 +41,21 @@ interface ResultCatalogCardProps {
 export function ResultCatalogCard({ locale, series, profile, viewLabel }: ResultCatalogCardProps) {
   const keywords = profile.keywords?.slice(0, 3) ?? profile.strengths.slice(0, 3);
   const summaryLabel = getSummaryLabel(series, locale);
+  const isLoveSeries = series === 'love';
+  const articleClass = isLoveSeries
+    ? 'border-[#ffd4ea]/14 bg-[linear-gradient(180deg,rgba(33,20,38,0.94),rgba(17,21,34,0.96))] shadow-[0_24px_72px_rgba(38,18,42,0.24)]'
+    : 'shadow-soft';
+  const keywordClass = isLoveSeries
+    ? 'border border-[#ffd4ea]/14 bg-white/7 text-[#fbe4f0]'
+    : 'bg-white/6 text-white/86';
+  const buttonClass = isLoveSeries
+    ? 'bg-[#ffe9f5] text-[#5e2d4f] group-hover:bg-[#ffd1e6] group-hover:text-[#4b2242]'
+    : 'group-hover:bg-white group-hover:text-ink';
 
   return (
     <Link href={getResultHref(locale, profile.type, series) as Route} className="interactive-card group block h-full rounded-[1.8rem] sm:rounded-[2rem]">
-      <article className="glass-panel flex h-full flex-col rounded-[1.8rem] p-3.5 shadow-soft transition duration-300 group-hover:border-white/16 group-hover:shadow-float sm:rounded-[2rem] sm:p-5">
-        <ResultImageCard image={profile.image} title={profile.title} subtitle={profile.subtitle} />
+      <article className={`glass-panel flex h-full flex-col rounded-[1.8rem] p-3.5 transition duration-300 group-hover:border-white/16 group-hover:shadow-float sm:rounded-[2rem] sm:p-5 ${articleClass}`}>
+        <ResultImageCard image={profile.image} title={profile.title} subtitle={profile.subtitle} series={series} />
 
         <div className="mt-4 min-h-[5.6rem] sm:min-h-[5.9rem]">
           <span className="pill-muted">{getSeriesBadge(series, locale)}</span>
@@ -55,7 +65,7 @@ export function ResultCatalogCard({ locale, series, profile, viewLabel }: Result
 
         <div className="mt-4 flex min-h-[2.4rem] flex-wrap gap-2">
           {keywords.map((strength) => (
-            <span key={strength} className="pill-accent bg-white/6 text-[0.72rem] font-medium tracking-normal text-white/86">
+            <span key={strength} className={`pill-accent text-[0.72rem] font-medium tracking-normal ${keywordClass}`}>
               {strength}
             </span>
           ))}
@@ -65,7 +75,7 @@ export function ResultCatalogCard({ locale, series, profile, viewLabel }: Result
         <p className="mt-2 line-clamp-3 min-h-[4.2rem] text-sm leading-6 text-white/70 sm:mt-2.5">{profile.quickSummary}</p>
 
         <div className="mt-auto pt-5">
-          <div className="button-secondary w-fit group-hover:bg-white group-hover:text-ink">
+          <div className={`button-secondary w-fit ${buttonClass}`}>
             {viewLabel}
             <ArrowRight className="h-4 w-4" />
           </div>
