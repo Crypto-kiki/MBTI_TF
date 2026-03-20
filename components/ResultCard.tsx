@@ -6,7 +6,7 @@ import { getTagLabel, uiMessages } from '@/data/i18n/messages';
 import { Locale } from '@/lib/i18n/config';
 import { getAxisFromResultType } from '@/lib/results';
 import { getSeriesPrimaryMode } from '@/data/series';
-import { getSeriesQuizModeHref, getSeriesResultHref } from '@/lib/series';
+import { getSeriesQuizHubHref, getSeriesQuizModeHref, getSeriesResultHref, getSeriesTypesHref } from '@/lib/series';
 import { QuizMode, ResolvedQuizResult } from '@/types/quiz';
 import { SeriesKey } from '@/types/series';
 import { ResultImageCard } from '@/components/ResultImageCard';
@@ -403,6 +403,29 @@ export function ResultCard({ locale, series, mode, modeLabel, result }: ResultCa
           ? 'Retake the love report'
           : messages.tryOther
       : messages.tryOther;
+  const seriesSwitchHref = getSeriesQuizHubHref(locale, isLoveSeries ? 'core' : 'love');
+  const seriesSwitchLabel =
+    isLoveSeries
+      ? locale === 'ko'
+        ? '기본편 이어서 보기'
+        : locale === 'en'
+          ? 'Continue with Core'
+          : messages.backHome
+      : locale === 'ko'
+        ? '연애편 이어서 보기'
+        : locale === 'en'
+          ? 'Continue with Love'
+          : messages.backHome;
+  const typesHref = getSeriesTypesHref(locale, series);
+  const typesLabel =
+    isLoveSeries
+      ? locale === 'ko'
+        ? '연애편 전체 유형 보기'
+        : locale === 'en'
+          ? 'Browse love types'
+          : messages.backHome
+      : messages.backHome;
+  const matchTitle = isLoveSeries && locale === 'ko' ? '나와 잘 맞는 연애 유형' : messages.goodMatch;
 
   return (
     <section className="mx-auto flex w-full max-w-6xl flex-col gap-4 sm:gap-5">
@@ -420,6 +443,12 @@ export function ResultCard({ locale, series, mode, modeLabel, result }: ResultCa
               <span className="rounded-full bg-plum/10 px-3 py-1 text-xs text-plum sm:text-sm">{axisLabel}</span>
             </div>
 
+            {isLoveSeries ? (
+              <div className="mt-4 inline-flex items-center rounded-full bg-[#f9dbe5]/70 px-3 py-1 text-[0.68rem] font-semibold tracking-[0.18em] text-plum/78">
+                {locale === 'ko' ? 'LOVE REPORT' : 'LOVE REPORT'}
+              </div>
+            ) : null}
+
             <h1 className="mt-5 text-balance text-[2.2rem] font-semibold leading-[0.96] text-ink sm:mt-6 sm:text-[3.25rem] lg:text-[3.95rem]">
               {result.profile.title}
             </h1>
@@ -430,7 +459,7 @@ export function ResultCard({ locale, series, mode, modeLabel, result }: ResultCa
             <div className="mt-5 rounded-[1.65rem] border border-white/80 bg-[linear-gradient(135deg,rgba(255,255,255,0.96),rgba(248,242,248,0.92),rgba(242,236,251,0.88))] p-4 shadow-soft sm:rounded-[1.9rem] sm:p-5">
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <div className="inline-flex items-center gap-2 rounded-full bg-plum/8 px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-plum/74 sm:text-[0.72rem]">
-                  {messages.summaryCard}
+                  {isLoveSeries && locale === 'ko' ? '한 줄 핵심 해석' : messages.summaryCard}
                 </div>
                 <p className="text-xs font-medium tracking-[0.08em] text-plum/50 sm:text-[0.78rem]">{messages.summaryHint}</p>
               </div>
@@ -601,11 +630,11 @@ export function ResultCard({ locale, series, mode, modeLabel, result }: ResultCa
             </ul>
           </div>
           <div>
-            <h2 className="text-lg font-semibold text-ink">{messages.goodMatch}</h2>
+            <h2 className="text-lg font-semibold text-ink">{matchTitle}</h2>
             <div className="mt-3.5 rounded-[1.6rem] border border-plum/10 bg-[linear-gradient(180deg,rgba(248,243,255,0.98),rgba(255,255,255,0.9))] px-4 py-4 shadow-soft sm:mt-4 sm:rounded-[1.85rem] sm:p-5">
               <div className="inline-flex items-center gap-2 rounded-full bg-plum/10 px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-plum/74 sm:text-[0.72rem]">
                 <Sparkles className="h-3.5 w-3.5" />
-                {messages.goodMatch}
+                {matchTitle}
               </div>
               <p className="mt-3 text-base font-semibold text-ink">{result.profile.compatibility.title}</p>
               <p className="mt-1 text-sm text-plum">{result.profile.compatibility.subtitle}</p>
@@ -648,20 +677,30 @@ export function ResultCard({ locale, series, mode, modeLabel, result }: ResultCa
         </div>
       </div>
 
-      <div className="flex flex-col gap-3 pt-1 sm:flex-row sm:pt-0">
-        <Link
-          href={otherRoute as Route}
-          className="interactive-card inline-flex min-h-[3.35rem] items-center justify-center gap-2 rounded-full bg-gradient-to-r from-plum to-[#8d7488] px-6 py-3.5 text-sm font-semibold text-white shadow-soft hover:shadow-float sm:flex-1 sm:min-h-[3.5rem] sm:flex-none"
-        >
-          {retryLabel}
-          <ArrowRight className="h-4 w-4" />
-        </Link>
-        <Link
-          href={`/${locale}` as Route}
-          className="interactive-card inline-flex min-h-[3.35rem] items-center justify-center rounded-full border border-plum/12 bg-white/84 px-5 py-3 text-sm font-medium text-plum hover:bg-white sm:min-h-[3.5rem]"
-        >
-          {messages.backHome}
-        </Link>
+      <div className="flex flex-col gap-3 pt-1 sm:pt-0">
+        <div className="grid gap-3 lg:grid-cols-3">
+          <Link
+            href={otherRoute as Route}
+            className="interactive-card inline-flex min-h-[3.35rem] items-center justify-center gap-2 rounded-full bg-gradient-to-r from-plum to-[#8d7488] px-6 py-3.5 text-sm font-semibold text-white shadow-soft hover:shadow-float sm:min-h-[3.5rem]"
+          >
+            {retryLabel}
+            <ArrowRight className="h-4 w-4" />
+          </Link>
+          <Link
+            href={seriesSwitchHref as Route}
+            className="interactive-card inline-flex min-h-[3.35rem] items-center justify-center gap-2 rounded-full border border-plum/14 bg-white/92 px-5 py-3 text-sm font-medium text-plum hover:bg-white sm:min-h-[3.5rem]"
+          >
+            {seriesSwitchLabel}
+            <ArrowRight className="h-4 w-4" />
+          </Link>
+          <Link
+            href={(isLoveSeries ? typesHref : `/${locale}`) as Route}
+            className="interactive-card inline-flex min-h-[3.35rem] items-center justify-center gap-2 rounded-full border border-plum/12 bg-white/84 px-5 py-3 text-sm font-medium text-plum hover:bg-white sm:min-h-[3.5rem]"
+          >
+            {isLoveSeries ? typesLabel : messages.backHome}
+            <ArrowRight className="h-4 w-4" />
+          </Link>
+        </div>
       </div>
     </section>
   );

@@ -86,6 +86,7 @@ export interface ResultContent {
   subtitle: string;
   summary?: string;
   quickSummary?: string;
+  keywords?: string[];
   description: string;
   strengths: string[];
   tips: string[];
