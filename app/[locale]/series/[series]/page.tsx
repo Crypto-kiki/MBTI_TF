@@ -25,7 +25,7 @@ export default function SeriesLandingPage({ params }: SeriesLandingPageProps) {
   const definition = getSeriesDefinition(locale, series);
 
   return (
-    <Layout locale={locale} series={series}>
+    <Layout locale={locale} series={series} activeNav="overview" contextTitle={definition.content.title}>
       <SeriesOverviewSection locale={locale} series={definition.key} />
     </Layout>
   );

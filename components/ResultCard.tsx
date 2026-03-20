@@ -5,7 +5,7 @@ import { ArrowRight, Fingerprint, Lightbulb, Sparkles } from 'lucide-react';
 import { getTagLabel, uiMessages } from '@/data/i18n/messages';
 import { Locale } from '@/lib/i18n/config';
 import { getAxisFromResultType } from '@/lib/results';
-import { getSeriesPrimaryMode } from '@/data/series';
+import { getSeriesDefinition, getSeriesPrimaryMode } from '@/data/series';
 import { getSeriesQuizHubHref, getSeriesQuizModeHref, getSeriesResultHref, getSeriesTypesHref } from '@/lib/series';
 import { QuizMode, ResolvedQuizResult } from '@/types/quiz';
 import { SeriesKey } from '@/types/series';
@@ -378,6 +378,62 @@ function getGuidanceMessage(locale: Locale, axis: 'f' | 't' | 'balanced') {
   };
 }
 
+function getSeriesSwitchCopy(locale: Locale, currentSeries: SeriesKey, nextSeriesLabel: string) {
+  if (locale === 'ko') {
+    return currentSeries === 'love'
+      ? {
+          eyebrow: '다음 추천 시리즈',
+          title: `${nextSeriesLabel}도 이어서 보면 전체 흐름이 더 또렷해져요.`,
+          description: '연애 안에서의 반응을 봤다면, 이제 일상적인 기본 해석 습관도 함께 보면 두 결과를 비교하기 쉬워집니다.',
+        }
+      : {
+          eyebrow: '다음 추천 시리즈',
+          title: `${nextSeriesLabel}에서 관계 안의 반응도 함께 읽어보세요.`,
+          description: '기본 성향을 확인했다면, 연애 안에서 갈등·연락·표현 방식이 어떻게 드러나는지도 자연스럽게 이어서 볼 수 있어요.',
+        };
+  }
+
+  if (locale === 'ja') {
+    return currentSeries === 'love'
+      ? {
+          eyebrow: '次におすすめのシリーズ',
+          title: `${nextSeriesLabel}も続けて見ると全体像がつかみやすくなります。`,
+          description: '恋愛での反応を見たあとに、日常の基本的な読み取り癖も合わせて見ると、二つの結果を比べやすくなります。',
+        }
+      : {
+          eyebrow: '次におすすめのシリーズ',
+          title: `${nextSeriesLabel}で関係の中の反応も読んでみましょう。`,
+          description: '基本傾向を確認したあと、そのスタイルが恋愛の衝突・連絡・表現でどう出るかを自然に続けて見られます。',
+        };
+  }
+
+  if (locale === 'zh-TW') {
+    return currentSeries === 'love'
+      ? {
+          eyebrow: '下一個推薦系列',
+          title: `接著看 ${nextSeriesLabel}，整體輪廓會更清楚。`,
+          description: '看完你在感情中的反應後，再搭配日常基礎解讀習慣一起看，會更容易比較兩份結果。',
+        }
+      : {
+          eyebrow: '下一個推薦系列',
+          title: `也到 ${nextSeriesLabel} 看看你在關係裡的反應。`,
+          description: '確認完基礎傾向後，可以自然延伸去看衝突、聯絡與表達方式在戀愛裡如何出現。',
+        };
+  }
+
+  return currentSeries === 'love'
+    ? {
+        eyebrow: 'Recommended next series',
+        title: `Continue with ${nextSeriesLabel} to complete the bigger picture.`,
+        description: 'After reading your relationship style, it helps to compare it with your baseline everyday interpretation habits.',
+      }
+    : {
+        eyebrow: 'Recommended next series',
+        title: `Continue with ${nextSeriesLabel} to see how your style shows up in relationships.`,
+        description: 'After your baseline result, the relationship series gives a fuller read on conflict, contact, and affection patterns.',
+      };
+}
+
 export function ResultCard({ locale, series, mode, modeLabel, result }: ResultCardProps) {
   const isLoveSeries = series === 'love';
   const otherRoute = isLoveSeries
@@ -424,8 +480,15 @@ export function ResultCard({ locale, series, mode, modeLabel, result }: ResultCa
         : locale === 'en'
           ? 'Browse love types'
           : messages.backHome
-      : messages.backHome;
+      : locale === 'ko'
+        ? '기본편 전체 유형 보기'
+        : locale === 'en'
+          ? 'Browse core types'
+          : messages.backHome;
   const matchTitle = isLoveSeries && locale === 'ko' ? '나와 잘 맞는 연애 유형' : messages.goodMatch;
+  const nextSeriesKey: SeriesKey = isLoveSeries ? 'core' : 'love';
+  const nextSeriesDefinition = getSeriesDefinition(locale, nextSeriesKey);
+  const seriesSwitchCopy = getSeriesSwitchCopy(locale, series, nextSeriesDefinition.content.label);
 
   return (
     <section className="mx-auto flex w-full max-w-6xl flex-col gap-4 sm:gap-5">
@@ -678,26 +741,47 @@ export function ResultCard({ locale, series, mode, modeLabel, result }: ResultCa
       </div>
 
       <div className="flex flex-col gap-3 pt-1 sm:pt-0">
+        <div className="rounded-[1.75rem] border border-white/72 bg-[linear-gradient(135deg,rgba(255,255,255,0.96),rgba(247,241,249,0.92),rgba(241,235,249,0.9))] p-5 shadow-soft sm:p-6">
+          <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+            <div className="max-w-3xl">
+              <p className="text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-plum/60">{seriesSwitchCopy.eyebrow}</p>
+              <h2 className="mt-2 text-xl font-semibold text-ink sm:text-[1.45rem]">{seriesSwitchCopy.title}</h2>
+              <p className="mt-2 text-sm leading-7 text-ink/72 sm:text-base">{seriesSwitchCopy.description}</p>
+              <div className="mt-3 flex flex-wrap items-center gap-2">
+                <span className="rounded-full bg-white px-3 py-1 text-[0.68rem] font-semibold tracking-[0.18em] text-plum/74 shadow-sm">{nextSeriesDefinition.badge}</span>
+                <span className="rounded-full bg-plum/8 px-3 py-1 text-xs font-medium text-plum/72">{nextSeriesDefinition.content.summaryLine}</span>
+              </div>
+            </div>
+            <Link
+              href={seriesSwitchHref as Route}
+              className="interactive-card inline-flex min-h-[3.35rem] items-center justify-center gap-2 rounded-full bg-gradient-to-r from-plum to-[#8d7488] px-6 py-3.5 text-sm font-semibold text-white shadow-soft hover:shadow-float sm:min-h-[3.5rem]"
+            >
+              {seriesSwitchLabel}
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
+        </div>
+
         <div className="grid gap-3 lg:grid-cols-3">
           <Link
             href={otherRoute as Route}
-            className="interactive-card inline-flex min-h-[3.35rem] items-center justify-center gap-2 rounded-full bg-gradient-to-r from-plum to-[#8d7488] px-6 py-3.5 text-sm font-semibold text-white shadow-soft hover:shadow-float sm:min-h-[3.5rem]"
+            className="interactive-card inline-flex min-h-[3.35rem] items-center justify-center gap-2 rounded-full border border-plum/12 bg-white/92 px-6 py-3.5 text-sm font-medium text-plum hover:bg-white sm:min-h-[3.5rem]"
           >
             {retryLabel}
             <ArrowRight className="h-4 w-4" />
           </Link>
           <Link
-            href={seriesSwitchHref as Route}
-            className="interactive-card inline-flex min-h-[3.35rem] items-center justify-center gap-2 rounded-full border border-plum/14 bg-white/92 px-5 py-3 text-sm font-medium text-plum hover:bg-white sm:min-h-[3.5rem]"
+            href={typesHref as Route}
+            className="interactive-card inline-flex min-h-[3.35rem] items-center justify-center gap-2 rounded-full border border-plum/12 bg-white/84 px-5 py-3 text-sm font-medium text-plum hover:bg-white sm:min-h-[3.5rem]"
           >
-            {seriesSwitchLabel}
+            {typesLabel}
             <ArrowRight className="h-4 w-4" />
           </Link>
           <Link
-            href={(isLoveSeries ? typesHref : `/${locale}`) as Route}
+            href={`/${locale}` as Route}
             className="interactive-card inline-flex min-h-[3.35rem] items-center justify-center gap-2 rounded-full border border-plum/12 bg-white/84 px-5 py-3 text-sm font-medium text-plum hover:bg-white sm:min-h-[3.5rem]"
           >
-            {isLoveSeries ? typesLabel : messages.backHome}
+            {messages.backHome}
             <ArrowRight className="h-4 w-4" />
           </Link>
         </div>

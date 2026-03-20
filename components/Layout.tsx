@@ -9,15 +9,17 @@ import { getSeriesHomeHref, getSeriesTypesHref } from '@/lib/series';
 import { SeriesKey } from '@/types/series';
 
 import { LanguageSwitcher } from './LanguageSwitcher';
+import { PageContextHeader } from './PageContextHeader';
 
 interface LayoutProps {
   children: ReactNode;
   locale: Locale;
-  activeNav?: 'types';
+  activeNav?: 'overview' | 'quiz' | 'types' | 'result';
   series?: SeriesKey;
+  contextTitle?: string;
 }
 
-export function Layout({ children, locale, activeNav, series }: LayoutProps) {
+export function Layout({ children, locale, activeNav, series, contextTitle }: LayoutProps) {
   const messages = uiMessages[locale];
   const isTypesActive = activeNav === 'types';
   const seriesDefinition = series ? getSeriesDefinition(locale, series) : null;
@@ -53,6 +55,7 @@ export function Layout({ children, locale, activeNav, series }: LayoutProps) {
           </div>
           <LanguageSwitcher locale={locale} label={messages.localeSwitcher.label} />
         </header>
+        {series && activeNav ? <PageContextHeader locale={locale} series={series} activeNav={activeNav} contextTitle={contextTitle} /> : null}
         {children}
       </main>
     </div>

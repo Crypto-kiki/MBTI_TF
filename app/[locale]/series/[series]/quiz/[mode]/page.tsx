@@ -27,7 +27,7 @@ export default function SeriesQuizPage({ params }: SeriesQuizPageProps) {
   }
 
   return (
-    <Layout locale={locale} series={series}>
+    <Layout locale={locale} series={series} activeNav="quiz" contextTitle={getSeriesModeLabel(locale, params.mode, series)}>
       <div className="flex flex-1 items-center py-8">
         <QuizFlow
           locale={locale}

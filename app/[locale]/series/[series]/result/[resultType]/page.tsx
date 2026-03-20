@@ -108,7 +108,7 @@ export default function DynamicSeriesResultPage({ params, searchParams }: Dynami
     }
 
     return (
-      <Layout locale={locale} series={series}>
+      <Layout locale={locale} series={series} activeNav="result" contextTitle={resolvedResult.profile.title}>
         <div className="flex flex-1 items-center py-8">
           <ResultCard locale={locale} series={series} mode={mode} modeLabel={getSeriesModeLabel(locale, mode, series)} result={resolvedResult} />
         </div>
@@ -119,7 +119,7 @@ export default function DynamicSeriesResultPage({ params, searchParams }: Dynami
   const result = resolveResultFromType(locale, resultType, series);
 
   return (
-    <Layout locale={locale} series={series}>
+    <Layout locale={locale} series={series} activeNav="result" contextTitle={result.profile.title}>
       <div className="flex flex-1 items-center py-8">
         <ResultCard locale={locale} series={series} mode={mode} modeLabel={getSeriesModeLabel(locale, mode, series)} result={result} />
       </div>

@@ -17,6 +17,9 @@ interface LocalizedSeriesContent {
   topicSummary: string;
   eyebrow: string;
   accentLabel: string;
+  summaryLine: string;
+  recommendedFor: string;
+  reportIncludes: string;
 }
 
 interface SeriesDefinition {
@@ -43,6 +46,9 @@ const seriesDefinitions: Record<SeriesKey, SeriesDefinition> = {
         topicSummary: '일상적 해석 습관 · 공감 · 판단 균형',
         eyebrow: '가장 먼저 해보기 좋은 기본 시리즈',
         accentLabel: '일상 해석',
+        summaryLine: '감정과 판단 사이의 기본 성향 리포트',
+        recommendedFor: '서비스를 처음 시작하거나, 내 기본 해석 습관부터 가볍게 보고 싶을 때 좋아요.',
+        reportIncludes: '두 개의 짧은 모드로 공감, 판단, 해석 균형을 차분하게 정리해요.',
       },
       ja: {
         label: '基本編',
@@ -53,6 +59,9 @@ const seriesDefinitions: Record<SeriesKey, SeriesDefinition> = {
         topicSummary: '日常の読み取り習慣・共感・判断のバランス',
         eyebrow: '最初に触れやすいベーシックシリーズ',
         accentLabel: '日常の読み取り',
+        summaryLine: '感情と判断のあいだにある基本傾向レポート',
+        recommendedFor: 'まず最初に始めたいときや、自分の基本的な読み取り癖を軽く見たいときに向いています。',
+        reportIncludes: '短い2つのモードで、共感・判断・解釈のバランスを見ていきます。',
       },
       'zh-TW': {
         label: '基本篇',
@@ -63,6 +72,9 @@ const seriesDefinitions: Record<SeriesKey, SeriesDefinition> = {
         topicSummary: '日常解讀習慣 · 共感 · 判準平衡',
         eyebrow: '最適合先開始的基礎系列',
         accentLabel: '日常解讀',
+        summaryLine: '感受與判斷之間的基礎傾向報告',
+        recommendedFor: '適合第一次使用服務，或想先快速理解自己日常解讀習慣的時候。',
+        reportIncludes: '用兩個簡短模式整理你的共感、判準與解讀平衡。',
       },
       en: {
         label: 'Core',
@@ -73,6 +85,9 @@ const seriesDefinitions: Record<SeriesKey, SeriesDefinition> = {
         topicSummary: 'Everyday interpretation · empathy · judgment balance',
         eyebrow: 'The best place to start',
         accentLabel: 'Everyday reading',
+        summaryLine: 'A foundational report on how you usually read situations.',
+        recommendedFor: 'Best when you are new here or want a quick read on your baseline interpretation style first.',
+        reportIncludes: 'Two short modes that map empathy, judgment, and your everyday balance between them.',
       },
     },
   },
@@ -91,6 +106,9 @@ const seriesDefinitions: Record<SeriesKey, SeriesDefinition> = {
         topicSummary: '갈등 반응 · 연락 감각 · 애정 표현 · 회복 방식',
         eyebrow: '연애 속 F/T 성향을 한 번에 읽는 종합 리포트',
         accentLabel: '연애 리포트',
+        summaryLine: '연애 속 갈등, 연락, 서운함, 표현 방식을 읽는 종합 리포트',
+        recommendedFor: '기본 성향을 넘어서 관계 안에서 내가 어떻게 반응하는지 더 입체적으로 보고 싶을 때 좋아요.',
+        reportIncludes: '한 번의 30문항 테스트로 갈등 반응, 연락 감각, 애정 표현, 안정감, 회복 흐름까지 함께 읽어요.',
       },
       ja: {
         label: '恋愛編',
@@ -101,6 +119,9 @@ const seriesDefinitions: Record<SeriesKey, SeriesDefinition> = {
         topicSummary: '衝突反応・連絡感覚・愛情表現・回復スタイル',
         eyebrow: '恋愛での F/T をひとつのレポートにまとめるシリーズ',
         accentLabel: '恋愛レポート',
+        summaryLine: '恋愛での衝突・連絡・愛情表現を読む総合レポート',
+        recommendedFor: '基本傾向だけでなく、関係の中で自分がどう反応するかを立体的に見たいときに向いています。',
+        reportIncludes: '30問の一回完結テストで、衝突反応・連絡感覚・愛情表現・安心・回復までまとめて見ます。',
       },
       'zh-TW': {
         label: '戀愛篇',
@@ -111,6 +132,9 @@ const seriesDefinitions: Record<SeriesKey, SeriesDefinition> = {
         topicSummary: '衝突反應 · 聯絡感覺 · 愛意表達 · 修復方式',
         eyebrow: '把戀愛中的 F/T 傾向整理成一份完整報告',
         accentLabel: '戀愛報告',
+        summaryLine: '讀懂你在戀愛中的衝突、聯絡與表達方式的完整報告',
+        recommendedFor: '適合想從基礎傾向再往下看，理解自己在關係裡如何反應的人。',
+        reportIncludes: '一次 30 題測試，同時整理衝突反應、聯絡節奏、愛意表達、安心感與修復方式。',
       },
       en: {
         label: 'Love',
@@ -121,6 +145,9 @@ const seriesDefinitions: Record<SeriesKey, SeriesDefinition> = {
         topicSummary: 'Conflict response · contact rhythm · affection · repair',
         eyebrow: 'A single report for your F/T style in love',
         accentLabel: 'Love report',
+        summaryLine: 'An integrated report on conflict, contact, hurt, and affection in relationships.',
+        recommendedFor: 'Best when you want a fuller relationship-specific read beyond your baseline style.',
+        reportIncludes: 'One 30-question report that reads conflict response, contact rhythm, affection, reassurance, and repair together.',
       },
     },
   },

@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation';
 import { Layout } from '@/components/Layout';
 import { SeriesOverviewSection } from '@/components/SeriesOverviewSection';
 import { isSeriesKey } from '@/data/series';
+import { uiMessages } from '@/data/i18n/messages';
 import { defaultLocale, isLocale, type Locale } from '@/lib/i18n/config';
 import { defaultSeries } from '@/lib/series';
 
@@ -23,7 +24,7 @@ export default function SeriesQuizHubPage({ params }: SeriesQuizHubPageProps) {
   }
 
   return (
-    <Layout locale={locale} series={series}>
+    <Layout locale={locale} series={series} activeNav="quiz" contextTitle={uiMessages[locale].modes.modeSelect}>
       <SeriesOverviewSection locale={locale} series={series} />
     </Layout>
   );
