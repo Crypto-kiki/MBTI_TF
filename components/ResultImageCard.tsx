@@ -30,16 +30,16 @@ export function ResultImageCard({ image, title, subtitle, variant = 'default' }:
 
   return (
     <div
-      className={`relative overflow-hidden border border-white/70 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.98),rgba(246,233,230,0.88)_34%,rgba(221,212,239,0.82)_100%)] shadow-soft ${
+      className={`relative overflow-hidden border border-white/10 bg-[linear-gradient(180deg,rgba(17,18,31,0.96),rgba(10,11,22,0.92))] shadow-soft ${
         isHero ? 'rounded-[2.15rem] p-3 shadow-float sm:rounded-[2.4rem] sm:p-3.5' : 'rounded-[1.8rem] p-2.5 sm:rounded-[2rem] sm:p-3'
       }`}
     >
       <div
-        className={`relative overflow-hidden rounded-[1.7rem] bg-gradient-to-br from-white via-[#f8f2f7] to-[#e7e0f3] ${
+        className={`relative overflow-hidden rounded-[1.7rem] bg-gradient-to-br from-[#1d2035] via-[#171a2e] to-[#10121f] ${
           isHero ? 'aspect-[16/11] min-h-[15.5rem] sm:min-h-[18rem] lg:min-h-[20rem]' : 'aspect-[16/10]'
         }`}
       >
-        {isHero ? <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0)_24%,rgba(117,86,113,0.1)_78%,rgba(52,44,67,0.16)_100%)]" /> : null}
+        {isHero ? <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0)_24%,rgba(171,137,255,0.14)_78%,rgba(35,43,77,0.2)_100%)]" /> : null}
         {!hasError ? (
           <Image
             src={image.src}
@@ -51,17 +51,17 @@ export function ResultImageCard({ image, title, subtitle, variant = 'default' }:
             priority={false}
           />
         ) : (
-          <div className="flex h-full flex-col justify-between bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.98),rgba(248,240,246,0.92)_45%,rgba(227,220,242,0.9)_100%)] p-5 sm:p-6">
-            <div className="brand-chip w-fit border-white/80 bg-white/80 text-[0.7rem] tracking-[0.24em] text-plum/80 shadow-none">
+          <div className="flex h-full flex-col justify-between bg-[radial-gradient(circle_at_top_left,rgba(35,38,63,0.98),rgba(20,22,39,0.94)_45%,rgba(14,16,28,0.92)_100%)] p-5 sm:p-6">
+            <div className="brand-chip w-fit border-white/12 bg-white/8 text-[0.7rem] tracking-[0.24em] text-white/82 shadow-none">
               <ImageOff className="h-3.5 w-3.5" />
             </div>
             <div className="space-y-4">
-              <div className="flex h-20 w-20 items-center justify-center rounded-[1.65rem] border border-white/80 bg-white/85 text-2xl font-semibold tracking-[0.18em] text-plum shadow-sm sm:h-24 sm:w-24 sm:text-3xl">
+              <div className="flex h-20 w-20 items-center justify-center rounded-[1.65rem] border border-white/10 bg-white/8 text-2xl font-semibold tracking-[0.18em] text-white shadow-sm sm:h-24 sm:w-24 sm:text-3xl">
                 {fallbackInitials}
               </div>
               <div>
-                <p className="font-serif text-2xl text-ink sm:text-3xl">{title}</p>
-                <p className="mt-2 max-w-xs text-sm leading-6 text-ink/62">{subtitle}</p>
+                <p className="font-serif text-2xl text-white sm:text-3xl">{title}</p>
+                <p className="mt-2 max-w-xs text-sm leading-6 text-white/62">{subtitle}</p>
               </div>
             </div>
           </div>

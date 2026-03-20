@@ -1,4 +1,4 @@
-import { resultProfiles } from '@/data/results';
+import { getLocalizedResultProfiles as getBaseLocalizedResultProfiles } from '@/data/results';
 import { Locale } from '@/lib/i18n/config';
 import { ResultProfile, ResultType } from '@/types/quiz';
 
@@ -202,9 +202,10 @@ const localizedResultOverrides: Partial<Record<Locale, Partial<Record<ResultType
 
 export function getLocalizedResultProfiles(locale: Locale): Record<ResultType, ResultProfile> {
   const overrides = localizedResultOverrides[locale] ?? {};
+  const baseProfiles = getBaseLocalizedResultProfiles(locale);
 
   return Object.fromEntries(
-    Object.entries(resultProfiles).map(([type, profile]) => [
+    Object.entries(baseProfiles).map(([type, profile]) => [
       type,
       {
         ...profile,
