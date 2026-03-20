@@ -1,11 +1,14 @@
+import type { Locale } from '@/lib/i18n/config';
+import { loveClusterTags, loveResultAxisMap } from '@/data/love-results';
 import { getResultProfile } from '@/data/results';
 import { defaultSeries, getSeriesResultHref } from '@/lib/series';
-import { Choice, Question, QuizAnswer, QuizMode, QuizTotals, ResolvedQuizResult, ResultType } from '@/types/quiz';
-import type { Locale } from '@/lib/i18n/config';
+import { resolveLoveQuizResult, resolveLoveResultFromType } from '@/lib/love-results';
+import { Choice, CoreResultType, Question, QuizAnswer, QuizMode, QuizTotals, ResolvedQuizResult, ResultType } from '@/types/quiz';
+import { SeriesKey } from '@/types/series';
 
 const axisThreshold = 6;
 
-const clusterTags = {
+const coreClusterTags = {
   f_empathy: ['공감', '배려', '경청', '지지', '수용', '안심', '관심', '격려'],
   f_nuance: ['세심함', '해석', '맥락', '감정읽기', '숨은감정', '추론', '관찰', '감지', '회상'],
   f_warmth: ['분위기', '관계', '조율', '이해', '유연함', '온도감', '대기', '기다림', '접근'],
@@ -21,9 +24,9 @@ const clusterTags = {
   b_bridge: ['역할', '행동', '정리', '실행', '경청', '기준', '조화'],
   b_attune: ['조화', '경청', '이해', '균형', '관계', '행동', '배려'],
   b_anchor: ['신중함', '명료함', '기준', '존중', '확인', '거리두기', '판단유보'],
-} as const satisfies Record<ResultType, string[]>;
+} as const satisfies Record<CoreResultType, string[]>;
 
-const axisProfiles: Record<'f' | 't' | 'balanced', ResultType[]> = {
+const coreAxisProfiles: Record<'f' | 't' | 'balanced', CoreResultType[]> = {
   f: ['f_empathy', 'f_nuance', 'f_warmth', 'f_shelter', 'f_harmony'],
   t: ['t_calm', 't_criteria', 't_structure', 't_signal', 't_drive'],
   balanced: ['b_balance', 'b_steady', 'b_bridge', 'b_attune', 'b_anchor'],
@@ -69,6 +72,10 @@ export function getResultHref(locale: Locale, resultType: ResultType, series = d
 }
 
 export function getAxisFromResultType(resultType: ResultType): 'f' | 't' | 'balanced' {
+  if ((resultType as string).startsWith('love_')) {
+    return loveResultAxisMap[resultType as keyof typeof loveResultAxisMap] ?? 'balanced';
+  }
+
   if (resultType.startsWith('f_')) {
     return 'f';
   }
@@ -81,6 +88,10 @@ export function getAxisFromResultType(resultType: ResultType): 'f' | 't' | 'bala
 }
 
 export function getModeFromResultType(resultType: ResultType, explicitMode?: QuizMode): QuizMode {
+  if ((resultType as string).startsWith('love_')) {
+    return 'f';
+  }
+
   if (explicitMode) {
     return explicitMode;
   }
@@ -88,13 +99,19 @@ export function getModeFromResultType(resultType: ResultType, explicitMode?: Qui
   return resultType.startsWith('t_') ? 't' : 'f';
 }
 
-export function resolveResultFromType(locale: Locale, resultType: ResultType): ResolvedQuizResult {
+function resolveCoreResultFromType(locale: Locale, resultType: CoreResultType): ResolvedQuizResult {
   return {
     axis: getAxisFromResultType(resultType),
-    dominantTags: clusterTags[resultType].slice(0, 3),
+    dominantTags: coreClusterTags[resultType].slice(0, 3),
     profile: getResultProfile(locale, resultType),
     totals: emptyTotals,
   };
+}
+
+export function resolveResultFromType(locale: Locale, resultType: ResultType, series: SeriesKey = defaultSeries): ResolvedQuizResult {
+  return series === 'love'
+    ? resolveLoveResultFromType(locale, resultType as keyof typeof loveClusterTags)
+    : resolveCoreResultFromType(locale, resultType as CoreResultType);
 }
 
 export function calculateQuizTotals(questions: Question[], answers: QuizAnswer[]): QuizTotals {
@@ -160,7 +177,7 @@ export function getTopTags(tagCounts: Record<string, number>, limit = 3) {
     .map(([tag]) => tag);
 }
 
-function resolveAxis(totals: QuizTotals): 'f' | 't' | 'balanced' {
+function resolveCoreAxis(totals: QuizTotals): 'f' | 't' | 'balanced' {
   const diff = totals.totalFScore - totals.totalTScore;
 
   if (diff >= axisThreshold) {
@@ -174,24 +191,24 @@ function resolveAxis(totals: QuizTotals): 'f' | 't' | 'balanced' {
   return 'balanced';
 }
 
-function getClusterScore(profileType: ResultType, tagCounts: Record<string, number>) {
-  return clusterTags[profileType].reduce((sum, tag) => sum + (tagCounts[tag] ?? 0), 0);
+function getCoreClusterScore(profileType: CoreResultType, tagCounts: Record<string, number>) {
+  return coreClusterTags[profileType].reduce((sum, tag) => sum + (tagCounts[tag] ?? 0), 0);
 }
 
-function pickProfileType(axis: 'f' | 't' | 'balanced', tagCounts: Record<string, number>): ResultType {
-  const candidates = axisProfiles[axis];
+function pickCoreProfileType(axis: 'f' | 't' | 'balanced', tagCounts: Record<string, number>): CoreResultType {
+  const candidates = coreAxisProfiles[axis];
 
   return candidates.reduce((best, current) => {
-    const bestScore = getClusterScore(best, tagCounts);
-    const currentScore = getClusterScore(current, tagCounts);
+    const bestScore = getCoreClusterScore(best, tagCounts);
+    const currentScore = getCoreClusterScore(current, tagCounts);
     return currentScore > bestScore ? current : best;
   }, candidates[0]);
 }
 
-export function resolveQuizResult(locale: Locale, totals: QuizTotals): ResolvedQuizResult {
+function resolveCoreQuizResult(locale: Locale, totals: QuizTotals): ResolvedQuizResult {
   const normalizedTotals = normalizeQuizTotals(totals);
-  const axis = resolveAxis(normalizedTotals);
-  const profileType = pickProfileType(axis, normalizedTotals.tagCounts);
+  const axis = resolveCoreAxis(normalizedTotals);
+  const profileType = pickCoreProfileType(axis, normalizedTotals.tagCounts);
 
   return {
     axis,
@@ -199,6 +216,11 @@ export function resolveQuizResult(locale: Locale, totals: QuizTotals): ResolvedQ
     profile: getResultProfile(locale, profileType),
     totals: normalizedTotals,
   };
+}
+
+export function resolveQuizResult(locale: Locale, totals: QuizTotals, series: SeriesKey = defaultSeries): ResolvedQuizResult {
+  const normalizedTotals = normalizeQuizTotals(totals);
+  return series === 'love' ? resolveLoveQuizResult(locale, normalizedTotals) : resolveCoreQuizResult(locale, normalizedTotals);
 }
 
 export function getSelectedChoices(questions: Question[], answers: QuizAnswer[]) {

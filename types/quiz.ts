@@ -2,7 +2,7 @@ import type { Locale } from '@/lib/i18n/config';
 
 export type QuizMode = 'f' | 't';
 
-export const resultTypes = [
+export const coreResultTypes = [
   'f_empathy',
   'f_nuance',
   'f_warmth',
@@ -20,9 +20,27 @@ export const resultTypes = [
   'b_anchor',
 ] as const;
 
+export const loveResultTypes = [
+  'love_resonant_anchor',
+  'love_midnight_listener',
+  'love_heartbeat_reader',
+  'love_tender_guardian',
+  'love_signal_cartographer',
+  'love_boundary_strategist',
+  'love_clear_current',
+  'love_repair_architect',
+  'love_steady_weaver',
+  'love_gentle_negotiator',
+] as const;
+
+export const resultTypes = [...coreResultTypes, ...loveResultTypes] as const;
+
+export type CoreResultType = (typeof coreResultTypes)[number];
+export type LoveResultType = (typeof loveResultTypes)[number];
 export type ResultType = (typeof resultTypes)[number];
 
-export const defaultResultType: ResultType = 'f_empathy';
+export const defaultResultType: CoreResultType = 'f_empathy';
+export const defaultLoveResultType: LoveResultType = 'love_steady_weaver';
 
 export function isResultType(value: string): value is ResultType {
   return (resultTypes as readonly string[]).includes(value);
@@ -66,6 +84,7 @@ export interface ResultImage {
 export interface ResultContent {
   title: string;
   subtitle: string;
+  summary?: string;
   quickSummary?: string;
   description: string;
   strengths: string[];
@@ -86,6 +105,7 @@ export interface ResultDefinition {
 export interface ResultProfile extends ResultContent {
   type: ResultType;
   image: ResultImage;
+  summary: string;
   quickSummary: string;
   compatibility: NonNullable<ResultContent['compatibility']> & {
     title: string;
@@ -100,9 +120,23 @@ export interface QuizTotals {
   tagCounts: Record<string, number>;
 }
 
+export interface ReportSection {
+  key: string;
+  label: string;
+  leftLabel: string;
+  rightLabel: string;
+  summary: string;
+  detail: string;
+  dominantSide: 'f' | 't' | 'balanced';
+  dominantTags: string[];
+  leftScore: number;
+  rightScore: number;
+}
+
 export interface ResolvedQuizResult {
   axis: 'f' | 't' | 'balanced';
   dominantTags: string[];
   profile: ResultProfile;
   totals: QuizTotals;
+  reportSections?: ReportSection[];
 }

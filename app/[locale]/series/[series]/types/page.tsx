@@ -3,11 +3,10 @@ import { redirect } from 'next/navigation';
 
 import { Layout } from '@/components/Layout';
 import { ResultCatalogExplorer } from '@/components/ResultCatalogExplorer';
-import { getSeriesDefinition, getSeriesLocalizedResultProfiles, isSeriesKey } from '@/data/series';
+import { getSeriesDefinition, getSeriesLocalizedResultProfiles, getSeriesResultTypes, isSeriesKey } from '@/data/series';
 import { uiMessages } from '@/data/i18n/messages';
 import { defaultLocale, isLocale, type Locale } from '@/lib/i18n/config';
 import { defaultSeries } from '@/lib/series';
-import { resultTypes } from '@/types/quiz';
 
 interface SeriesTypesPageProps {
   params: { locale: string; series: string };
@@ -58,7 +57,7 @@ export default function SeriesTypesPage({ params }: SeriesTypesPageProps) {
           <p className="mt-3 max-w-3xl text-base leading-8 text-ink/72 sm:text-lg">{messages.catalog.description}</p>
         </div>
 
-        <ResultCatalogExplorer locale={locale} series={series} resultTypes={resultTypes} profiles={profiles} messages={messages.catalog} />
+        <ResultCatalogExplorer locale={locale} series={series} resultTypes={getSeriesResultTypes(series)} profiles={profiles} messages={messages.catalog} />
       </section>
     </Layout>
   );

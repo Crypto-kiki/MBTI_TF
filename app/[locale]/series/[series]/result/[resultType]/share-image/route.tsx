@@ -1,12 +1,12 @@
 import { ImageResponse } from 'next/og';
 
 import { getTagLabel, uiMessages } from '@/data/i18n/messages';
-import { isSeriesKey } from '@/data/series';
+import { getSeriesDefaultResultType, getSeriesModeLabel, isSeriesKey, isSeriesQuizMode, isSeriesResultType } from '@/data/series';
 import { defaultLocale, isLocale, type Locale } from '@/lib/i18n/config';
 import { defaultSeries } from '@/lib/series';
 import { getModeFromResultType, parseTagCounts, resolveQuizResult, resolveResultFromType } from '@/lib/results';
 import { getResultShareMetadata } from '@/lib/result-meta';
-import { defaultResultType, isResultType, QuizMode, QuizTotals, ResultType } from '@/types/quiz';
+import { QuizMode, QuizTotals, ResultType } from '@/types/quiz';
 
 export const runtime = 'edge';
 
@@ -19,8 +19,12 @@ function getLocaleOrFallback(locale: string): Locale {
   return isLocale(locale) ? locale : defaultLocale;
 }
 
-function getResultTypeOrFallback(resultType: string): ResultType {
-  return isResultType(resultType) ? resultType : defaultResultType;
+function getResultTypeOrFallback(series: string, resultType: string): ResultType {
+  if (isSeriesKey(series) && isSeriesResultType(series, resultType)) {
+    return resultType;
+  }
+
+  return getSeriesDefaultResultType(isSeriesKey(series) ? series : defaultSeries);
 }
 
 function toNumber(value?: string | null) {
@@ -34,9 +38,12 @@ function hasQuizState(searchParams: URLSearchParams) {
   );
 }
 
-function getMode(searchParams: URLSearchParams, resultType: ResultType): QuizMode {
+function getMode(series: string, searchParams: URLSearchParams, resultType: ResultType): QuizMode {
   const explicitMode = searchParams.get('mode');
-  return getModeFromResultType(resultType, explicitMode === 't' ? 't' : explicitMode === 'f' ? 'f' : undefined);
+  if (isSeriesKey(series) && explicitMode && isSeriesQuizMode(series, explicitMode)) {
+    return explicitMode;
+  }
+  return getModeFromResultType(resultType);
 }
 
 function createTotals(searchParams: URLSearchParams): QuizTotals {
@@ -55,7 +62,7 @@ function clampText(value: string, maxLength: number) {
 export async function GET(request: Request, { params }: { params: { locale: string; series: string; resultType: string } }) {
   const locale = getLocaleOrFallback(params.locale);
   const series = isSeriesKey(params.series) ? params.series : defaultSeries;
-  const resultType = getResultTypeOrFallback(params.resultType);
+  const resultType = getResultTypeOrFallback(series, params.resultType);
   const searchParams = new URL(request.url).searchParams;
   const metadata = getResultShareMetadata(
     locale,
@@ -69,9 +76,9 @@ export async function GET(request: Request, { params }: { params: { locale: stri
     },
     series,
   );
-  const mode = getMode(searchParams, resultType);
+  const mode = getMode(series, searchParams, resultType);
   const messages = uiMessages[locale].result;
-  const result = hasQuizState(searchParams) ? resolveQuizResult(locale, createTotals(searchParams)) : resolveResultFromType(locale, resultType);
+  const result = hasQuizState(searchParams) ? resolveQuizResult(locale, createTotals(searchParams), series) : resolveResultFromType(locale, resultType, series);
   const imageUrl = new URL(result.profile.image.src, request.url).toString();
   const description = clampText(result.profile.description, 145);
 
@@ -131,7 +138,7 @@ export async function GET(request: Request, { params }: { params: { locale: stri
                 textTransform: 'uppercase',
               }}
             >
-              ✦ {uiMessages[locale].modes[mode].title} Result
+              ✦ {getSeriesModeLabel(locale, mode, series)}
             </div>
 
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, marginTop: 18 }}>
@@ -220,35 +227,18 @@ export async function GET(request: Request, { params }: { params: { locale: stri
           <div style={{ display: 'flex', flexDirection: 'column', width: 360, gap: 18 }}>
             <div
               style={{
-                position: 'relative',
                 display: 'flex',
-                flexDirection: 'column',
-                flex: 1,
-                overflow: 'hidden',
+                width: '100%',
+                height: 360,
                 borderRadius: 30,
-                background: 'rgba(255,255,255,0.52)',
+                overflow: 'hidden',
+                background: metadata.palette.mist,
                 border: '1px solid rgba(255,255,255,0.72)',
-                boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.65)',
+                alignItems: 'center',
+                justifyContent: 'center',
               }}
             >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={imageUrl}
-                alt={result.profile.title}
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  objectFit: 'contain',
-                  padding: '26px',
-                }}
-              />
-              <div
-                style={{
-                  position: 'absolute',
-                  inset: 0,
-                  background: 'linear-gradient(180deg, rgba(255,255,255,0.08) 0%, rgba(25,22,32,0.04) 58%, rgba(27,24,36,0.26) 100%)',
-                }}
-              />
+              <img src={imageUrl} width={320} height={320} alt={result.profile.title} />
             </div>
           </div>
         </div>

@@ -1,9 +1,11 @@
 import { uiMessages } from '@/data/i18n/messages';
 import { getModeConfigs as getBaseModeConfigs } from '@/data/modes';
+import { getLoveQuestions } from '@/data/love-questions';
+import { getLocalizedLoveResultProfiles, getLoveResultProfile } from '@/data/love-results';
 import { getLocalizedQuestions as getBaseLocalizedQuestions } from '@/data/quizzes';
 import { getLocalizedResultProfiles as getBaseLocalizedResultProfiles, getResultProfile as getBaseResultProfile } from '@/data/results';
 import { Locale } from '@/lib/i18n/config';
-import { Question, QuizMode, ResultProfile, ResultType } from '@/types/quiz';
+import { coreResultTypes, defaultLoveResultType, defaultResultType, loveResultTypes, Question, QuizMode, ResultProfile, ResultType } from '@/types/quiz';
 import { SeriesKey, seriesKeys } from '@/types/series';
 
 interface LocalizedSeriesContent {
@@ -36,7 +38,7 @@ const seriesDefinitions: Record<SeriesKey, SeriesDefinition> = {
         label: '기본편',
         title: '기본편',
         description: '감정과 판단 사이에서 내가 상황을 읽는 기본 해석 습관을 살펴보는 시리즈예요.',
-        questionCount: '10문항',
+        questionCount: '10문항 × 2모드',
         estimatedTime: '약 3분',
         topicSummary: '일상적 해석 습관 · 공감 · 판단 균형',
         eyebrow: '가장 먼저 해보기 좋은 기본 시리즈',
@@ -46,7 +48,7 @@ const seriesDefinitions: Record<SeriesKey, SeriesDefinition> = {
         label: '基本編',
         title: '基本編',
         description: '感情と判断のあいだで、自分が状況を読む基本的な癖を見つめるシリーズです。',
-        questionCount: '10問',
+        questionCount: '10問 × 2モード',
         estimatedTime: '約3分',
         topicSummary: '日常の読み取り習慣・共感・判断のバランス',
         eyebrow: '最初に触れやすいベーシックシリーズ',
@@ -56,7 +58,7 @@ const seriesDefinitions: Record<SeriesKey, SeriesDefinition> = {
         label: '基本篇',
         title: '基本篇',
         description: '用來觀察你在感受與判斷之間，平常如何解讀情境的基礎系列。',
-        questionCount: '10題',
+        questionCount: '10題 × 2模式',
         estimatedTime: '約3分鐘',
         topicSummary: '日常解讀習慣 · 共感 · 判準平衡',
         eyebrow: '最適合先開始的基礎系列',
@@ -66,7 +68,7 @@ const seriesDefinitions: Record<SeriesKey, SeriesDefinition> = {
         label: 'Core',
         title: 'Core',
         description: 'A foundational series for noticing how you usually read situations between feeling and judgment.',
-        questionCount: '10 questions',
+        questionCount: '10 questions × 2 modes',
         estimatedTime: 'About 3 min',
         topicSummary: 'Everyday interpretation · empathy · judgment balance',
         eyebrow: 'The best place to start',
@@ -83,42 +85,42 @@ const seriesDefinitions: Record<SeriesKey, SeriesDefinition> = {
       ko: {
         label: '연애편',
         title: '연애편',
-        description: '관계가 가까워질수록 드러나는 감정 해석, 거리감, 표현 습관을 가볍게 살펴보는 시리즈예요.',
-        questionCount: '10문항',
-        estimatedTime: '약 3분',
-        topicSummary: '연애 감정선 · 표현 방식 · 관계 온도 읽기',
-        eyebrow: '가까운 관계의 해석 습관을 보는 시리즈',
-        accentLabel: '연애 해석',
+        description: '한 번의 종합 테스트로 싸움 반응, 연락 텀 감각, 서운함 포인트, 애정 표현, 안정감 기준, 회복 방식까지 함께 읽어내는 시리즈예요.',
+        questionCount: '30문항 종합 테스트',
+        estimatedTime: '약 7분',
+        topicSummary: '갈등 반응 · 연락 감각 · 애정 표현 · 회복 방식',
+        eyebrow: '연애 속 F/T 성향을 한 번에 읽는 종합 리포트',
+        accentLabel: '연애 리포트',
       },
       ja: {
         label: '恋愛編',
         title: '恋愛編',
-        description: '距離が近い関係の中で表れやすい感情の読み方や表現の癖を見つめるシリーズです。',
-        questionCount: '10問',
-        estimatedTime: '約3分',
-        topicSummary: '恋愛の感情線・表現・関係の温度',
-        eyebrow: '近い関係での読み取りをみるシリーズ',
-        accentLabel: '恋愛の読み取り',
+        description: 'ひとつの総合テストで、ケンカの反応、連絡感覚、愛情表現、安心の基準、回復のしかたまで読み解くシリーズです。',
+        questionCount: '30問 総合テスト',
+        estimatedTime: '約7分',
+        topicSummary: '衝突反応・連絡感覚・愛情表現・回復スタイル',
+        eyebrow: '恋愛での F/T をひとつのレポートにまとめるシリーズ',
+        accentLabel: '恋愛レポート',
       },
       'zh-TW': {
         label: '戀愛篇',
         title: '戀愛篇',
-        description: '觀察在更親近的關係裡，你如何解讀情緒、距離感與表達方式的系列。',
-        questionCount: '10題',
-        estimatedTime: '約3分鐘',
-        topicSummary: '戀愛情緒線 · 表達方式 · 關係溫度',
-        eyebrow: '用來看親密關係解讀習慣的系列',
-        accentLabel: '戀愛解讀',
+        description: '用一次完整測試，同時讀出衝突反應、聯絡節奏、受傷點、愛意表達、安心感與修復方式。',
+        questionCount: '30題綜合測試',
+        estimatedTime: '約7分鐘',
+        topicSummary: '衝突反應 · 聯絡感覺 · 愛意表達 · 修復方式',
+        eyebrow: '把戀愛中的 F/T 傾向整理成一份完整報告',
+        accentLabel: '戀愛報告',
       },
       en: {
         label: 'Love',
         title: 'Love',
-        description: 'A relationship-focused series for noticing how emotion, distance, and expression show up in close connections.',
-        questionCount: '10 questions',
-        estimatedTime: 'About 3 min',
-        topicSummary: 'Romantic cues · expression style · relational temperature',
-        eyebrow: 'A closer-relationship reading series',
-        accentLabel: 'Relationship reading',
+        description: 'One integrated relationship test that reads conflict style, contact rhythm, hurt triggers, affection language, reassurance, and repair patterns together.',
+        questionCount: '30-question relationship report',
+        estimatedTime: 'About 7 min',
+        topicSummary: 'Conflict response · contact rhythm · affection · repair',
+        eyebrow: 'A single report for your F/T style in love',
+        accentLabel: 'Love report',
       },
     },
   },
@@ -141,6 +143,29 @@ export function getSeriesList(locale: Locale) {
 }
 
 export function getSeriesModeConfigs(locale: Locale, series: SeriesKey) {
+  if (series === 'love') {
+    return [
+      {
+        mode: 'f' as const,
+        title: locale === 'ko' ? '종합 연애 리포트' : locale === 'en' ? 'Love Relationship Report' : uiMessages[locale].modes.f.title,
+        subtitle:
+          locale === 'ko'
+            ? '30문항으로 갈등, 연락, 서운함, 애정 표현, 안정감, 회복 방식을 한 번에 읽어요.'
+            : locale === 'en'
+              ? 'A single 30-question read on conflict, contact, hurt, affection, reassurance, and repair.'
+              : uiMessages[locale].modes.f.subtitle,
+        description:
+          locale === 'ko'
+            ? '세부 테스트로 쪼개지지 않는 한 번의 연애 종합 테스트예요.'
+            : locale === 'en'
+              ? 'A single integrated relationship test rather than multiple split quizzes.'
+              : uiMessages[locale].modes.f.description,
+        accentClass: 'from-[#f9dbe5] via-white to-[#f4d9ee]',
+        route: `/${locale}/series/${series}/quiz/f`,
+      },
+    ];
+  }
+
   return getBaseModeConfigs(locale).map((config) => ({
     ...config,
     route: `/${locale}/series/${series}/quiz/${config.mode}`,
@@ -148,20 +173,58 @@ export function getSeriesModeConfigs(locale: Locale, series: SeriesKey) {
 }
 
 export function getSeriesQuestions(series: SeriesKey, locale: Locale, mode: QuizMode): Question[] {
-  void series;
+  if (series === 'love') {
+    void mode;
+    return getLoveQuestions(locale);
+  }
+
   return getBaseLocalizedQuestions(locale, mode);
 }
 
 export function getSeriesResultProfile(series: SeriesKey, locale: Locale, type: ResultType): ResultProfile {
-  void series;
-  return getBaseResultProfile(locale, type);
+  if (series === 'love' && (loveResultTypes as readonly string[]).includes(type)) {
+    return getLoveResultProfile(locale, type as (typeof loveResultTypes)[number]);
+  }
+
+  return getBaseResultProfile(locale, type as (typeof coreResultTypes)[number]);
 }
 
 export function getSeriesLocalizedResultProfiles(series: SeriesKey, locale: Locale): Record<ResultType, ResultProfile> {
-  void series;
-  return getBaseLocalizedResultProfiles(locale);
+  return series === 'love'
+    ? (getLocalizedLoveResultProfiles(locale) as Record<ResultType, ResultProfile>)
+    : (getBaseLocalizedResultProfiles(locale) as Record<ResultType, ResultProfile>);
 }
 
-export function getSeriesModeLabel(locale: Locale, mode: QuizMode) {
+export function getSeriesResultTypes(series: SeriesKey): readonly ResultType[] {
+  return series === 'love' ? loveResultTypes : coreResultTypes;
+}
+
+export function getSeriesDefaultResultType(series: SeriesKey): ResultType {
+  return series === 'love' ? defaultLoveResultType : defaultResultType;
+}
+
+export function isSeriesResultType(series: SeriesKey, value: string): value is ResultType {
+  return (getSeriesResultTypes(series) as readonly string[]).includes(value);
+}
+
+export function isSeriesQuizMode(series: SeriesKey, mode: string): mode is QuizMode {
+  return series === 'love' ? mode === 'f' : mode === 'f' || mode === 't';
+}
+
+export function getSeriesPrimaryMode(series: SeriesKey): QuizMode {
+  return series === 'love' ? 'f' : 'f';
+}
+
+export function getSeriesModeLabel(locale: Locale, mode: QuizMode, series?: SeriesKey) {
+  if (series === 'love') {
+    if (locale === 'ko') {
+      return '연애 종합 리포트';
+    }
+
+    if (locale === 'en') {
+      return 'Love Relationship Report';
+    }
+  }
+
   return uiMessages[locale].modes[mode].title;
 }

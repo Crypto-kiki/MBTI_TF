@@ -46,7 +46,7 @@ export function QuizFlow({ locale, series, mode, modeLabel, questions }: QuizFlo
     }
 
     if (currentIndex === questions.length - 1) {
-      const resolvedResult = resolveQuizResult(locale, totals);
+      const resolvedResult = resolveQuizResult(locale, totals, series);
       const searchParams = new URLSearchParams({
         mode,
         totalFScore: String(totals.totalFScore),

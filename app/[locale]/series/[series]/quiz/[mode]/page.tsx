@@ -2,10 +2,9 @@ import { redirect } from 'next/navigation';
 
 import { Layout } from '@/components/Layout';
 import { QuizFlow } from '@/components/QuizFlow';
-import { getSeriesModeLabel, getSeriesQuestions, isSeriesKey } from '@/data/series';
+import { getSeriesModeLabel, getSeriesQuestions, isSeriesKey, isSeriesQuizMode } from '@/data/series';
 import { defaultLocale, isLocale, type Locale } from '@/lib/i18n/config';
 import { defaultSeries } from '@/lib/series';
-import { QuizMode } from '@/types/quiz';
 
 interface SeriesQuizPageProps {
   params: { locale: string; series: string; mode: string };
@@ -13,10 +12,6 @@ interface SeriesQuizPageProps {
 
 function getLocaleOrFallback(locale: string): Locale {
   return isLocale(locale) ? locale : defaultLocale;
-}
-
-function isQuizMode(value: string): value is QuizMode {
-  return value === 'f' || value === 't';
 }
 
 export default function SeriesQuizPage({ params }: SeriesQuizPageProps) {
@@ -27,7 +22,7 @@ export default function SeriesQuizPage({ params }: SeriesQuizPageProps) {
     redirect(`/${locale}/series/${series}/quiz`);
   }
 
-  if (!isQuizMode(params.mode)) {
+  if (!isSeriesQuizMode(series, params.mode)) {
     redirect(`/${locale}/series/${series}/quiz`);
   }
 
@@ -38,7 +33,7 @@ export default function SeriesQuizPage({ params }: SeriesQuizPageProps) {
           locale={locale}
           series={series}
           mode={params.mode}
-          modeLabel={getSeriesModeLabel(locale, params.mode)}
+          modeLabel={getSeriesModeLabel(locale, params.mode, series)}
           questions={getSeriesQuestions(series, locale, params.mode)}
         />
       </div>

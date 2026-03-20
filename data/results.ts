@@ -1,5 +1,5 @@
 import { defaultLocale, type Locale } from '@/lib/i18n/config';
-import { ResultContent, ResultDefinition, ResultImage, ResultProfile, ResultType } from '@/types/quiz';
+import { CoreResultType, ResultContent, ResultDefinition, ResultImage, ResultProfile } from '@/types/quiz';
 
 const RESULT_IMAGE_SIZE = { width: 1200, height: 630 } as const;
 
@@ -10,7 +10,7 @@ function createResultImage(src: string): ResultImage {
   };
 }
 
-function createResultDefinition(type: ResultType, image: string, content: Record<Locale, ResultContent>): ResultDefinition {
+function createResultDefinition(type: CoreResultType, image: string, content: Record<Locale, ResultContent>): ResultDefinition {
   return {
     type,
     image: createResultImage(image),
@@ -73,7 +73,7 @@ function buildActionCta(locale: Locale, content: ResultContent) {
   return `${content.cta} It becomes even stronger when you remember to ${firstTip.toLowerCase()}.`;
 }
 
-const compatibilityDefinitions: Record<ResultType, Record<Locale, { type: ResultType; reason: string }>> = {
+const compatibilityDefinitions: Record<CoreResultType, Record<Locale, { type: CoreResultType; reason: string }>> = {
   f_empathy: {
     ko: { type: 't_calm', reason: '당신의 공감력에 이 유형의 차분한 정리가 더해지면 서로를 안정적으로 받쳐줄 수 있어요.' },
     ja: { type: 't_calm', reason: 'あなたの共感力に、このタイプの落ち着いた整理力が合わさると、お互いを安定して支えやすくなります。' },
@@ -166,7 +166,7 @@ const compatibilityDefinitions: Record<ResultType, Record<Locale, { type: Result
   },
 };
 
-export const resultDefinitions: Record<ResultType, ResultDefinition> = {
+export const resultDefinitions: Record<CoreResultType, ResultDefinition> = {
   f_empathy: createResultDefinition('f_empathy', '/images/results/f-empathy.svg', {
     ko: {
       title: 'Velvet Ember',
@@ -679,11 +679,11 @@ export const resultDefinitions: Record<ResultType, ResultDefinition> = {
   }),
 };
 
-export function getResultDefinition(type: ResultType): ResultDefinition {
+export function getResultDefinition(type: CoreResultType): ResultDefinition {
   return resultDefinitions[type];
 }
 
-export function getResultProfile(locale: Locale, type: ResultType): ResultProfile {
+export function getResultProfile(locale: Locale, type: CoreResultType): ResultProfile {
   const definition = getResultDefinition(type);
   const content = definition.content[locale] ?? definition.content[defaultLocale];
   const compatibility = compatibilityDefinitions[type][locale] ?? compatibilityDefinitions[type][defaultLocale];
@@ -694,7 +694,8 @@ export function getResultProfile(locale: Locale, type: ResultType): ResultProfil
     type,
     image: definition.image,
     ...content,
-    quickSummary: content.quickSummary ?? buildQuickSummary(locale, content),
+    summary: content.summary ?? content.quickSummary ?? buildQuickSummary(locale, content),
+    quickSummary: content.quickSummary ?? content.summary ?? buildQuickSummary(locale, content),
     description: enrichDescription(locale, content),
     cta: buildActionCta(locale, content),
     compatibility: {
@@ -705,8 +706,8 @@ export function getResultProfile(locale: Locale, type: ResultType): ResultProfil
   };
 }
 
-export function getLocalizedResultProfiles(locale: Locale): Record<ResultType, ResultProfile> {
+export function getLocalizedResultProfiles(locale: Locale): Record<CoreResultType, ResultProfile> {
   return Object.fromEntries(
-    (Object.keys(resultDefinitions) as ResultType[]).map((type) => [type, getResultProfile(locale, type)]),
-  ) as Record<ResultType, ResultProfile>;
+    (Object.keys(resultDefinitions) as CoreResultType[]).map((type) => [type, getResultProfile(locale, type)]),
+  ) as Record<CoreResultType, ResultProfile>;
 }

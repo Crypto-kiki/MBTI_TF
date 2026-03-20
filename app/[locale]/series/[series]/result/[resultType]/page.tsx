@@ -3,12 +3,12 @@ import { redirect } from 'next/navigation';
 
 import { Layout } from '@/components/Layout';
 import { ResultCard } from '@/components/ResultCard';
-import { getSeriesModeLabel, isSeriesKey } from '@/data/series';
+import { getSeriesDefaultResultType, getSeriesModeLabel, getSeriesPrimaryMode, getSeriesResultTypes, isSeriesKey, isSeriesQuizMode, isSeriesResultType } from '@/data/series';
 import { defaultLocale, isLocale, locales, type Locale } from '@/lib/i18n/config';
 import { getResultHref, getModeFromResultType, parseTagCounts, resolveQuizResult, resolveResultFromType } from '@/lib/results';
 import { defaultSeries } from '@/lib/series';
 import { getResultShareMetadata } from '@/lib/result-meta';
-import { defaultResultType, isResultType, resultTypes, QuizMode, QuizTotals, ResultType } from '@/types/quiz';
+import { QuizMode, QuizTotals } from '@/types/quiz';
 import { seriesKeys } from '@/types/series';
 
 interface DynamicSeriesResultPageProps {
@@ -35,18 +35,24 @@ function getLocaleOrFallback(locale: string): Locale {
   return isLocale(locale) ? locale : defaultLocale;
 }
 
-function getMode(searchMode: string | undefined, resultType: ResultType): QuizMode {
-  return getModeFromResultType(resultType, searchMode === 't' ? 't' : searchMode === 'f' ? 'f' : undefined);
+function getMode(series: string, searchMode: string | undefined, resultType: string): QuizMode {
+  if (isSeriesKey(series) && searchMode && isSeriesQuizMode(series, searchMode)) {
+    return searchMode;
+  }
+
+  return getModeFromResultType(resultType as never, getSeriesPrimaryMode(isSeriesKey(series) ? series : defaultSeries));
 }
 
 export function generateStaticParams() {
-  return locales.flatMap((locale) => seriesKeys.flatMap((series) => resultTypes.map((resultType) => ({ locale, series, resultType }))));
+  return locales.flatMap((locale) =>
+    seriesKeys.flatMap((series) => getSeriesResultTypes(series).map((resultType) => ({ locale, series, resultType }))),
+  );
 }
 
 export async function generateMetadata({ params, searchParams }: DynamicSeriesResultPageProps): Promise<Metadata> {
   const locale = getLocaleOrFallback(params.locale);
   const series = isSeriesKey(params.series) ? params.series : defaultSeries;
-  const resultType = isResultType(params.resultType) ? params.resultType : defaultResultType;
+  const resultType = isSeriesResultType(series, params.resultType) ? params.resultType : getSeriesDefaultResultType(series);
   const metadata = getResultShareMetadata(locale, resultType, searchParams, series);
 
   return {
@@ -74,12 +80,12 @@ export default function DynamicSeriesResultPage({ params, searchParams }: Dynami
     redirect(`/${locale}/series/${series}/result/${params.resultType}`);
   }
 
-  if (!isResultType(params.resultType)) {
-    redirect(getResultHref(locale, defaultResultType, series));
+  if (!isSeriesResultType(series, params.resultType)) {
+    redirect(getResultHref(locale, getSeriesDefaultResultType(series), series));
   }
 
   const resultType = params.resultType;
-  const mode = getMode(searchParams?.mode, resultType);
+  const mode = getMode(series, searchParams?.mode, resultType);
 
   if (hasQuizState(searchParams)) {
     const totals: QuizTotals = {
@@ -89,7 +95,7 @@ export default function DynamicSeriesResultPage({ params, searchParams }: Dynami
       tagCounts: parseTagCounts(searchParams?.tags),
     };
 
-    const resolvedResult = resolveQuizResult(locale, totals);
+    const resolvedResult = resolveQuizResult(locale, totals, series);
 
     if (resolvedResult.profile.type !== resultType) {
       const search = new URLSearchParams();
@@ -104,18 +110,18 @@ export default function DynamicSeriesResultPage({ params, searchParams }: Dynami
     return (
       <Layout locale={locale} series={series}>
         <div className="flex flex-1 items-center py-8">
-          <ResultCard locale={locale} series={series} mode={mode} modeLabel={getSeriesModeLabel(locale, mode)} result={resolvedResult} />
+          <ResultCard locale={locale} series={series} mode={mode} modeLabel={getSeriesModeLabel(locale, mode, series)} result={resolvedResult} />
         </div>
       </Layout>
     );
   }
 
-  const result = resolveResultFromType(locale, resultType);
+  const result = resolveResultFromType(locale, resultType, series);
 
   return (
     <Layout locale={locale} series={series}>
       <div className="flex flex-1 items-center py-8">
-        <ResultCard locale={locale} series={series} mode={mode} modeLabel={getSeriesModeLabel(locale, mode)} result={result} />
+        <ResultCard locale={locale} series={series} mode={mode} modeLabel={getSeriesModeLabel(locale, mode, series)} result={result} />
       </div>
     </Layout>
   );

@@ -124,8 +124,18 @@ const tagTranslations: Record<string, Record<Exclude<Locale, 'ko'>, string>> = {
   '회복': { ja: '回復', 'zh-TW': '恢復', en: 'recovery' },
   '회상': { ja: '回想', 'zh-TW': '回想', en: 'reflection' },
   '효율': { ja: '効率', 'zh-TW': '效率', en: 'efficiency' },
+  'conflict_emotion': { ja: '感情反応', 'zh-TW': '情緒衝突反應', en: 'conflict emotion' },
+  'conflict_logic': { ja: '論理整頓', 'zh-TW': '衝突邏輯整理', en: 'conflict logic' },
+  'contact_frequency': { ja: '連絡頻度', 'zh-TW': '聯絡頻率', en: 'contact frequency' },
+  'contact_stability': { ja: '連絡安定感', 'zh-TW': '聯絡穩定感', en: 'contact stability' },
+  'hurt_expression': { ja: '傷つきの表現', 'zh-TW': '受傷表達', en: 'hurt expression' },
+  'hurt_priority': { ja: '優先順位の傷つき', 'zh-TW': '優先順序受傷點', en: 'hurt priority' },
+  'affection_words': { ja: '言葉の愛情', 'zh-TW': '言語愛意', en: 'affection words' },
+  'affection_actions': { ja: '行動の愛情', 'zh-TW': '行動愛意', en: 'affection actions' },
+  'reassurance_consistency': { ja: '安心の一貫性', 'zh-TW': '安心一致感', en: 'reassurance consistency' },
+  'repair_time': { ja: '回復の時間', 'zh-TW': '修復時間', en: 'repair time' },
+  'repair_explanation': { ja: '回復の説明', 'zh-TW': '修復說明', en: 'repair explanation' },
 };
-
 const localizedTagLabels = Object.fromEntries(
   (Object.keys(tagTranslations) as Array<keyof typeof tagTranslations>).map((tag) => [tag, tagTranslations[tag]])
 ) as Record<keyof typeof tagTranslations, Record<Exclude<Locale, 'ko'>, string>>;

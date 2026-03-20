@@ -5,6 +5,7 @@ import { ArrowRight, Fingerprint, Lightbulb, Sparkles } from 'lucide-react';
 import { getTagLabel, uiMessages } from '@/data/i18n/messages';
 import { Locale } from '@/lib/i18n/config';
 import { getAxisFromResultType } from '@/lib/results';
+import { getSeriesPrimaryMode } from '@/data/series';
 import { getSeriesQuizModeHref, getSeriesResultHref } from '@/lib/series';
 import { QuizMode, ResolvedQuizResult } from '@/types/quiz';
 import { SeriesKey } from '@/types/series';
@@ -378,7 +379,10 @@ function getGuidanceMessage(locale: Locale, axis: 'f' | 't' | 'balanced') {
 }
 
 export function ResultCard({ locale, series, mode, modeLabel, result }: ResultCardProps) {
-  const otherRoute = getSeriesQuizModeHref(locale, series, mode === 'f' ? 't' : 'f');
+  const isLoveSeries = series === 'love';
+  const otherRoute = isLoveSeries
+    ? getSeriesQuizModeHref(locale, series, getSeriesPrimaryMode(series))
+    : getSeriesQuizModeHref(locale, series, mode === 'f' ? 't' : 'f');
   const messages = uiMessages[locale].result;
   const compatibilityHref = getSeriesResultHref(locale, series, result.profile.compatibility.type);
   const compatibilityAxis = getAxisFromResultType(result.profile.compatibility.type);
@@ -391,6 +395,14 @@ export function ResultCard({ locale, series, mode, modeLabel, result }: ResultCa
   const hasAnsweredStats = result.totals.answeredCount > 0;
   const scoreInsight = getScoreInsight(locale, result.totals.totalFScore, result.totals.totalTScore);
   const reactionPatterns = getReactionPatterns(locale, result.dominantTags);
+  const retryLabel =
+    isLoveSeries
+      ? locale === 'ko'
+        ? '연애 종합 테스트 다시 하기'
+        : locale === 'en'
+          ? 'Retake the love report'
+          : messages.tryOther
+      : messages.tryOther;
 
   return (
     <section className="mx-auto flex w-full max-w-6xl flex-col gap-4 sm:gap-5">
@@ -525,6 +537,46 @@ export function ResultCard({ locale, series, mode, modeLabel, result }: ResultCa
           </div>
         ) : null}
 
+        {result.reportSections?.length ? (
+          <div className="mb-5 rounded-[1.7rem] border border-plum/10 bg-white/92 p-4 shadow-soft sm:mb-6 sm:rounded-[2rem] sm:p-6">
+            <div className="flex flex-col gap-2">
+              <div className="inline-flex items-center gap-2 rounded-full bg-plum/8 px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-plum/74 sm:text-[0.72rem]">
+                <Fingerprint className="h-3.5 w-3.5" />
+                {locale === 'ko' ? '연애 세부 리포트' : locale === 'en' ? 'Relationship report details' : messages.patternsTitle}
+              </div>
+              <p className="text-sm leading-6 text-ink/68 sm:text-[0.96rem] sm:leading-7">
+                {locale === 'ko'
+                  ? '대표 타입과 함께, 연애 안에서 자주 드러나는 여섯 가지 해석 축을 함께 정리했어요.'
+                  : locale === 'en'
+                    ? 'Alongside your main type, these six dimensions show how your relationship style tends to operate.'
+                    : messages.patternsHint}
+              </p>
+            </div>
+
+            <div className="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+              {result.reportSections.map((section) => (
+                <article key={section.key} className="rounded-[1.35rem] border border-white/90 bg-[linear-gradient(180deg,rgba(248,245,251,0.96),rgba(255,255,255,0.95))] p-4 shadow-sm sm:rounded-[1.55rem]">
+                  <div className="flex items-center justify-between gap-2">
+                    <h3 className="text-base font-semibold text-ink">{section.label}</h3>
+                    <span className="rounded-full bg-plum/8 px-2.5 py-1 text-[0.68rem] font-medium text-plum/72">
+                      {section.dominantSide === 'balanced' ? messages.axis.balanced : section.dominantSide === 'f' ? messages.axis.f : messages.axis.t}
+                    </span>
+                  </div>
+                  <p className="mt-3 text-sm font-medium leading-6 text-ink">{section.summary}</p>
+                  <p className="mt-2 text-xs leading-5 text-plum/58">{section.detail}</p>
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {section.dominantTags.map((tag) => (
+                      <span key={tag} className="rounded-full bg-white px-2.5 py-1 text-xs text-plum/76 shadow-sm">
+                        #{getTagLabel(locale, tag)}
+                      </span>
+                    ))}
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        ) : null}
+
         <div className="grid gap-5 lg:grid-cols-3 lg:gap-6">
           <div>
             <h2 className="text-lg font-semibold text-ink">{messages.strengths}</h2>
@@ -601,7 +653,7 @@ export function ResultCard({ locale, series, mode, modeLabel, result }: ResultCa
           href={otherRoute as Route}
           className="interactive-card inline-flex min-h-[3.35rem] items-center justify-center gap-2 rounded-full bg-gradient-to-r from-plum to-[#8d7488] px-6 py-3.5 text-sm font-semibold text-white shadow-soft hover:shadow-float sm:flex-1 sm:min-h-[3.5rem] sm:flex-none"
         >
-          {messages.tryOther}
+          {retryLabel}
           <ArrowRight className="h-4 w-4" />
         </Link>
         <Link
