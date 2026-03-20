@@ -1,4 +1,7 @@
 import { defaultLocale, type Locale } from '@/lib/i18n/config';
+import { loveReportSectionContent } from '@/data/i18n/love-report-sections';
+import { loveResultOverrides } from '@/data/i18n/love-result-overrides';
+import { mergeLocalizedObject } from '@/lib/i18n/localized';
 import { LoveResultType, ReportSection, ResultContent, ResultDefinition, ResultImage, ResultProfile } from '@/types/quiz';
 
 const RESULT_IMAGE_SIZE = { width: 1200, height: 630 } as const;
@@ -15,8 +18,8 @@ function createResultImage(src: string): ResultImage {
 function localizedResultContent(ko: ResultContent, en: ResultContent): LocalizedRecord<ResultContent> {
   return {
     ko,
-    ja: ko,
-    'zh-TW': ko,
+    ja: en,
+    'zh-TW': en,
     en,
   };
 }
@@ -401,129 +404,10 @@ export const loveResultDefinitions: Record<LoveResultType, ResultDefinition> = {
   ),
 };
 
-export const loveReportSectionContent: LocalizedRecord<
-  Record<
-    string,
-    {
-      label: string;
-      leftLabel: string;
-      rightLabel: string;
-      leftSummary: string;
-      rightSummary: string;
-      balancedSummary: string;
-    }
-  >
-> = {
-  ko: {
-    conflict: {
-      label: '갈등 반응',
-      leftLabel: '감정 결 먼저 읽기',
-      rightLabel: '쟁점 구조 먼저 정리하기',
-      leftSummary: '감정이 다치지 않는지가 먼저 중요해요.',
-      rightSummary: '무엇이 문제였는지 정리되어야 마음이 놓여요.',
-      balancedSummary: '감정과 쟁점을 함께 다뤄야 갈등이 풀린다고 느껴요.',
-    },
-    contact: {
-      label: '연락 감각',
-      leftLabel: '자주 이어지는 연결감',
-      rightLabel: '예측 가능한 안정 패턴',
-      leftSummary: '연락의 빈도와 온도가 관계의 맥박처럼 느껴져요.',
-      rightSummary: '연락 횟수보다도 일정한 흐름이 더 큰 안심을 줘요.',
-      balancedSummary: '자주 연결되든 아니든, 리듬이 끊기지 않는지가 중요해요.',
-    },
-    hurt: {
-      label: '서운함 포인트',
-      leftLabel: '표현과 감정 수용',
-      rightLabel: '우선순위와 실행 기준',
-      leftSummary: '내 마음이 어떻게 받아들여졌는지가 가장 크게 남아요.',
-      rightSummary: '말보다 실제 우선순위와 반복 패턴이 더 크게 남아요.',
-      balancedSummary: '표현도 중요하지만, 결국 행동과 우선순위까지 함께 봐요.',
-    },
-    affection: {
-      label: '애정 표현 방식',
-      leftLabel: '말과 확인 중심',
-      rightLabel: '행동과 실질감 중심',
-      leftSummary: '다정한 말과 표현이 사랑의 체온을 만든다고 느껴요.',
-      rightSummary: '애정은 결국 행동과 책임으로 증명된다고 느껴요.',
-      balancedSummary: '말과 행동이 함께 맞아떨어질 때 가장 진심으로 느껴져요.',
-    },
-    reassurance: {
-      label: '안정감 기준',
-      leftLabel: '감정적으로 내 편인 느낌',
-      rightLabel: '일관성과 예측 가능성',
-      leftSummary: '감정이 흔들릴 때도 정서적으로 붙어주는지가 중요해요.',
-      rightSummary: '약속과 패턴이 일관되게 유지되는지가 중요해요.',
-      balancedSummary: '정서적 지지와 일관성이 함께 있을 때 가장 안심돼요.',
-    },
-    repair: {
-      label: '갈등 후 회복 방식',
-      leftLabel: '충분한 감정 시간',
-      rightLabel: '납득 가능한 설명과 합의',
-      leftSummary: '감정이 실제로 풀릴 때까지 시간이 필요해요.',
-      rightSummary: '왜 그런 일이 생겼고 어떻게 달라질지 설명되어야 풀려요.',
-      balancedSummary: '감정이 정리되는 시간과 설명 둘 다 있어야 회복이 완성돼요.',
-    },
-  },
-  ja: {} as LocalizedRecord<Record<string, never>>['ko'],
-  'zh-TW': {} as LocalizedRecord<Record<string, never>>['ko'],
-  en: {
-    conflict: {
-      label: 'Conflict response',
-      leftLabel: 'Emotional impact first',
-      rightLabel: 'Issue structure first',
-      leftSummary: 'You care first about whether hearts are being hurt.',
-      rightSummary: 'You relax once the actual issue becomes clear.',
-      balancedSummary: 'You want emotion and issue structure handled together.',
-    },
-    contact: {
-      label: 'Contact rhythm',
-      leftLabel: 'Frequent connection',
-      rightLabel: 'Stable pattern',
-      leftSummary: 'Contact frequency feels like the heartbeat of the bond.',
-      rightSummary: 'Predictable rhythm matters more than constant contact.',
-      balancedSummary: 'You care about rhythm staying alive, not just raw volume.',
-    },
-    hurt: {
-      label: 'Hurt trigger',
-      leftLabel: 'Emotional reception',
-      rightLabel: 'Priority and follow-through',
-      leftSummary: 'What lingers most is how your feelings were received.',
-      rightSummary: 'What lingers most is where you stood in priority and action.',
-      balancedSummary: 'Expression matters, but action and priority matter too.',
-    },
-    affection: {
-      label: 'Affection style',
-      leftLabel: 'Words and reassurance',
-      rightLabel: 'Actions and proof',
-      leftSummary: 'Warm words feel like the clearest shape of love.',
-      rightSummary: 'Love feels most real when it becomes action.',
-      balancedSummary: 'Love feels best when words and action align.',
-    },
-    reassurance: {
-      label: 'Reassurance basis',
-      leftLabel: 'Feeling emotionally held',
-      rightLabel: 'Consistency and predictability',
-      leftSummary: 'You feel safest when the bond stays emotionally close.',
-      rightSummary: 'You feel safest when patterns and promises stay steady.',
-      balancedSummary: 'You want both emotional holding and consistency.',
-    },
-    repair: {
-      label: 'Repair style',
-      leftLabel: 'Time to feel through it',
-      rightLabel: 'Explanation and agreement',
-      leftSummary: 'Repair begins when emotion has had enough room.',
-      rightSummary: 'Repair begins when what happened makes sense.',
-      balancedSummary: 'You need both emotional processing and explanation.',
-    },
-  },
-};
-
-loveReportSectionContent.ja = loveReportSectionContent.ko;
-loveReportSectionContent['zh-TW'] = loveReportSectionContent.ko;
-
 export function getLoveResultProfile(locale: Locale, type: LoveResultType): ResultProfile {
   const definition = loveResultDefinitions[type];
-  const content = definition.content[locale] ?? definition.content[defaultLocale];
+  const baseContent = definition.content[locale] ?? definition.content[defaultLocale];
+  const content = mergeLocalizedObject(baseContent, loveResultOverrides[locale]?.[type]);
   const compatibility = compatibilityDefinitions[type][locale] ?? compatibilityDefinitions[type][defaultLocale];
   const compatibilityContent = loveResultDefinitions[compatibility.type].content[locale] ?? loveResultDefinitions[compatibility.type].content[defaultLocale];
 

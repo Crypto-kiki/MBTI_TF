@@ -1,22 +1,31 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="640" viewBox="0 0 640 640" fill="none">
-  <defs>
-    <linearGradient id="bg" x1="80" y1="72" x2="560" y2="584" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#4a3040"/>
-      <stop offset="1" stop-color="#120f18"/>
-    </linearGradient>
-    <radialGradient id="mist" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(180 148) rotate(45) scale(360)">
-      <stop stop-color="#efb7cb" stop-opacity="0.42"/>
-      <stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
-    </radialGradient>
-    <linearGradient id="stroke" x1="180" y1="176" x2="480" y2="470" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#fff0f5"/>
-      <stop offset="1" stop-color="#efb7cb"/>
-    </linearGradient>
-  </defs>
-  <rect width="640" height="640" rx="88" fill="url(#bg)"/>
-  <rect x="38" y="38" width="564" height="564" rx="60" fill="url(#mist)" stroke="rgba(255,255,255,0.16)"/>
-  <circle cx="320" cy="320" r="170" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.14)" stroke-width="2"/>
-  <circle cx="320" cy="320" r="118" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.12)" stroke-width="2"/>
-  <g stroke="url(#stroke)" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"><path d="M320 158L426 204V290C426 372 370 430 320 456C270 430 214 372 214 290V204L320 158Z"/><path d="M278 284C278 258 294 242 314 242C327 242 340 249 348 261C356 249 369 242 382 242C402 242 418 258 418 284C418 315 384 338 348 369C312 338 278 315 278 284Z"/></g>
-  <circle cx="320" cy="320" r="230" stroke="rgba(255,255,255,0.08)" stroke-width="1.5" stroke-dasharray="6 12"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900" fill="none">
+<defs>
+  <linearGradient id="paper" x1="84" y1="74" x2="1118" y2="826" gradientUnits="userSpaceOnUse">
+    <stop stop-color="#FFFDFD"/>
+    <stop offset="1" stop-color="#F6F1F5"/>
+  </linearGradient>
+  <linearGradient id="plumLine" x1="280" y1="210" x2="924" y2="696" gradientUnits="userSpaceOnUse">
+    <stop stop-color="#7A5E79"/>
+    <stop offset="1" stop-color="#2E3A55"/>
+  </linearGradient>
+  <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+    <feDropShadow dx="0" dy="18" stdDeviation="24" flood-color="rgba(72,54,86,0.12)"/>
+  </filter>
+</defs>
+<rect width="1200" height="900" rx="76" fill="url(#paper)"/>
+<rect x="56" y="56" width="1088" height="788" rx="52" fill="white" stroke="rgba(91,65,88,0.08)"/>
+<rect x="102" y="102" width="996" height="696" rx="40" fill="rgba(248,243,247,0.96)" stroke="rgba(91,65,88,0.07)"/>
+
+<rect x="132" y="132" width="936" height="636" rx="34" fill="url(#hero)"/>
+<rect x="164" y="164" width="188" height="42" rx="21" fill="rgba(255,255,255,0.82)"/>
+<path d="M186 185H330" stroke="rgba(91,65,88,0.18)" stroke-width="2" stroke-linecap="round" stroke-dasharray="6 8"/>
+<defs><linearGradient id="hero" x1="144" y1="148" x2="1056" y2="752" gradientUnits="userSpaceOnUse"><stop stop-color="#F6EAEE"/><stop offset="1" stop-color="#E9F0F6"/></linearGradient></defs>
+
+<g filter="url(#shadow)">
+  <path d="M760 254C850 254 924 332 924 426C924 548 830 640 760 676C690 640 596 548 596 426C596 332 670 254 760 254Z" fill="rgba(255,255,255,0.78)" stroke="url(#plumLine)" stroke-width="18"/>
+  <circle cx="760" cy="446" r="78" fill="#F4DCE7" stroke="rgba(91,65,88,0.16)" stroke-width="8"/>
+  <path d="M682 560C706 520 734 500 760 500C786 500 814 520 838 560" stroke="url(#plumLine)" stroke-width="18" stroke-linecap="round"/>
+  <path d="M660 362C688 318 724 292 760 292C796 292 832 318 860 362" stroke="rgba(91,65,88,0.18)" stroke-width="12" stroke-linecap="round"/>
+</g>
+
 </svg>

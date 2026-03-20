@@ -510,10 +510,24 @@ export function ResultCard({ locale, series, mode, modeLabel, result }: ResultCa
   const nextSeriesKey: SeriesKey = isLoveSeries ? 'core' : 'love';
   const nextSeriesDefinition = getSeriesDefinition(locale, nextSeriesKey);
   const seriesSwitchCopy = getSeriesSwitchCopy(locale, series, nextSeriesDefinition.content.label);
+  const heroPanelClass = isLoveSeries
+    ? 'bg-[radial-gradient(circle_at_top_left,rgba(255,190,222,0.28),transparent_24%),radial-gradient(circle_at_82%_18%,rgba(145,182,255,0.16),transparent_22%),linear-gradient(135deg,rgba(255,247,251,0.98),rgba(247,240,249,0.96),rgba(236,238,252,0.94))]'
+    : 'bg-hero-glow';
+  const summaryPanelClass = isLoveSeries
+    ? 'border-[#f5d7e6]/70 bg-[linear-gradient(135deg,rgba(255,255,255,0.98),rgba(255,244,249,0.96),rgba(241,239,252,0.94))]'
+    : 'border-white/80 bg-[linear-gradient(135deg,rgba(255,255,255,0.96),rgba(248,242,248,0.92),rgba(242,236,251,0.88))]';
+  const descriptionPanelClass = isLoveSeries ? 'bg-[linear-gradient(180deg,rgba(255,250,252,0.92),rgba(249,244,250,0.88))]' : 'bg-white/74';
+  const reportShellClass = isLoveSeries ? 'border-[#f2d5e7]/60 bg-[linear-gradient(180deg,rgba(255,249,252,0.96),rgba(250,244,250,0.92))]' : 'bg-white/82';
+  const reportSectionClass = isLoveSeries
+    ? 'border-[#f0d7e6]/85 bg-[linear-gradient(180deg,rgba(255,248,252,0.98),rgba(252,245,250,0.95))]'
+    : 'border-white/90 bg-[linear-gradient(180deg,rgba(248,245,251,0.96),rgba(255,255,255,0.95))]';
+  const guidanceClass = isLoveSeries
+    ? 'from-[#24162d] via-[#6d335c] to-[#40568c]'
+    : 'from-[#1d1b22] via-plum to-[#8d7488]';
 
   return (
     <section className="mx-auto flex w-full max-w-6xl flex-col gap-4 sm:gap-5">
-      <div className="glass-panel overflow-hidden rounded-[2.1rem] bg-hero-glow p-4 sm:rounded-[2.6rem] sm:p-7 lg:p-8">
+      <div className={`glass-panel overflow-hidden rounded-[2.1rem] p-4 sm:rounded-[2.6rem] sm:p-7 lg:p-8 ${heroPanelClass}`}>
         <div className="grid gap-6 xl:grid-cols-[minmax(0,1.02fr)_minmax(22rem,0.98fr)] xl:items-start xl:gap-8">
           <div className="max-w-3xl xl:pt-2">
             <div className="flex flex-wrap items-center gap-2">
@@ -540,7 +554,7 @@ export function ResultCard({ locale, series, mode, modeLabel, result }: ResultCa
               {result.profile.subtitle}
             </p>
 
-            <div className="mt-5 rounded-[1.65rem] border border-white/80 bg-[linear-gradient(135deg,rgba(255,255,255,0.96),rgba(248,242,248,0.92),rgba(242,236,251,0.88))] p-4 shadow-soft sm:rounded-[1.9rem] sm:p-5">
+            <div className={`mt-5 rounded-[1.65rem] border p-4 shadow-soft sm:rounded-[1.9rem] sm:p-5 ${summaryPanelClass}`}>
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <div className="inline-flex items-center gap-2 rounded-full bg-plum/8 px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-plum/74 sm:text-[0.72rem]">
                   {isLoveSeries ? getLoveSummaryLabel(locale, messages.summaryCard) : messages.summaryCard}
@@ -558,7 +572,7 @@ export function ResultCard({ locale, series, mode, modeLabel, result }: ResultCa
               ))}
             </div>
 
-            <div className="mt-5 rounded-[1.55rem] bg-white/74 p-4 sm:mt-6 sm:rounded-[1.9rem] sm:p-5">
+            <div className={`mt-5 rounded-[1.55rem] p-4 sm:mt-6 sm:rounded-[1.9rem] sm:p-5 ${descriptionPanelClass}`}>
               <p className="max-w-2xl text-sm leading-7 text-ink/72 sm:text-base sm:leading-8">{result.profile.description}</p>
 
               {hasAnsweredStats ? (
@@ -603,7 +617,7 @@ export function ResultCard({ locale, series, mode, modeLabel, result }: ResultCa
           </div>
 
           <div className="relative xl:pl-2">
-            <ResultImageCard image={result.profile.image} title={result.profile.title} subtitle={result.profile.subtitle} variant="hero" />
+            <ResultImageCard image={result.profile.image} title={result.profile.title} subtitle={result.profile.subtitle} series={series} variant="hero" />
             <div className="relative z-10 mx-2 -mt-4 sm:mx-5 sm:-mt-6 lg:mx-6 xl:mx-7">
               <ResultShareCard
                 locale={locale}
@@ -620,7 +634,7 @@ export function ResultCard({ locale, series, mode, modeLabel, result }: ResultCa
         </div>
       </div>
 
-      <div className="glass-panel rounded-[1.95rem] bg-white/82 p-4 shadow-soft sm:rounded-[2.2rem] sm:p-8">
+      <div className={`glass-panel rounded-[1.95rem] border p-4 shadow-soft sm:rounded-[2.2rem] sm:p-8 ${reportShellClass}`}>
         {reactionPatterns.length > 0 ? (
           <div className="mb-5 rounded-[1.7rem] border border-plum/10 bg-[linear-gradient(180deg,rgba(248,245,251,0.96),rgba(255,255,255,0.9))] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.85)] sm:mb-6 sm:rounded-[2rem] sm:p-6">
             <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
@@ -651,7 +665,7 @@ export function ResultCard({ locale, series, mode, modeLabel, result }: ResultCa
         ) : null}
 
         {result.reportSections?.length ? (
-          <div className="mb-5 rounded-[1.7rem] border border-plum/10 bg-white/92 p-4 shadow-soft sm:mb-6 sm:rounded-[2rem] sm:p-6">
+          <div className={`mb-5 rounded-[1.7rem] border p-4 shadow-soft sm:mb-6 sm:rounded-[2rem] sm:p-6 ${isLoveSeries ? 'border-[#f0d8e5]/80 bg-[linear-gradient(180deg,rgba(255,249,252,0.96),rgba(251,244,249,0.92))]' : 'border-plum/10 bg-white/92'}`}>
             <div className="flex flex-col gap-2">
               <div className="inline-flex items-center gap-2 rounded-full bg-plum/8 px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-plum/74 sm:text-[0.72rem]">
                 <Fingerprint className="h-3.5 w-3.5" />
@@ -668,7 +682,7 @@ export function ResultCard({ locale, series, mode, modeLabel, result }: ResultCa
 
             <div className="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
               {result.reportSections.map((section) => (
-                <article key={section.key} className="rounded-[1.35rem] border border-white/90 bg-[linear-gradient(180deg,rgba(248,245,251,0.96),rgba(255,255,255,0.95))] p-4 shadow-sm sm:rounded-[1.55rem]">
+                <article key={section.key} className={`rounded-[1.35rem] border p-4 shadow-sm sm:rounded-[1.55rem] ${reportSectionClass}`}>
                   <div className="flex items-center justify-between gap-2">
                     <h3 className="text-base font-semibold text-ink">{section.label}</h3>
                     <span className="rounded-full bg-plum/8 px-2.5 py-1 text-[0.68rem] font-medium text-plum/72">
@@ -747,7 +761,7 @@ export function ResultCard({ locale, series, mode, modeLabel, result }: ResultCa
           </div>
         </div>
 
-        <div className="mt-5 overflow-hidden rounded-[1.6rem] bg-gradient-to-r from-[#1d1b22] via-plum to-[#8d7488] px-4 py-5 text-white shadow-float sm:mt-6 sm:rounded-[1.9rem] sm:px-6 sm:py-6">
+        <div className={`mt-5 overflow-hidden rounded-[1.6rem] bg-gradient-to-r px-4 py-5 text-white shadow-float sm:mt-6 sm:rounded-[1.9rem] sm:px-6 sm:py-6 ${guidanceClass}`}>
           <div className="flex items-start gap-3">
             <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/14">
               <Lightbulb className="h-5 w-5" />

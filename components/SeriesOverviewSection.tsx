@@ -4,8 +4,8 @@ import { ArrowRight, Layers3, Sparkles } from 'lucide-react';
 
 import { getSeriesDefinition, getSeriesList, getSeriesModeConfigs } from '@/data/series';
 import { uiMessages } from '@/data/i18n/messages';
-import { getSeriesTypesHref } from '@/lib/series';
 import { Locale } from '@/lib/i18n/config';
+import { getSeriesQuizHubHref, getSeriesTypesHref } from '@/lib/series';
 import { SeriesKey } from '@/types/series';
 
 import { ModeCard } from './ModeCard';
@@ -18,40 +18,68 @@ interface SeriesOverviewSectionProps {
 function getCopy(locale: Locale) {
   if (locale === 'ko') {
     return {
-      summary: '이 시리즈는 이렇게 읽어요',
-      includes: '이 시리즈에서 받게 되는 리포트',
-      more: '같은 서비스 안의 다른 시리즈',
-      moreDescription: '시리즈는 늘어나도 같은 탐색 규칙을 유지해요. 지금 보고 있는 시리즈를 마친 뒤 다른 시리즈로 자연스럽게 이어질 수 있어요.',
-      explore: '다른 시리즈 둘러보기',
+      startTitle: '지금 할 일',
+      startDescription: '설명을 읽었으면 바로 시작하거나, 전체 유형을 먼저 비교해보세요.',
+      startQuiz: '테스트 시작',
+      viewTypes: '전체 유형 보기',
+      exploreOther: '다른 시리즈 보기',
+      whatItReads: '무엇을 측정하는지',
+      reportIncludes: '결과에서 받는 것',
+      modeSection: '시작할 테스트',
+      modeDescription: '원하는 흐름을 고르면 바로 이어집니다.',
+      otherSeries: '다른 시리즈 추천',
+      otherSeriesDescription: '비교만 하고 넘어가고 싶다면 여기서 바로 이동하세요.',
+      moveToSeries: '이 시리즈 열기',
     };
   }
 
   if (locale === 'ja') {
     return {
-      summary: 'このシリーズの見方',
-      includes: 'このシリーズで受け取るレポート',
-      more: '同じサービス内の別シリーズ',
-      moreDescription: 'シリーズが増えても同じ導線ルールを保てるようにしています。今のシリーズを終えたあと、別シリーズへ自然に続けられます。',
-      explore: '別シリーズを見る',
+      startTitle: '今すること',
+      startDescription: '説明を読んだら、そのまま始めるか全タイプを先に見て決められます。',
+      startQuiz: 'テストを始める',
+      viewTypes: '全タイプを見る',
+      exploreOther: '別シリーズを見る',
+      whatItReads: '何を測るか',
+      reportIncludes: '結果で受け取るもの',
+      modeSection: '始めるテスト',
+      modeDescription: '一つ選ぶと、そのまま進めます。',
+      otherSeries: '別シリーズのおすすめ',
+      otherSeriesDescription: '比較だけして次へ進みたいときはここから移動できます。',
+      moveToSeries: 'このシリーズを開く',
     };
   }
 
   if (locale === 'zh-TW') {
     return {
-      summary: '這個系列會怎麼讀你',
-      includes: '你會拿到的報告內容',
-      more: '同服務中的其他系列',
-      moreDescription: '即使之後系列增加，也會維持相同探索規則，讓你完成目前系列後能自然延伸到其他系列。',
-      explore: '瀏覽其他系列',
+      startTitle: '現在就能做的事',
+      startDescription: '看完介紹後，可以直接開始，也可以先看全部類型再決定。',
+      startQuiz: '開始測驗',
+      viewTypes: '查看全部類型',
+      exploreOther: '查看其他系列',
+      whatItReads: '測量重點',
+      reportIncludes: '你會拿到什麼',
+      modeSection: '要開始的測驗',
+      modeDescription: '選好後就能直接進入。',
+      otherSeries: '其他系列推薦',
+      otherSeriesDescription: '如果只想快速比較，也可以直接跳到別的系列。',
+      moveToSeries: '打開這個系列',
     };
   }
 
   return {
-    summary: 'How this series reads you',
-    includes: 'What this report covers',
-    more: 'Other series in the same service',
-    moreDescription: 'The product keeps the same navigation pattern as more series are added, so finishing one series naturally leads into another.',
-    explore: 'Browse other series',
+    startTitle: 'What to do now',
+    startDescription: 'Start right away or compare all types first.',
+    startQuiz: 'Start the quiz',
+    viewTypes: 'Browse all types',
+    exploreOther: 'Browse other series',
+    whatItReads: 'What it measures',
+    reportIncludes: 'What you get',
+    modeSection: 'Pick a quiz',
+    modeDescription: 'Choose a flow and continue.',
+    otherSeries: 'Other recommended series',
+    otherSeriesDescription: 'If you only want to compare first, move straight into another series here.',
+    moveToSeries: 'Open this series',
   };
 }
 
@@ -69,82 +97,104 @@ export function SeriesOverviewSection({ locale, series }: SeriesOverviewSectionP
           <Sparkles className="h-4 w-4" />
           {seriesDefinition.content.eyebrow}
         </div>
+
         <div className="flex flex-wrap items-center gap-2">
-          <span className="rounded-full bg-white/82 px-3 py-1 text-[0.68rem] font-semibold tracking-[0.22em] text-plum/76 shadow-sm">
-            {seriesDefinition.badge}
-          </span>
-          <span className="rounded-full bg-plum/8 px-3 py-1 text-xs font-medium text-plum/72">{seriesDefinition.content.label}</span>
-        </div>
-        <h1 className="mt-5 text-balance font-serif text-4xl font-semibold leading-[1.05] text-ink sm:text-5xl lg:text-6xl">
-          {seriesDefinition.content.title}
-        </h1>
-        <p className="mt-4 max-w-3xl text-lg leading-8 text-plum sm:text-xl">{seriesDefinition.content.summaryLine}</p>
-        <p className="mt-3 max-w-3xl text-base leading-8 text-ink/72 sm:text-lg">{seriesDefinition.content.description}</p>
-
-        <div className="mt-6 grid gap-3 lg:grid-cols-3">
-          {[seriesDefinition.content.questionCount, seriesDefinition.content.estimatedTime, seriesDefinition.content.topicSummary].map((item) => (
-            <span key={item} className="rounded-[1.25rem] border border-white/65 bg-white/72 px-4 py-3 text-sm text-plum/80 shadow-sm">
-              {item}
-            </span>
-          ))}
+          <span className="pill-accent">{seriesDefinition.badge}</span>
+          <span className="pill-muted">{seriesDefinition.content.label}</span>
         </div>
 
-        <div className="mt-6 grid gap-3 lg:grid-cols-2">
-          <div className="rounded-[1.6rem] border border-white/72 bg-white/78 p-4 shadow-soft sm:p-5">
-            <p className="text-[0.68rem] uppercase tracking-[0.18em] text-plum/54">{copy.summary}</p>
-            <p className="mt-3 text-sm leading-7 text-ink/72 sm:text-base">{seriesDefinition.content.recommendedFor}</p>
+        <div className="mt-5 grid gap-6 xl:grid-cols-[minmax(0,1fr)_22rem] xl:items-start">
+          <div>
+            <h1 className="text-balance font-serif text-4xl font-semibold leading-[1.05] text-ink sm:text-5xl lg:text-6xl">
+              {seriesDefinition.content.title}
+            </h1>
+            <p className="mt-4 max-w-3xl text-lg leading-8 text-ink sm:text-xl">{seriesDefinition.content.summaryLine}</p>
+            <p className="mt-3 max-w-3xl text-base leading-7 text-ink/68 sm:text-lg">{seriesDefinition.content.description}</p>
+
+            <div className="mt-6 grid gap-3 lg:grid-cols-3">
+              {[seriesDefinition.content.questionCount, seriesDefinition.content.estimatedTime, seriesDefinition.content.topicSummary].map((item) => (
+                <span key={item} className="metric-tile text-sm text-ink/82">
+                  {item}
+                </span>
+              ))}
+            </div>
           </div>
-          <div className="rounded-[1.6rem] border border-white/72 bg-white/78 p-4 shadow-soft sm:p-5">
-            <p className="text-[0.68rem] uppercase tracking-[0.18em] text-plum/54">{copy.includes}</p>
-            <p className="mt-3 text-sm leading-7 text-ink/72 sm:text-base">{seriesDefinition.content.reportIncludes}</p>
-          </div>
-        </div>
 
-        <div className="mt-6">
-          <Link
-            href={getSeriesTypesHref(locale, series) as Route}
-            className="interactive-card inline-flex items-center justify-center rounded-full border border-plum/12 bg-white/84 px-5 py-3 text-sm font-medium text-plum hover:bg-white"
-          >
-            {messages.header.typesTab}
-          </Link>
+          <div className="surface-panel-strong p-5 text-white sm:p-6">
+            <p className="text-[0.68rem] uppercase tracking-[0.18em] text-white/52">{copy.startTitle}</p>
+            <p className="mt-3 text-sm leading-7 text-white/76 sm:text-base">{copy.startDescription}</p>
+            <div className="mt-5 flex flex-col gap-3">
+              <Link href={getSeriesQuizHubHref(locale, series) as Route} className="button-primary w-full justify-center">
+                {copy.startQuiz}
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+              <Link href={getSeriesTypesHref(locale, series) as Route} className="button-secondary w-full justify-center">
+                {copy.viewTypes}
+              </Link>
+              <Link href={`/${locale}` as Route} className="button-tertiary w-full justify-center">
+                {copy.exploreOther}
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div className="grid gap-5 md:grid-cols-2">
-        {modeConfigs.map((config) => (
-          <ModeCard key={config.mode} config={config} locale={locale} />
-        ))}
+        <div className="grid gap-5 lg:grid-cols-2">
+          <div className="surface-panel p-5 sm:p-6">
+          <p className="text-[0.68rem] uppercase tracking-[0.18em] text-plum/46">{copy.whatItReads}</p>
+          <p className="mt-3 text-base font-semibold text-ink">{seriesDefinition.content.topicSummary}</p>
+          <p className="mt-3 text-sm leading-7 text-ink/72 sm:text-base">{seriesDefinition.content.recommendedFor}</p>
+          </div>
+          <div className="surface-panel p-5 sm:p-6">
+          <p className="text-[0.68rem] uppercase tracking-[0.18em] text-plum/46">{copy.reportIncludes}</p>
+          <p className="mt-3 text-base font-semibold text-ink">{seriesDefinition.content.accentLabel}</p>
+          <p className="mt-3 text-sm leading-7 text-ink/72 sm:text-base">{seriesDefinition.content.reportIncludes}</p>
+          </div>
+        </div>
+
+      <div className="glass-panel rounded-[2rem] p-5 shadow-soft sm:p-6">
+        <p className="text-[0.68rem] uppercase tracking-[0.18em] text-plum/46">{copy.modeSection}</p>
+        <div className="mt-3 flex flex-col gap-2 lg:flex-row lg:items-end lg:justify-between">
+          <h2 className="text-2xl font-semibold text-ink sm:text-[1.8rem]">{messages.modes.modeSelect}</h2>
+          <p className="max-w-2xl text-sm leading-7 text-ink/70 sm:text-base">{copy.modeDescription}</p>
+        </div>
+        <div className="mt-5 grid gap-5 md:grid-cols-2">
+          {modeConfigs.map((config) => (
+            <ModeCard key={config.mode} config={config} locale={locale} />
+          ))}
+        </div>
       </div>
 
       {otherSeries.length ? (
-        <div className="rounded-[2rem] border border-white/72 bg-white/78 p-5 shadow-soft sm:p-6">
+        <div className="surface-panel p-5 shadow-soft sm:p-6">
           <div className="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
             <div>
-              <div className="inline-flex items-center gap-2 rounded-full bg-plum/8 px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-plum/74">
+              <div className="section-label">
                 <Layers3 className="h-3.5 w-3.5" />
-                {copy.more}
+                {copy.otherSeries}
               </div>
-              <p className="mt-3 max-w-3xl text-sm leading-7 text-ink/72 sm:text-base">{copy.moreDescription}</p>
+              <p className="mt-3 max-w-3xl text-sm leading-6 text-ink/72 sm:text-base">{copy.otherSeriesDescription}</p>
             </div>
-            <Link
-              href={`/${locale}` as Route}
-              className="interactive-card inline-flex items-center gap-2 rounded-full border border-plum/12 bg-white px-4 py-2.5 text-sm font-medium text-plum hover:bg-plum hover:text-white"
-            >
-              {copy.explore}
+            <Link href={`/${locale}` as Route} className="button-tertiary">
+              {copy.exploreOther}
               <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
 
           <div className="mt-4 grid gap-3 md:grid-cols-2">
             {otherSeries.map((item) => (
-              <div key={item.key} className="rounded-[1.5rem] border border-white/78 bg-[linear-gradient(180deg,rgba(248,245,251,0.95),rgba(255,255,255,0.95))] p-4 shadow-sm">
+              <Link key={item.key} href={`/${locale}/series/${item.key}` as Route} className="surface-panel-muted interactive-card p-4">
                 <div className="flex flex-wrap items-center gap-2">
-                  <span className="rounded-full bg-white px-3 py-1 text-[0.68rem] font-semibold tracking-[0.18em] text-plum/74 shadow-sm">{item.badge}</span>
-                  <span className="rounded-full bg-plum/8 px-3 py-1 text-xs font-medium text-plum/72">{item.content.label}</span>
+                  <span className="pill-accent">{item.badge}</span>
+                  <span className="pill-muted">{item.content.label}</span>
                 </div>
                 <h3 className="mt-3 text-lg font-semibold text-ink">{item.content.summaryLine}</h3>
-                <p className="mt-2 text-sm leading-6 text-ink/70">{item.content.description}</p>
-              </div>
+                <p className="mt-2 text-sm leading-6 text-ink/68">{item.content.topicSummary}</p>
+                <div className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-plum">
+                  {copy.moveToSeries}
+                  <ArrowRight className="h-4 w-4" />
+                </div>
+              </Link>
             ))}
           </div>
         </div>
